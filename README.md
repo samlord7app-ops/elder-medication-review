@@ -1,5 +1,15 @@
 # 藥安・本機高齡用藥評估原型
 
+## 🌐 給其他人一起使用的公開網址與方式
+
+- **雲端高齡病人用藥安全評估 UI（GitHub Pages 公開網址）：**
+  🔗 https://samlord7app-ops.github.io/elder-medication-review/
+- **打開此網站點擊右上角「下載 Windows 本機套件」取得免安裝壓縮包：**
+  🔗 https://github.com/samlord7app-ops/elder-medication-review/releases/latest
+- 下載安裝 **`ElderMedicationReview-Windows-x64.zip`**（解壓縮後執行 `ElderMedicationReview.exe`）後即可使用。
+
+---
+
 **藥名＋品項含量：** 支援 Lipitor 10 mg、立普妥 10毫克等目錄比對；雲端候選也會檢查含量並於套用時保留含量與劑型。不符或不確定時不改配其他規格，單顆含量不會當成每日總劑量。
 
 **選用雲端藥名核對：** 人工校對區可展開雲端核對，每次人工確認 1–5 個藥名後，才傳至 NLM RxNav 官方服務取得英文近似藥名及成分候選。圖片、Excel、原文、年齡、診斷、檢驗與臨床評估不傳送。中文／台灣代碼仍使用本機 TFDA／健保目錄；候選不會自動套用，複方不提供一鍵成分替換。外部服務會收到確認的藥名及連線 IP，無法撤回已送出的查詢；本機程式不保存查詢日誌。
