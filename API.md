@@ -67,3 +67,12 @@ POST /api/evaluate 的每個 results 項目新增 analysis 陣列，含 drug、i
 
 
 年齡為選填：前端未勾選時傳 age: null，API 亦接受省略 age。未提供年齡不推定為 65 歲以上，仍辨識藥品並列出對應條款；其高齡適用性標示資料不足待確認，不產生已確認適用的風險結論。已填年齡仍須為 65–120 歲整數。紀錄以 null 保存，畫面及匯出顯示「未提供」。
+
+
+## 選用雲端藥名核對
+
+`POST /api/cloud/drugs` 仍受本機 Host、Origin、token 限制，只接受 `{"medications":["Diazepame"],"consent":true}`，每批 1–5 項。多餘欄位、疑似識別資料與未同意請求，在連線前整批拒絕。此為獨立流程，不會因 OCR、預覽或臨床評估而自動連線。
+
+目的地固定為 https://rxnav.nlm.nih.gov/REST/ ，以官方 approximateTerm、properties、related (IN) 取得候選及成分。禁用重新導向，限制回應大小、數量與逾時；不接受使用者提供目的網址或 API key，不持久化查詢／結果，不輸出原始連線錯誤。中國字、台灣代碼或含頻次的整段處方不送至 RxNav；其字庫不能替代台灣 TFDA／健保目錄。來源參閱 https://lhncbc-portal.lhcaws-prod-pub.nlm.nih.gov/RxNav/APIs/api-RxNorm.getApproximateMatch.html 。
+
+外部服務將接收人工確認的英文藥名及連線 IP；無法保證其留存方式，也無法靠格式檢查排除所有人名，因此必須逐項人工核對且禁止原始處方／姓名誤選為藥名。本機臨床 API 仍不向雲端傳送年齡、檢驗、診斷。相似順位與分數不是正確機率；單方可暫選成分後批次確認套用，複方或成分未取得時不可一鍵替換。變更來源將捨棄舊結果，套用後仍須重新預覽及確認本機評估。

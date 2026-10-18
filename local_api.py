@@ -1,4 +1,4 @@
-"""Loopback-only import and medication review. No patient logging or external requests."""
+"""Loopback-only clinical review; opt-in drug-name-only RxNav lookup. No patient logging."""
 import io, json, os, re, secrets, socket, subprocess, tempfile, zipfile, unicodedata
 from difflib import get_close_matches
 from pathlib import Path
@@ -7,6 +7,7 @@ import catalog
 import clinical_rules as clinical
 import reference_updates
 import analysis_table
+import cloud_drugs
 
 ROOT = Path(__file__).resolve().parent
 TOKEN = secrets.token_urlsafe(32)
@@ -166,6 +167,7 @@ class Handler(BaseHTTPRequestHandler):
         files['/clinical-ui.js']='clinical-ui.js'
         files['/records-core.js']='records-core.js'
         files['/records-ui.js']='records-ui.js'
+        files['/cloud-drugs-ui.js']='cloud-drugs-ui.js'
         name=files.get(self.path)
         if not name: return self.send(404,{'error':'Not found'})
         kind='text/html; charset=utf-8' if name.endswith('html') else 'text/css; charset=utf-8' if name.endswith('css') else 'text/javascript; charset=utf-8'
@@ -173,13 +175,15 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if not self.valid_host() or self.headers.get('Origin')!=ORIGIN or self.headers.get('X-Local-Token')!=TOKEN:
             return self.send(403,{'error':'僅接受本機工作台確認的請求。'})
-        if self.path not in ['/api/extract/excel','/api/extract/image','/api/evaluate','/api/reference/check','/api/reference/update']: return self.send(404,{'error':'Not found'})
+        if self.path not in ['/api/extract/excel','/api/extract/image','/api/evaluate','/api/cloud/drugs','/api/reference/check','/api/reference/update']: return self.send(404,{'error':'Not found'})
         try:
             size=int(self.headers.get('Content-Length','0'))
             if size<=0 or size>MAX_BYTES: return self.send(413,{'error':'檔案或請求必須在 10 MB 以內。'})
             self.connection.settimeout(20)
             raw=self.rfile.read(size)
             if len(raw)!=size: raise ValueError('資料不完整。')
+            if self.path=='/api/cloud/drugs':
+                return self.send(200,cloud_drugs.lookup(json.loads(raw)))
             if self.path=='/api/reference/check':
                 if json.loads(raw)!={}:raise ValueError('檢查更新不接受任何個案資料。')
                 return self.send(202,reference_updates.start_check())

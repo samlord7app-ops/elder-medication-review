@@ -23,9 +23,16 @@ try:
         assert "frame-ancestors 'none'" in r.headers['Content-Security-Policy']
     with urllib.request.urlopen('http://127.0.0.1:18743/api/session',timeout=5) as r:
         token=json.load(r)['token']
-    for script in ['records-core.js','records-ui.js']:
+    for script in ['records-core.js','records-ui.js','cloud-drugs-ui.js']:
         with urllib.request.urlopen('http://127.0.0.1:18743/'+script,timeout=5) as r:
             assert r.status==200
+    request=urllib.request.Request('http://127.0.0.1:18743/api/cloud/drugs',
+        data=json.dumps({'medications':['Diazepam'],'consent':False}).encode(),
+        headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token,'Content-Type':'application/json'})
+    try:
+        urllib.request.urlopen(request,timeout=5)
+        raise AssertionError('Cloud lookup accepted without consent')
+    except urllib.error.HTTPError as e:assert e.code==400
     request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',
         data=json.dumps({'age':78,'medications':['Diazepam'],'labs':[],'diagnoses':[]}).encode(),
         headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token,'Content-Type':'application/json'})
