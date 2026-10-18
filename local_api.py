@@ -3,6 +3,8 @@ import io, json, os, re, secrets, socket, subprocess, tempfile, zipfile, unicode
 from difflib import get_close_matches
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import catalog
+import reference_updates
 
 ROOT = Path(__file__).resolve().parent
 TOKEN = secrets.token_urlsafe(32)
@@ -54,9 +56,23 @@ def evaluate(p):
     results=[]
     for med in meds:
         ingredient=ALIASES.get(normalize_med(med))
+        identity=None
+        if not ingredient:
+            identity=catalog.lookup(med)
+            if identity and identity.get('matched'):
+                ingredient=' + '.join(identity['ingredients'])
         rule=RULES.get(ingredient)
-        results.append({'input':med,'ingredient':ingredient,'suggestions':suggestions(med) if not ingredient else [],'identitySource':DRUG_SOURCES.get(ingredient),'status':'potentially_inappropriate' if rule else 'no_rule_hit' if ingredient else 'unrecognized','category':rule[0] if rule else None,'reason':rule[1] if rule else '已辨識成分，但未命中有限示範規則；不代表用藥安全或適當。' if ingredient else '字典未收錄或拼字／OCR 有誤。請核對原始處方；相似候選不能視為已確認成分。','source':'AGS Beers 2023 Table 2（部分示範摘要）' if rule else None})
-    return {'version':'DEMO-2026-10-18.2','clinicalUseReady':False,'results':results,'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['只有五種成分辨識與三項風險示範，非完整臨床引擎。','檢驗與診斷本次僅接收及驗證，尚未用於條件式判讀。','未涵蓋劑量、療程、腎功能、交互作用及全部例外；請由醫師或藥師覆核。']}
+        needs_context=False
+        if identity and identity.get('matched'):
+            if len(identity['ingredients'])>1 and any(i in RULES for i in identity['ingredients']):
+                rule=None;needs_context=True
+            if ingredient=='diphenhydramine' and not all(re.search('口服|內服|錠|膠囊|糖漿|散|顆粒|丸|酏',p['form']) for p in identity['products']):
+                rule=None;needs_context=True
+        hints=list(dict.fromkeys(suggestions(med)+(identity.get('suggestions',[]) if identity else [])))[:5] if not ingredient else []
+        results.append({'input':med,'ingredient':ingredient,'catalogMatches':identity.get('products',[]) if identity else [],'suggestions':hints,'identitySource':'TFDA／健保署本機公開藥品目錄；含歷史與註銷品項，請核對劑型、規格及狀態' if identity and identity.get('matched') else DRUG_SOURCES.get(ingredient),'status':'potentially_inappropriate' if rule else 'no_rule_hit' if ingredient else 'ambiguous' if identity and identity.get('ambiguous') else 'unrecognized','category':rule[0] if rule else None,'reason':rule[1] if rule else '已辨識成分，但未命中有限示範規則；不代表用藥安全或適當。' if ingredient else '同名成分不一致或字典未收錄／OCR 有誤。請核對原始處方；候選不能視為已確認成分。','source':'AGS Beers 2023 Table 2（部分示範摘要）' if rule else None})
+        if needs_context:
+            results[-1].update(status='needs_clinical_context',reason='已辨識成分，但複方或給藥途徑尚未符合此示範引擎的判讀範圍；需人工評估，不能視為未命中或安全。')
+    return {'version':'CATALOG-2026-10-18 / DEMO-RULES-3','clinicalUseReady':False,'results':results,'catalog':catalog.metadata(),'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['藥品辨識已接本機官方目錄；只有三項風險示範，文獻尚未轉成完整臨床規則。','檢驗與診斷本次僅接收及驗證，尚未用於條件式判讀。','未涵蓋劑量、療程、腎功能、交互作用及全部例外；請由醫師或藥師覆核。']}
 
 def excel_rows(raw):
     from openpyxl import load_workbook
@@ -105,7 +121,24 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.valid_host(): return self.send(403,{'error':'Host rejected'})
         if self.path=='/api/session': return self.send(200,{'token':TOKEN,'mode':'loopback-only'})
-        files={'/':'intake.html','/intake.html':'intake.html','/intake.js':'intake.js','/intake.css':'intake.css','/intake-core.js':'intake-core.js'}
+        if self.path=='/api/catalog':
+            result=catalog.metadata()
+            literature=ROOT/'public_reference'/'literature-manifest.json'
+            result['literature']=json.loads(literature.read_text(encoding='utf-8')) if literature.exists() else []
+            extra=ROOT/'public_reference'/'extra-manifest.json'
+            result['extraReferences']=json.loads(extra.read_text(encoding='utf-8')) if extra.exists() else []
+            result['localReferences']=[key for key,file in {'beers':'beers-2023-paper.pdf','stopp-start':'stopp-start-v3-appendix.pdf','pim-taiwan':'pim-taiwan-2018.txt'}.items() if (ROOT/'public_reference'/file).exists()]
+            return self.send(200,result)
+        if self.path=='/api/reference/latest':return self.send(200,reference_updates.latest() or {})
+        if self.path.startswith('/api/reference/check/'):
+            try:return self.send(200,reference_updates.status(self.path.rsplit('/',1)[-1]))
+            except ValueError as e:return self.send(404,{'error':str(e)})
+        references={'/reference/beers':'beers-2023-paper.pdf','/reference/stopp-start':'stopp-start-v3-appendix.pdf','/reference/pim-taiwan':'pim-taiwan-2018.txt'}
+        if self.path in references:
+            path=ROOT/'public_reference'/references[self.path]
+            if not path.exists(): return self.send(404,{'error':'Reference not downloaded'})
+            return self.send(200,path.read_bytes(),'application/pdf' if path.suffix=='.pdf' else 'text/plain; charset=utf-8')
+        files={'/':'intake.html','/intake.html':'intake.html','/intake.js':'intake.js','/intake.css':'intake.css','/intake-core.js':'intake-core.js','/update-controls.js':'update-controls.js'}
         name=files.get(self.path)
         if not name: return self.send(404,{'error':'Not found'})
         kind='text/html; charset=utf-8' if name.endswith('html') else 'text/css; charset=utf-8' if name.endswith('css') else 'text/javascript; charset=utf-8'
@@ -113,13 +146,21 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if not self.valid_host() or self.headers.get('Origin')!=ORIGIN or self.headers.get('X-Local-Token')!=TOKEN:
             return self.send(403,{'error':'僅接受本機工作台確認的請求。'})
-        if self.path not in ['/api/extract/excel','/api/extract/image','/api/evaluate']: return self.send(404,{'error':'Not found'})
+        if self.path not in ['/api/extract/excel','/api/extract/image','/api/evaluate','/api/reference/check','/api/reference/update']: return self.send(404,{'error':'Not found'})
         try:
             size=int(self.headers.get('Content-Length','0'))
             if size<=0 or size>MAX_BYTES: return self.send(413,{'error':'檔案或請求必須在 10 MB 以內。'})
             self.connection.settimeout(20)
             raw=self.rfile.read(size)
             if len(raw)!=size: raise ValueError('資料不完整。')
+            if self.path=='/api/reference/check':
+                if json.loads(raw)!={}:raise ValueError('檢查更新不接受任何個案資料。')
+                return self.send(202,reference_updates.start_check())
+            if self.path=='/api/reference/update':
+                p=json.loads(raw)
+                if not isinstance(p,dict) or set(p)!={'checkId','sources'} or not isinstance(p['checkId'],str):raise ValueError('更新只接受 checkId 與 sources。')
+                return self.send(202,reference_updates.start_update(p['checkId'],p['sources']))
+            if reference_updates.UPDATING:return self.send(409,{'error':'公開資料更新中，請完成後再評估。'})
             if self.path=='/api/extract/excel': result=excel_rows(raw)
             elif self.path=='/api/extract/image': result=ocr(raw)
             else: result=evaluate(json.loads(raw))
@@ -134,6 +175,11 @@ class LocalServer(ThreadingHTTPServer):
         super().server_bind()
 
 if __name__=='__main__':
+    if not catalog.PATH.exists() and (catalog.PATH.parent/'public-catalog.zip').exists():
+        import import_public_data
+        import_public_data.unpack_bundle()
+        print('Building public offline catalog; this may take a few minutes.',flush=True)
+        import_public_data.build()
     server=LocalServer(('127.0.0.1',PORT),Handler)
     print(f'Local-only review workstation: {ORIGIN} (Ctrl+C to stop)',flush=True)
     server.serve_forever()

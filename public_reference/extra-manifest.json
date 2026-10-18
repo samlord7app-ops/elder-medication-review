@@ -1,0 +1,43 @@
+[
+  {
+    "file": "beers-2023-paper.pdf",
+    "url": "https://geriatrictoolkit.missouri.edu/drug/Beers-Criteria-AGS-2023.pdf",
+    "title": "AGS 2023 original paper, university-hosted copy; rights reserved",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:49:26.256372+08:00",
+    "status": "downloaded",
+    "sha256": "2a24c71a86ceeb92f85b6a7b6682ae0bd43c555cf9e320ed295274f9de6f32e8",
+    "bytes": 1803912
+  },
+  {
+    "file": "stopp-start-v3-appendix.pdf",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10447584/supplementaryFiles",
+    "title": "STOPP/START v3 Appendix 1; see article CC BY 4.0 attribution",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:49:28.766607+08:00",
+    "status": "downloaded",
+    "error": "<urlopen error [Errno 11001] getaddrinfo failed>",
+    "sha256": "fa664265aadaae1bd093171a78f6f262a4cc22fc5c8748c50ab32f93cf9cbfb7",
+    "bytes": 536989
+  },
+  {
+    "file": "lipitor-label.html",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a60cc18b-0631-4cf0-b021-9f52224ece65",
+    "title": "DailyMed Lipitor label, source reference only",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:49:28.929956+08:00",
+    "status": "downloaded",
+    "sha256": "dd03f7a84ab480cf5271e141aacc331545d72e46d76d444801f109c071c56cfe",
+    "bytes": 332778
+  },
+  {
+    "file": "windows-ocr.html",
+    "url": "https://learn.microsoft.com/en-us/uwp/api/windows.media.ocr.ocrengine?view=winrt-20348",
+    "title": "Microsoft Windows OCR technical documentation",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:49:32.032674+08:00",
+    "status": "downloaded",
+    "sha256": "5a8b71e02f28a31f76f120ed5855c4f0e08826c9b2abdfcd6ca00b811774a5f6",
+    "bytes": 56951
+  }
+]

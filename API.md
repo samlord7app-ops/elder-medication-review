@@ -1,5 +1,9 @@
 # 本機匯入與評估 API
 
+公開資料更新端點：`POST /api/reference/check`（body 必須為 `{}`）啟動背景檢核；`GET /api/reference/check/<id>` 取得狀態；`POST /api/reference/update` 接受 `{checkId, sources}`，只可更新該次檢查有變動／新增的白名單來源。兩個 POST 均沿用本機 Origin／token 保護。沒有自動排程或自動更新；服務重啟後需重新檢查。完整保存行為見 REFERENCES.md。
+
+**2026-10-18 更新：** 已匯入 TFDA／健保署官方公開目錄並接上此 API；下文早期「五種成分」限制現僅適用於人工別名與示範風險規則，不再代表目錄辨識範圍。共 291,408 筆目錄紀錄（含歷史），來源與文獻狀態見 [REFERENCES.md](REFERENCES.md)。新裝置先執行 `python import_public_data.py --from-bundle`。`GET /api/catalog` 回傳匯入來源、筆數與文獻狀態；結果新增 `catalogMatches` 與 `ambiguous` 狀態。
+
 ## 啟動
 
 需要 Python 3.10+、openpyxl（Excel 唯讀解析）、Windows 10/11 及已安裝的 Windows OCR 語言。此裝置已有 Python 和 openpyxl，可在 PowerShell 執行 `./start-local.ps1`；或執行 `python local_api.py`。其他裝置請先由管理員安裝 `openpyxl>=3.1.5`。

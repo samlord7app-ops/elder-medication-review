@@ -26,3 +26,10 @@ __pycache__/
 *.pyc
 .venv/
 test-output/
+
+# Explicitly allow only public-source bundle and provenance, never patient exports.
+public_reference/*
+!public_reference/public-catalog.zip
+!public_reference/catalog-manifest.json
+!public_reference/literature-manifest.json
+!public_reference/extra-manifest.json

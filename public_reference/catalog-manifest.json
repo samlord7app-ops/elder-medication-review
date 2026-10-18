@@ -1,0 +1,28 @@
+{
+  "status": "imported",
+  "importedAt": "2026-10-18T10:48:09.249770+08:00",
+  "license": "政府資料開放授權條款第1版；來源各資料集頁面",
+  "sources": [
+    {
+      "id": "tfda",
+      "url": "https://data.fda.gov.tw/data/opendata/export/36/csv",
+      "datasetUrl": "https://data.gov.tw/dataset/9122",
+      "rawRows": 72074,
+      "distinctProducts": 66512,
+      "sha256": "1ee6a0f476dd692ed70b8b58a5541151f793b06975ce91f8429751824b7f75fa",
+      "fileDate": "download snapshot; not a claim of current validity"
+    },
+    {
+      "id": "nhi",
+      "url": "https://info.nhi.gov.tw/api/iode0000s01/Dataset?rId=A21030000I-E41001-001",
+      "datasetUrl": "https://data.gov.tw/dataset/23715",
+      "rawRows": 224896,
+      "distinctProducts": 224896,
+      "sha256": "e2a8160d58d98465183f1632cf654a08599b2015b6b6097b2b5f00d004d8c1c7",
+      "fileDate": "download snapshot; not a claim of current validity"
+    }
+  ],
+  "clinicalRules": "Only 3 demo rules; literature not activated",
+  "productCount": 291408,
+  "aliasCount": 1218827
+}

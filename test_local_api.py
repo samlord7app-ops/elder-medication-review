@@ -10,7 +10,7 @@ class LocalTests(unittest.TestCase):
         self.assertFalse(r['clinicalUseReady'])
         self.assertIn('尚未用於條件式判讀',r['limitations'][1])
     def test_brand_and_typo(self):
-        p=self.payload();p['medications']=['Diazepame','Lipitor','Ｄｉａｚｅｐａｍ','nonsense']
+        p=self.payload();p['medications']=['Diazepame','Lipitor','Ｄｉａｚｅｐａｍ','zzzzzzzzzzzz']
         results=evaluate(p)['results']
         self.assertEqual(results[0]['status'],'unrecognized')
         self.assertIsNone(results[0]['ingredient'])

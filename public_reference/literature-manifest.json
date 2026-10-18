@@ -1,0 +1,40 @@
+[
+  {
+    "id": "beers-2023",
+    "title": "AGS Beers 2023",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:46:51.741770+08:00",
+    "status": "download_failed",
+    "error": "HTTP Error 500: "
+  },
+  {
+    "id": "stopp-start-v3",
+    "title": "STOPP/START version 3",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10447584/",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:46:54.518636+08:00",
+    "status": "downloaded",
+    "sha256": "993467dc22ee96ebcd701fd3ffca7908f2dbcc3c246449e435a8ba0efc1cc4ac",
+    "file": "stopp-start-v3.xml",
+    "license": "© The Author(s) 2023, corrected publication 2023 https://creativecommons.org/licenses/by/4.0/ Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in the article's Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article's Creative Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit  http://creativecommons.org/licenses/by/4.0/ .",
+    "tableCount": 2,
+    "supplementLinks": [
+      "41999_2023_777_MOESM1_ESM.pdf",
+      "41999_2023_777_MOESM2_ESM.docx"
+    ]
+  },
+  {
+    "id": "pim-taiwan-2018",
+    "title": "PIM-Taiwan 2018, published 2019",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6779000/",
+    "role": "reference_only_not_active_rules",
+    "retrievedAt": "2026-10-18T10:47:01.087935+08:00",
+    "status": "downloaded",
+    "sha256": "e23df756f48019f52439a1f008ac64c5c9fac5e1c5f5be69394115eed4996d33",
+    "file": "pim-taiwan-2018.xml",
+    "license": "© The Author(s), 2019 This article is distributed under the terms of the Creative Commons Attribution-NonCommercial 4.0 License ( http://www.creativecommons.org/licenses/by-nc/4.0/ ) which permits non-commercial use, reproduction and distribution of the work without further permission provided the original work is attributed as specified on the SAGE and Open Access pages ( https://us.sagepub.com/en-us/nam/open-access-at-sage ).",
+    "tableCount": 5,
+    "supplementLinks": []
+  }
+]
