@@ -1,5 +1,7 @@
 # 本機匯入與評估 API
 
+**臨床引擎更新：** 原三項示範規則已換成 90 個明確條件分支（Beers 66、STOPP 13、PIM-Taiwan 11）；會使用部分劑量、療程、途徑、診斷、檢驗與併用條件。仍未完成三套準則完整自動化，`fullAutomation=false`、`clinicalUseReady=false`。medications 現可包含嚴格白名單的臨床欄位；完整格式、實際覆蓋與未完成事項見 [CLINICAL_RULES.md](CLINICAL_RULES.md)。`GET /api/clinical/coverage` 顯示規則分支；`GET /api/clinical/registry` 是來源盤點，不能當作已實作清單。下文較早的三項示範與「檢驗／診斷未使用」敘述已由此更新取代。
+
 人工校對新增「全選藥品／取消全選藥品」，只作用於非空白且未偵測到個資線索的藥品候選，年齡、診斷與檢驗不會被一起選取。評估後可連續選取多項相似藥名候選，再按「一次套用全部藥名修正」統一核對及套用；套用不會呼叫 API，必須重新預覽、確認後才一次送出全部選取藥品。此流程由 `test-batch-browser.cjs` 驗證。
 
 公開資料更新端點：`POST /api/reference/check`（body 必須為 `{}`）啟動背景檢核；`GET /api/reference/check/<id>` 取得狀態；`POST /api/reference/update` 接受 `{checkId, sources}`，只可更新該次檢查有變動／新增的白名單來源。兩個 POST 均沿用本機 Origin／token 保護。沒有自動排程或自動更新；服務重啟後需重新檢查。完整保存行為見 REFERENCES.md。

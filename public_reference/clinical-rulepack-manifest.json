@@ -1,0 +1,28 @@
+{
+  "version": "CLINICAL-SCREEN-2026-10-18.1",
+  "status": "engineering_tested_not_institutionally_validated",
+  "fullAutomation": false,
+  "sources": [
+    {
+      "id": "beers",
+      "file": "beers-2023-paper.pdf",
+      "sha256": "2a24c71a86ceeb92f85b6a7b6682ae0bd43c555cf9e320ed295274f9de6f32e8"
+    },
+    {
+      "id": "stopp-start",
+      "file": "stopp-start-v3-appendix.pdf",
+      "sha256": "fa664265aadaae1bd093171a78f6f262a4cc22fc5c8748c50ab32f93cf9cbfb7"
+    },
+    {
+      "id": "pim-taiwan",
+      "file": "pim-taiwan-2018.xml",
+      "sha256": "e23df756f48019f52439a1f008ac64c5c9fac5e1c5f5be69394115eed4996d33"
+    }
+  ],
+  "executableRuleCount": 90,
+  "bySource": {
+    "beers": 66,
+    "stopp-start": 13,
+    "pim-taiwan": 11
+  }
+}

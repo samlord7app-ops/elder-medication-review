@@ -1,14 +1,17 @@
 import io, json, unittest
+from unittest.mock import patch
 from openpyxl import Workbook
 from local_api import evaluate, excel_rows
 
 class LocalTests(unittest.TestCase):
+    def setUp(self):
+        self.source_patch=patch('clinical_rules.approved_sources',return_value={'beers','stopp-start','pim-taiwan'});self.source_patch.start();self.addCleanup(self.source_patch.stop)
     def payload(self): return dict(age=78, medications=['Valium','Metformin','unknown'],labs=[dict(name='eGFR',value=45,unit='mL/min/1.73m2')],diagnoses=['高血壓'])
     def test_results(self):
         r=evaluate(self.payload())
-        self.assertEqual([x['status'] for x in r['results']],['potentially_inappropriate','no_rule_hit','unrecognized'])
+        self.assertEqual([x['status'] for x in r['results']],['potentially_inappropriate','not_covered','unrecognized'])
         self.assertFalse(r['clinicalUseReady'])
-        self.assertIn('尚未用於條件式判讀',r['limitations'][1])
+        self.assertIn('CrCl 與 eGFR 不互相代用',r['limitations'][1])
     def test_brand_and_typo(self):
         p=self.payload();p['medications']=['Diazepame','Lipitor','Ｄｉａｚｅｐａｍ','zzzzzzzzzzzz']
         results=evaluate(p)['results']
@@ -16,7 +19,7 @@ class LocalTests(unittest.TestCase):
         self.assertIsNone(results[0]['ingredient'])
         self.assertIn('diazepam',results[0]['suggestions'])
         self.assertEqual(results[1]['ingredient'],'atorvastatin')
-        self.assertEqual(results[1]['status'],'no_rule_hit')
+        self.assertEqual(results[1]['status'],'not_covered')
         self.assertIn('Pfizer',results[1]['identitySource'])
         self.assertEqual(results[2]['ingredient'],'diazepam')
         self.assertEqual(results[3]['suggestions'],[])

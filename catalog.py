@@ -25,4 +25,6 @@ def lookup(value):
     return {'matched':True,'ingredients':list(next(iter(signatures))),'products':[dict(zip(['source','code','chineseName','englishName','ingredients','status','form'],r)) for r in rows[:10]],'suggestions':[]}
 def metadata():
     path=PATH.parent/'catalog-manifest.json'
-    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'status':'not_imported','productCount':0}
+    result=json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'status':'not_imported','productCount':0}
+    result['clinicalRules']='See /api/clinical/coverage for executable branches and unsupported criteria; catalog count is not clinical rule coverage.'
+    return result

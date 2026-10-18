@@ -4,6 +4,7 @@ from difflib import get_close_matches
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import catalog
+import clinical_rules as clinical
 import reference_updates
 
 ROOT = Path(__file__).resolve().parent
@@ -24,10 +25,6 @@ def suggestions(value):
     if not re.fullmatch('[a-z]{5,40}',key): return []
     matches=get_close_matches(key,sorted(ALIASES),n=3,cutoff=0.82)
     return list(dict.fromkeys(ALIASES[m] for m in matches))
-RULES = {
- 'diazepam': ('苯二氮平類', '高齡者可能增加認知障礙、譫妄、跌倒及骨折風險；部分適應症有例外，需臨床覆核。'),
- 'zolpidem': ('非苯二氮平類安眠藥', '可能增加譫妄、跌倒、骨折及急診／住院風險，需評估效益與替代處置。'),
- 'diphenhydramine': ('第一代抗組織胺（口服）', '強抗膽鹼作用可能增加混亂、口乾及便秘；須確認劑型及例外適應症。')}
 PRIVACY = re.compile(r'[A-Za-z][12]\d{8}|[A-Za-z][89]\d{8}|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|(?:09\d{8})|姓名|身[份分]證|病歷|住址|電話|出生|聯絡|patient\s*name|patient\s*id|mrn',re.I)
 
 def text(v, limit=100):
@@ -43,7 +40,8 @@ def evaluate(p):
         raise ValueError('年齡須為 65–120 歲整數。')
     for key in ['medications','labs','diagnoses']:
         if not isinstance(p[key],list) or len(p[key])>100: raise ValueError('每類最多 100 項。')
-    meds=[text(m) for m in p['medications']]
+    med_models=[clinical.validate_med(m,text) for m in p['medications']]
+    meds=[m['name'] for m in med_models]
     diagnoses=[text(d) for d in p['diagnoses']]
     labs=[]
     for lab in p['labs']:
@@ -53,26 +51,38 @@ def evaluate(p):
         if isinstance(value,bool) or not isinstance(value,(float,int)) or not -1e6<=value<=1e6: raise ValueError('檢驗值須為有限數字。')
         labs.append({'name':name,'value':value,'unit':unit})
     if not meds: raise ValueError('至少需要一項已確認藥品。')
-    results=[]
-    for med in meds:
-        ingredient=ALIASES.get(normalize_med(med))
-        identity=None
-        if not ingredient:
-            identity=catalog.lookup(med)
-            if identity and identity.get('matched'):
-                ingredient=' + '.join(identity['ingredients'])
-        rule=RULES.get(ingredient)
-        needs_context=False
-        if identity and identity.get('matched'):
-            if len(identity['ingredients'])>1 and any(i in RULES for i in identity['ingredients']):
-                rule=None;needs_context=True
-            if ingredient=='diphenhydramine' and not all(re.search('口服|內服|錠|膠囊|糖漿|散|顆粒|丸|酏',p['form']) for p in identity['products']):
-                rule=None;needs_context=True
-        hints=list(dict.fromkeys(suggestions(med)+(identity.get('suggestions',[]) if identity else [])))[:5] if not ingredient else []
-        results.append({'input':med,'ingredient':ingredient,'catalogMatches':identity.get('products',[]) if identity else [],'suggestions':hints,'identitySource':'TFDA／健保署本機公開藥品目錄；含歷史與註銷品項，請核對劑型、規格及狀態' if identity and identity.get('matched') else DRUG_SOURCES.get(ingredient),'status':'potentially_inappropriate' if rule else 'no_rule_hit' if ingredient else 'ambiguous' if identity and identity.get('ambiguous') else 'unrecognized','category':rule[0] if rule else None,'reason':rule[1] if rule else '已辨識成分，但未命中有限示範規則；不代表用藥安全或適當。' if ingredient else '同名成分不一致或字典未收錄／OCR 有誤。請核對原始處方；候選不能視為已確認成分。','source':'AGS Beers 2023 Table 2（部分示範摘要）' if rule else None})
-        if needs_context:
-            results[-1].update(status='needs_clinical_context',reason='已辨識成分，但複方或給藥途徑尚未符合此示範引擎的判讀範圍；需人工評估，不能視為未命中或安全。')
-    return {'version':'CATALOG-2026-10-18 / DEMO-RULES-3','clinicalUseReady':False,'results':results,'catalog':catalog.metadata(),'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['藥品辨識已接本機官方目錄；只有三項風險示範，文獻尚未轉成完整臨床規則。','檢驗與診斷本次僅接收及驗證，尚未用於條件式判讀。','未涵蓋劑量、療程、腎功能、交互作用及全部例外；請由醫師或藥師覆核。']}
+    resolved=[]
+    for med in med_models:
+        name=med['name'];generic=ALIASES.get(normalize_med(name)) or clinical.generic_name(name);identity=None
+        if generic:
+            ingredients={generic};unmapped=[];display=generic
+        else:
+            identity=catalog.lookup(name)
+            raw=identity['ingredients'] if identity and identity.get('matched') else []
+            ingredients,unmapped=clinical.components(raw);display=' + '.join(sorted(ingredients)+unmapped) or None
+        route=med['route']
+        if route=='unknown' and identity and identity.get('matched'):
+            forms=[item['form'] for item in identity['products']]
+            inferred=set()
+            for form in forms:
+                if re.search('外用|乳膏|軟膏|凝膠|洗劑',form):inferred.add('topical')
+                elif re.search('眼用|眼藥|眼膏',form):inferred.add('ophthalmic')
+                elif re.search('注射|輸注',form):inferred.add('parenteral')
+                elif re.search('陰道',form):inferred.add('vaginal')
+                elif re.search('口服|錠|膠囊|糖漿|內服',form):inferred.add('oral')
+                else:inferred.add('unknown')
+            if len(inferred)==1:route=inferred.pop()
+        resolved.append({**med,'route':route,'ingredients':ingredients,'unmapped':unmapped,'display':display,'identity':identity})
+    active=set().union(*(m['ingredients'] for m in resolved));approved_sources=clinical.approved_sources();results=[]
+    for med in resolved:
+        identity=med['identity'];display=med['display'];checks=clinical.assess(med,labs,diagnoses,active,approved_sources)
+        hits=[r for r in checks if r['status']=='potential_risk'];missing=[r for r in checks if r['status'] in ['insufficient_data','source_unverified']];exceptions=[r for r in checks if r['status']=='exception_requires_review']
+        state='potentially_inappropriate' if hits else 'needs_clinical_context' if missing else 'exception_requires_review' if exceptions else 'not_covered' if display and not checks else 'no_rule_hit' if display else 'ambiguous' if identity and identity.get('ambiguous') else 'unrecognized'
+        reason='；'.join(r['title'] for r in hits) if hits else '缺少必要資料或此規則文獻版本未確認，不能判定。' if missing else '符合可能的適應症例外，需臨床覆核；不等同安全。' if exceptions else '已辨識成分，但目前沒有涵蓋此藥的可執行規則；不能判定適當。' if display and not checks else '僅表示已執行條件未命中；完整準則尚未實作，不能視為安全。' if display else '藥名未辨識或同名成分不一致，請核對原始處方。'
+        hints=list(dict.fromkeys(suggestions(med['name'])+(identity.get('suggestions',[]) if identity else [])))[:5] if not display else []
+        results.append({'input':med['name'],'ingredient':display,'catalogMatches':identity.get('products',[]) if identity else [],'suggestions':hints,'identitySource':'TFDA／健保署本機公開目錄（含歷史品項），請核對規格與途徑' if identity and identity.get('matched') else DRUG_SOURCES.get(display),'status':state,'category':'條件式用藥篩檢' if hits else None,'reason':reason,'source':'；'.join(r['id'] for r in hits) or None,'clinicalChecks':checks,'unmappedIngredients':med['unmapped'],'clinicalInput':{k:med[k] for k in ['route','dailyDoseMg','durationDays','indication','formulation']}})
+    coverage=clinical.coverage()
+    return {'version':clinical.VERSION,'clinicalUseReady':False,'fullAutomation':False,'results':results,'catalog':catalog.metadata(),'coverage':{k:v for k,v in coverage.items() if k!='rules'},'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['已啟用 '+str(coverage['executableRuleCount'])+' 個條件式分支；不等同三套準則完整自動判讀，尚未經機構臨床驗證。','未列出的診斷視為未知；CrCl 與 eGFR 不互相代用；檢驗時效與病史完整性需人工確認。','START 處方遺漏、未編碼條件與例外仍需人工覆核；不得依本工具自行停藥或改劑量。']}
 
 def excel_rows(raw):
     from openpyxl import load_workbook
@@ -120,6 +130,8 @@ class Handler(BaseHTTPRequestHandler):
     def valid_host(self): return self.headers.get('Host')==f'127.0.0.1:{PORT}'
     def do_GET(self):
         if not self.valid_host(): return self.send(403,{'error':'Host rejected'})
+        if self.path=='/api/clinical/registry':return self.send(200,clinical.source_registry())
+        if self.path=='/api/clinical/coverage':return self.send(200,clinical.coverage())
         if self.path=='/api/session': return self.send(200,{'token':TOKEN,'mode':'loopback-only'})
         if self.path=='/api/catalog':
             result=catalog.metadata()
@@ -144,6 +156,7 @@ class Handler(BaseHTTPRequestHandler):
             if not path.exists(): return self.send(404,{'error':'Reference not downloaded'})
             return self.send(200,path.read_bytes(),'application/pdf' if path.suffix=='.pdf' else 'text/plain; charset=utf-8')
         files={'/':'intake.html','/intake.html':'intake.html','/intake.js':'intake.js','/intake.css':'intake.css','/intake-core.js':'intake-core.js','/update-controls.js':'update-controls.js'}
+        files['/clinical-ui.js']='clinical-ui.js'
         name=files.get(self.path)
         if not name: return self.send(404,{'error':'Not found'})
         kind='text/html; charset=utf-8' if name.endswith('html') else 'text/css; charset=utf-8' if name.endswith('css') else 'text/javascript; charset=utf-8'
