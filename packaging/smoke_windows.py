@@ -1,5 +1,6 @@
 """Smoke-test frozen application before publishing its already-built ZIP."""
-import json, subprocess, time, urllib.request, urllib.error
+import io, json, subprocess, time, urllib.request, urllib.error
+from openpyxl import Workbook
 from pathlib import Path
 
 root=Path(__file__).resolve().parents[1]
@@ -16,11 +17,17 @@ try:
         except (OSError,urllib.error.URLError):
             if time.monotonic()>deadline:raise RuntimeError('Packaged service did not become ready')
             time.sleep(1)
+    assert catalog['productCount']>200000, 'Public catalog failed to initialize'
     with urllib.request.urlopen('http://127.0.0.1:18743/',timeout=5) as r:
         assert r.status==200 and b'intake.js' in r.read()
         assert "frame-ancestors 'none'" in r.headers['Content-Security-Policy']
     with urllib.request.urlopen('http://127.0.0.1:18743/api/session',timeout=5) as r:
         token=json.load(r)['token']
+    workbook=Workbook();workbook.active.append(['Diazepam']);buffer=io.BytesIO();workbook.save(buffer);workbook.close()
+    request=urllib.request.Request('http://127.0.0.1:18743/api/extract/excel',data=buffer.getvalue(),
+        headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token})
+    with urllib.request.urlopen(request,timeout=10) as r:
+        assert json.load(r)['sheets'][0]['rows']==[['Diazepam']]
     request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',data=b'{}',
         headers={'Origin':'https://untrusted.example','X-Local-Token':token})
     try:
@@ -28,7 +35,7 @@ try:
         raise AssertionError('Cross-origin request was accepted')
     except urllib.error.HTTPError as e:assert e.code==403
     # Do not ship the test-generated catalog database: ZIP was assembled beforehand.
-    print('Frozen Windows package: startup, local UI and origin isolation passed.')
+    print('Frozen Windows package: startup, catalog, Excel, local UI and origin isolation passed.')
 finally:
     process.terminate()
     process.wait(timeout=15)

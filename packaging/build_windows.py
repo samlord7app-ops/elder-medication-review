@@ -1,6 +1,7 @@
 """Allowlist-only release assembly. Never recursively copy the workspace."""
 from pathlib import Path
 import hashlib, shutil, subprocess, sys, zipfile
+from importlib.metadata import distribution
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_FILES = ['intake.html','intake.css','intake.js','intake-core.js',
@@ -28,6 +29,16 @@ def build():
     args += [str(ROOT/'desktop_launcher.py')]
     subprocess.run(args, cwd=ROOT, check=True)
     folder = ROOT/'release-build'/'ElderMedicationReview'
+    licenses = folder/'THIRD-PARTY-LICENSES'
+    licenses.mkdir(exist_ok=True)
+    python_license = Path(sys.base_prefix)/'LICENSE.txt'
+    if not python_license.is_file():raise SystemExit('Python runtime license missing')
+    shutil.copy2(python_license,licenses/'Python-LICENSE.txt')
+    for package in ['pyinstaller','openpyxl','et_xmlfile','pypdf']:
+        dist=distribution(package)
+        for file in dist.files or []:
+            if file.name.lower().startswith(('license','licence','copying')):
+                shutil.copy2(dist.locate_file(file),licenses/(package+'-'+file.name))
     for name in ['SHARING.md','CLINICAL_RULES.md','REFERENCES.md']:
         shutil.copy2(ROOT/name, folder/name)
     output = ROOT/'release-build'/'ElderMedicationReview-Windows-x64.zip'
