@@ -22,3 +22,7 @@ patient-data/
 node_modules/
 .DS_Store
 Thumbs.db
+__pycache__/
+*.pyc
+.venv/
+test-output/
