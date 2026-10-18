@@ -5,11 +5,18 @@ def rows(results):
     output=[]
     for result in results:
         checks=result.get('clinicalChecks',[])
-        if not checks:
+        # 過濾掉明確「條件未命中 (not_matched)」的無關規則（例如未併用該交互作用藥物、檢驗值未達危險門檻等）
+        relevant=[c for c in checks if c['status']!='not_matched']
+        if not relevant:
+            status=result['status']
+            risk_msg='本次處方未觸發高齡潛在不適當用藥、肝腎功能門檻或併用交互作用警示。' if status=='no_rule_hit' else result['reason']
+            advice_msg='目前已檢核之條件未命中；仍請藥師結合病人完整病史與臨床狀況覆核。' if status=='no_rule_hit' else '請藥師確認藥品／保健食品成分、規格與適用準則，另行人工評估。'
             output.append(dict(drug=result['input'],ingredient=result.get('ingredient') or '',
-                criterion='無可對應的已執行條款',ruleId='',source='',status=result['status'],
-                risk=result['reason'],recommendation='請藥師確認藥品／保健食品成分、規格與適用準則，另行人工評估；不得視為用藥安全。'))
-        for check in checks:
+                criterion='已檢核無觸發條款' if status=='no_rule_hit' else '無可對應的已執行條款',
+                ruleId='',source='',status=status,
+                risk=risk_msg,recommendation=advice_msg))
+            continue
+        for check in relevant:
             rule_id=check['id'];source=check['source']
             if source=='beers':
                 match=re.match(r'BEERS-T(\d+)',rule_id)

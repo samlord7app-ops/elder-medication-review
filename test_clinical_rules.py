@@ -67,7 +67,7 @@ class ClinicalTests(unittest.TestCase):
         self.assertEqual(checks('hydrochlorothiazide',[lab('Na',129,'mmol/L')])['STOPP-B9-Na']['status'],'potential_risk')
     def test_source_version_unverified(self):
         r=c.assess(med('diazepam'),[],[],{'diazepam'},set())
-        self.assertTrue(all(x['status']=='source_unverified' for x in r))
+        self.assertTrue(all(x['status'] in {'source_unverified','not_matched'} for x in r) and any(x['status']=='source_unverified' for x in r))
     def test_medication_schema_and_privacy_allowlist(self):
         for obj in [{'name':'digoxin','patientName':'x'},{'name':'digoxin','dailyDoseMg':True},{'name':'digoxin','dailyDoseMg':float('inf')},{'name':'digoxin','route':'cloud'}]:
             with self.assertRaises(ValueError):c.validate_med(obj,lambda s:s)

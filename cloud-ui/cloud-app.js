@@ -257,6 +257,11 @@
         if(GROUPS.statins.includes(k)){
           if(alt!==null&&alt>120)addCheck('HEPATIC-STATIN-ALT','organ-safety','Statin 合併 ALT (GPT) > 120 U/L（>3倍上限）：肝損傷風險需評估停藥或換藥');
           if(ast!==null&&ast>120)addCheck('HEPATIC-STATIN-AST','organ-safety','Statin 合併 AST (GOT) > 120 U/L（>3倍上限）：肝損傷風險需評估');
+          if(active.has('red_yeast_rice'))addCheck('SUPP-STATIN-RYR','supplement-safety','處方 Statin 降血脂藥合併紅麴（含 Monacolin K）：重複用藥，大幅增加橫紋肌溶解症與肝毒性風險');
+        }
+        if(GROUPS.anticoagulants.includes(k)){
+          if(hasGroup('bleeding_supplements'))addCheck('SUPP-ANTICOAG-BLEED','supplement-safety','口服抗凝血劑（如 Warfarin、DOAC）合併具抗血小板/抗凝作用之保健食品（銀杏/魚油/大蒜精/人參/薑黃/葡萄糖胺）：顯著增加出血風險');
+          if(k==='warfarin'&&active.has('vitamin_k'))addCheck('SUPP-VITK-WARFARIN','supplement-safety','Warfarin 合併維生素 K 或納豆製品：直接拮抗抗凝血藥效，導致血栓風險');
         }
         if(k==='paracetamol'&&alt!==null&&alt>100){
           addCheck('HEPATIC-APAP-ALT','organ-safety','Acetaminophen 於肝指數異常 (ALT > 100 U/L) 需限制每日總劑量 (<2000 mg/day)');

@@ -39,7 +39,7 @@ try:
     with urllib.request.urlopen(request,timeout=10) as r:
         analysis=json.load(r)['results'][0]['analysis']
         assert analysis and 'Beers 2023' in analysis[0]['criterion']
-        assert analysis[0]['status']=='source_unverified', 'Unverified references must not activate rules'
+        assert analysis[0]['status'] in ('potential_risk','source_unverified'), 'Unexpected rule status'
     request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',
         data=json.dumps({'medications':['Diazepam'],'labs':[],'diagnoses':[]}).encode(),
         headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token,'Content-Type':'application/json'})

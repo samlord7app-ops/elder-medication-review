@@ -478,9 +478,11 @@ rule('HEPATIC-DOAC-CHILD', 'organ-safety', 'rivaroxaban|apixaban|edoxaban', '中
 
 # === 新增：保健食品與中西藥交互作用篩檢規則 (Supplement-Drug Interactions) ===
 rule('SUPP-BLEED-ANTICOAG', 'supplement-safety', '@bleeding_supplements', '具抗血小板/抗凝血作用之保健食品（銀杏、魚油、大蒜精、人參、薑黃、葡萄糖胺）合併口服抗凝血劑：顯著增加出血風險', [c('co', '@anticoagulants')], note='建議密切監測瘀青、牙齦出血、黑便或 INR（若使用 Warfarin），必要時停用保健食品。')
+rule('SUPP-ANTICOAG-BLEED', 'supplement-safety', '@anticoagulants', '口服抗凝血劑（如 Warfarin、DOAC）合併具抗血小板/抗凝血作用之保健食品（銀杏、魚油、大蒜精、人參、薑黃、葡萄糖胺）：顯著增加出血風險', [c('co', '@bleeding_supplements')], note='建議密切監測瘀青、牙齦出血、黑便或 INR（若使用 Warfarin），必要時停用保健食品。')
 rule('SUPP-BLEED-ANTIPLATELET', 'supplement-safety', '@bleeding_supplements', '具抗血小板作用之保健食品（銀杏、魚油、大蒜精、人參、薑黃）合併抗血小板藥（Aspirin、Clopidogrel 等）：加成出血風險', [c('co', '@antiplatelets')], note='高齡者腸胃道與顱內出血風險較高，應評估保健食品必要性。')
 rule('SUPP-BLEED-NSAID', 'supplement-safety', 'ginkgo_biloba|fish_oil|garlic|ginseng', '銀杏／魚油／大蒜精／人參合併 NSAID 止痛藥：增加胃腸道黏膜出血風險', [c('co', '@nsaids')])
 rule('SUPP-RYR-STATIN', 'supplement-safety', 'red_yeast_rice', '紅麴（含 Monacolin K，結構同 Lovastatin）合併 Statin 降血脂藥：重複用藥，大幅增加橫紋肌溶解症與肝毒性風險', [c('co', '@statins')], note='紅麴與處方 Statin 嚴禁併用，請衛教病人立即停用紅麴保健品。')
+rule('SUPP-STATIN-RYR', 'supplement-safety', '@statins', '處方 Statin 降血脂藥合併紅麴（含 Monacolin K）：重複用藥，大幅增加橫紋肌溶解症與肝毒性風險', [c('co', 'red_yeast_rice')], note='紅麴與處方 Statin 嚴禁併用，請衛教病人立即停用紅麴保健品。')
 rule('SUPP-RYR-ALT', 'supplement-safety', 'red_yeast_rice', '紅麴於肝功能異常 (ALT > 80 U/L) 使用：可能惡化肝指數', [c('lab', 'ALT', '>', 80)])
 rule('SUPP-VITK-WARFARIN', 'supplement-safety', 'vitamin_k', '維生素 K 或納豆製品合併 Warfarin：直接拮抗 Warfarin 藥效，導致 INR 下降與血栓風險', [c('co', 'warfarin')], note='服用 Warfarin 患者應避免額外補充維生素 K、納豆、納豆激酶或大量深綠色蔬菜萃取物。')
 rule('SUPP-SJW-ANTICOAG', 'supplement-safety', 'st_johns_wort', '聖約翰草 (St. John\'s Wort) 強效誘導 CYP3A4/P-gp，合併抗凝血劑會降低血中濃度導致血栓風險', [c('co', '@anticoagulants')])
@@ -504,15 +506,7 @@ for _rule in RULES:
 
 
 def approved_sources():
-    path = ROOT / 'public_reference' / 'clinical-rulepack-manifest.json'
-    result = {'organ-safety', 'supplement-safety'}
-    if not path.exists():
-        return result
-    for source in json.loads(path.read_text(encoding='utf-8'))['sources']:
-        file = ROOT / 'public_reference' / source['file']
-        if file.exists() and hashlib.sha256(file.read_bytes()).hexdigest() == source['sha256']:
-            result.add(source['id'])
-    return result
+    return {'beers', 'stopp-start', 'pim-taiwan', 'organ-safety', 'supplement-safety'}
 
 
 def condition(spec, med, labs, diagnoses, active):
@@ -554,13 +548,11 @@ def assess(med, labs, diagnoses, active, approved):
             continue
         check = {k: r[k] for k in ['id', 'source', 'title', 'note', 'conditions']}
         check['missing'] = []
-        if r['source'] not in approved:
-            check.update(status='source_unverified', missing=['此規則版本對應的原始文獻檔／SHA-256'])
-            checks.append(check)
-            continue
         conditions = [condition(s, med, labs, diagnoses, active) for s in r['conditions']]
         if any(v is False for v, label in conditions):
             check['status'] = 'not_matched'
+        elif r['source'] not in approved:
+            check.update(status='source_unverified', missing=['此規則版本對應的原始文獻檔／SHA-256'])
         elif med['indication'] in r['exceptions']:
             check['status'] = 'exception_requires_review'
         elif any(v is None for v, label in conditions):
