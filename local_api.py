@@ -1,5 +1,6 @@
 """Loopback-only import and medication review. No patient logging or external requests."""
-import io, json, os, re, secrets, socket, subprocess, tempfile, zipfile
+import io, json, os, re, secrets, socket, subprocess, tempfile, zipfile, unicodedata
+from difflib import get_close_matches
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -9,6 +10,18 @@ PORT = 18743
 ORIGIN = f'http://127.0.0.1:{PORT}'
 MAX_BYTES = 10 * 1024 * 1024
 ALIASES = {'diazepam':'diazepam','valium':'diazepam','zolpidem':'zolpidem','stilnox':'zolpidem', 'diphenhydramine':'diphenhydramine','metformin':'metformin'}
+ALIASES.update({'lipitor':'atorvastatin','atorvastatin':'atorvastatin'})
+DRUG_SOURCES = {'atorvastatin':'Lipitor = atorvastatin calcium；Pfizer 仿單 https://labeling.pfizer.com/ShowLabeling.aspx?format=PDF&id=587'}
+
+def normalize_med(value):
+    return re.sub(r'\s','',unicodedata.normalize('NFKC',value)).lower()
+
+def suggestions(value):
+    key=normalize_med(value)
+    # Suggestions never resolve the ingredient or trigger a clinical rule.
+    if not re.fullmatch('[a-z]{5,40}',key): return []
+    matches=get_close_matches(key,sorted(ALIASES),n=3,cutoff=0.82)
+    return list(dict.fromkeys(ALIASES[m] for m in matches))
 RULES = {
  'diazepam': ('苯二氮平類', '高齡者可能增加認知障礙、譫妄、跌倒及骨折風險；部分適應症有例外，需臨床覆核。'),
  'zolpidem': ('非苯二氮平類安眠藥', '可能增加譫妄、跌倒、骨折及急診／住院風險，需評估效益與替代處置。'),
@@ -40,10 +53,10 @@ def evaluate(p):
     if not meds: raise ValueError('至少需要一項已確認藥品。')
     results=[]
     for med in meds:
-        ingredient=ALIASES.get(re.sub(r'\s','',med).lower())
+        ingredient=ALIASES.get(normalize_med(med))
         rule=RULES.get(ingredient)
-        results.append({'input':med,'ingredient':ingredient,'status':'potentially_inappropriate' if rule else 'no_rule_hit' if ingredient else 'unrecognized','category':rule[0] if rule else None,'reason':rule[1] if rule else '未命中有限示範規則，不代表安全。' if ingredient else '未能辨識，請由藥師確認成分。','source':'AGS Beers 2023 Table 2（部分示範摘要）' if rule else None})
-    return {'version':'DEMO-2026-10-18','clinicalUseReady':False,'results':results,'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['只有四種成分辨識與三項風險示範，非完整臨床引擎。','檢驗與診斷本次僅接收及驗證，尚未用於條件式判讀。','未涵蓋劑量、療程、腎功能、交互作用及全部例外；請由醫師或藥師覆核。']}
+        results.append({'input':med,'ingredient':ingredient,'suggestions':suggestions(med) if not ingredient else [],'identitySource':DRUG_SOURCES.get(ingredient),'status':'potentially_inappropriate' if rule else 'no_rule_hit' if ingredient else 'unrecognized','category':rule[0] if rule else None,'reason':rule[1] if rule else '已辨識成分，但未命中有限示範規則；不代表用藥安全或適當。' if ingredient else '字典未收錄或拼字／OCR 有誤。請核對原始處方；相似候選不能視為已確認成分。','source':'AGS Beers 2023 Table 2（部分示範摘要）' if rule else None})
+    return {'version':'DEMO-2026-10-18.2','clinicalUseReady':False,'results':results,'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['只有五種成分辨識與三項風險示範，非完整臨床引擎。','檢驗與診斷本次僅接收及驗證，尚未用於條件式判讀。','未涵蓋劑量、療程、腎功能、交互作用及全部例外；請由醫師或藥師覆核。']}
 
 def excel_rows(raw):
     from openpyxl import load_workbook

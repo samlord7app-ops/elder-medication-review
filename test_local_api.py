@@ -9,6 +9,17 @@ class LocalTests(unittest.TestCase):
         self.assertEqual([x['status'] for x in r['results']],['potentially_inappropriate','no_rule_hit','unrecognized'])
         self.assertFalse(r['clinicalUseReady'])
         self.assertIn('尚未用於條件式判讀',r['limitations'][1])
+    def test_brand_and_typo(self):
+        p=self.payload();p['medications']=['Diazepame','Lipitor','Ｄｉａｚｅｐａｍ','nonsense']
+        results=evaluate(p)['results']
+        self.assertEqual(results[0]['status'],'unrecognized')
+        self.assertIsNone(results[0]['ingredient'])
+        self.assertIn('diazepam',results[0]['suggestions'])
+        self.assertEqual(results[1]['ingredient'],'atorvastatin')
+        self.assertEqual(results[1]['status'],'no_rule_hit')
+        self.assertIn('Pfizer',results[1]['identitySource'])
+        self.assertEqual(results[2]['ingredient'],'diazepam')
+        self.assertEqual(results[3]['suggestions'],[])
     def test_reject_identifiers_and_extra_fields(self):
         for field in ['name','patientId','rawText','fileName']:
             p=self.payload();p[field]='test'

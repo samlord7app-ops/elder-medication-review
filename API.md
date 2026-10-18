@@ -36,7 +36,9 @@ GitHub 只存放程式碼，不接收個案資料。本機 API 並未部署到 G
 
 成功回傳包含 `version`、`clinicalUseReady: false`、`results`、`context` 與 `limitations`。每個結果含輸入藥品、辨識成分、狀態、類別、原因及來源。狀態包括 `potentially_inappropriate`、`no_rule_hit`、`unrecognized`。輸入錯誤回傳 400，來源／token 不符 403，過大請求 413。
 
-目前僅四種成分辨識及三項 AGS Beers 2023 示範摘要；API 與舊介面自訂規則尚未共用。檢驗與診斷僅驗證格式，不參與臨床判讀；沒有完整台灣商品名、中文名、健保碼與許可證資料。此限制會顯示在介面與回傳結果，不能用於正式醫療判斷或評鑑。
+目前僅五種成分辨識及三項 AGS Beers 2023 示範摘要；API 與舊介面自訂規則尚未共用。檢驗與診斷僅驗證格式，不參與臨床判讀；沒有完整台灣商品名、中文名、健保碼與許可證資料。此限制會顯示在介面與回傳結果，不能用於正式醫療判斷或評鑑。
+
+新增 Lipitor → atorvastatin 成分對照，依 Pfizer 公開仿單：https://labeling.pfizer.com/ShowLabeling.aspx?format=PDF&id=587 。此為辨識來源，不是風險規則。未命中規則不表示安全。藥名先正規化全形英數、大小寫與空白，仍採精確匹配；未辨識時另回傳 `suggestions`，例如 Diazepame 可提示 diazepam，但 ingredient 保持 null，不會自動觸發規則。使用者核對原始處方後可採用候選，採用後撤銷原確認，須重新勾選、預覽及確認。未知藥名不得以模糊匹配直接判定。
 
 ## 驗證
 
