@@ -18,6 +18,8 @@ class StrengthTests(unittest.TestCase):
         request=s.parse('Drug ER 10mg capsule')
         self.assertFalse(s.compatible(request,['Drug 10mg tablet']))
         self.assertTrue(s.compatible(request,['Drug XR 10mg capsule']))
+        self.assertFalse(s.compatible(s.parse('Drug cream 10mg'),['Drug gel 10mg']))
+        self.assertFalse(s.compatible(s.parse('Drug ointment 10mg'),['Drug cream 10mg']))
         self.assertIsNone(s.parse('Drug -5mg'));self.assertIsNone(s.parse('Drug 0mg'))
     def test_real_catalog_strength_and_wrong_strength(self):
         if not catalog.PATH.exists():self.skipTest('Public index not built')

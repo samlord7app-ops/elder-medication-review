@@ -66,8 +66,7 @@ def lookup(p):
                         brand=re.search(r'\[([^\]]+)\]',label)
                         base=brand[1] if brand else ingredients[0]
                         forms=med_strength.parse(label)['forms']
-                        topical=re.search(r'\b(cream|ointment|gel)\b',label,re.I)
-                        suffix=' '.join({'extended':'ER','immediate':'IR','tablet':'tablet','capsule':'capsule','injection':'injection','topical':topical[1] if topical else 'topical'}[f] for f in sorted(forms))
+                        suffix=' '.join({'extended':'ER','immediate':'IR','tablet':'tablet','capsule':'capsule','injection':'injection','cream':'cream','ointment':'ointment','gel':'gel'}[f] for f in sorted(forms))
                         entry['suggestedName']=(base+' '+requested_strength['display']+' '+suffix).strip()
                 item['candidates'].append(entry)
             item['status']='candidates' if item['candidates'] else 'not_found'

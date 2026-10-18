@@ -12,7 +12,9 @@ FORMS={
  'tablet':r'\b(?:tablets?|tabs?)\b|膜衣錠|糖衣錠|錠劑|錠',
  'capsule':r'\b(?:capsules?|caps?)\b|膠囊',
  'injection':r'\b(?:injections?|injectables?|inj)\b|注射',
- 'topical':r'\b(?:cream|ointment|gel)\b|乳膏|軟膏|凝膠'
+ 'cream':r'\bcream\b|乳膏',
+ 'ointment':r'\bointment\b|軟膏',
+ 'gel':r'\bgel\b|凝膠'
 }
 def clean(s):
     return unicodedata.normalize('NFKC',s).casefold().replace('μg','mcg').replace('µg','mcg')
