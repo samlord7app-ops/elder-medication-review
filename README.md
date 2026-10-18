@@ -6,7 +6,14 @@
   🔗 https://samlord7app-ops.github.io/elder-medication-review/
 - **打開此網站點擊右上角「下載 Windows 本機套件」取得免安裝壓縮包：**
   🔗 https://github.com/samlord7app-ops/elder-medication-review/releases/latest
-- 下載安裝 **`ElderMedicationReview-Windows-x64.zip`**（解壓縮後執行 `ElderMedicationReview.exe`）後即可使用。
+- 下載安裝 **`ElderMedicationReview-Windows-x64.zip`** 後即可使用：
+  1. 解壓縮後，進入資料夾找到 **`ElderMedicationReview.exe`** 點兩下執行。
+  2. 若跳出藍色的「**Windows 已保護您的電腦 (Microsoft Defender SmartScreen)**」：請點選左上角的「**其他資訊 (More info)**」→ 再按右下角的「**仍要執行 (Run anyway)**」。
+  3. **首次啟動需要約 1～2 分鐘建立 29 萬筆藥品資料庫索引：**
+     - 第一次點開 `ElderMedicationReview.exe` 時，黑色視窗會顯示：`Building public offline catalog; this may take a few minutes.`
+     - 在這 1 分鐘建立索引的期間，服務還沒正式監聽 `127.0.0.1:18743`。如果這時候直接去點網頁上的「開啟本機端工作台」，瀏覽器就會顯示 `127.0.0.1 拒絕連線`。
+     - 等它建立完索引（約 1 分鐘），黑色視窗會顯示 `Local-only review workstation: http://127.0.0.1:18743`，並且會自動幫使用者彈出瀏覽器進入工作台（第二次之後啟動則是 1 秒鐘瞬間開啟）。
+     - 使用期間**請勿關閉該黑色服務視窗**（縮小即可）。
 
 ---
 
