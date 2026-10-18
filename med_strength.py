@@ -3,7 +3,7 @@ from decimal import Decimal
 import re, unicodedata
 
 NUMBER=r'(?:\d+(?:\.\d+)?|\.\d+)'
-UNIT=r'(?:微克|毫克|公克|mcg|mg|ug|g)'
+UNIT=r'(?:微克|毫克|公絲|公克|mcg|mg|ug|g)'
 RATIO=re.compile(rf'({NUMBER})\s*({UNIT})(?:\s*/\s*({NUMBER})?\s*(ml|毫升))?',re.I)
 SHARED=re.compile(rf'({NUMBER})\s*/\s*({NUMBER})\s*({UNIT})(?![a-z])',re.I)
 FORMS={
@@ -20,7 +20,7 @@ def clean(s):
     return unicodedata.normalize('NFKC',s).casefold().replace('μg','mcg').replace('µg','mcg')
 def number(s):return format(Decimal(s).normalize(),'f')
 def quantity(value,unit,denominator=None):
-    factor={'mcg':1,'ug':1,'微克':1,'mg':1000,'毫克':1000,'g':1000000,'公克':1000000}[unit]
+    factor={'mcg':1,'ug':1,'微克':1,'mg':1000,'毫克':1000,'公絲':1000,'g':1000000,'公克':1000000}[unit]
     mass=Decimal(value)*factor
     return ('mass_per_ml',number(mass/Decimal(denominator or '1'))) if denominator is not None else ('mass',number(mass))
 def parse(value):

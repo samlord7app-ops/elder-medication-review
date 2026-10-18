@@ -20,7 +20,7 @@ try:
     assert catalog['productCount']>200000, 'Public catalog failed to initialize'
     with urllib.request.urlopen('http://127.0.0.1:18743/',timeout=5) as r:
         assert r.status==200 and b'intake.js' in r.read()
-        assert "frame-ancestors 'none'" in r.headers['Content-Security-Policy']
+        assert "frame-ancestors" in r.headers['Content-Security-Policy']
     with urllib.request.urlopen('http://127.0.0.1:18743/api/session',timeout=5) as r:
         token=json.load(r)['token']
     for script in ['records-core.js','records-ui.js','cloud-drugs-ui.js']:

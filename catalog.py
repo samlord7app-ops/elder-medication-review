@@ -3,13 +3,30 @@ import json, re, sqlite3, unicodedata
 from pathlib import Path
 from contextlib import closing
 import med_strength
+import clinical_rules
 PATH=Path(__file__).resolve().parent/'public_reference'/'catalog.sqlite'
 def norm(s): return re.sub(r'\s','',unicodedata.normalize('NFKC',s)).casefold()
+SALT_SUFFIX_RE = re.compile(
+    r'\b(?:HYDROCHLORIDE|HCL|HYDROBROMIDE|HBR|CALCIUM|SODIUM|POTASSIUM|MAGNESIUM|TARTRATE|BITARTRATE|'
+    r'PHOSPHATE|SULFATE|SULPHATE|MALEATE|FUMARATE|SUCCINATE|BESYLATE|BESILATE|MESYLATE|MESILATE|'
+    r'CITRATE|ACETATE|HYDRATE|MONOHYDRATE|DIHYDRATE|TRIHYDRATE|HEMIHYDRATE|ANHYDROUS|CLATHRATE|'
+    r'CRYSTALLINE|MICRONIZED|PROPIONATE|VALERATE|BUTYRATE|DIPROPIONATE|FUROATE|ACETONIDE|'
+    r'BROMIDE|CHLORIDE|IODIDE|NITRATE|GLUCONATE|LACTATE|SALICYLATE|BENZOATE|PAMOATE|EMBONATE|'
+    r'OXALATE|MALATE|STEARATE|CARBONATE|BICARBONATE|DISODIUM|DIPOTASSIUM|CALCIUM\s*\(2:1\)|'
+    r'\(SODIUM\)|\(CALCIUM\)|\(POTASSIUM\)|\(HCL\)|\(TARTRATE\)|\(MALEATE\)|\(SULFATE\)|\(2:1\))\b',
+    re.I
+)
 def canonical(s):
-    value=re.sub(r'\s+',' ',s.strip().upper())
-    value=re.sub(r'\s+\d+(?:\.\d+)?\s*(?:MG|MCG|G|毫克)$','',value)
+    value=re.sub(r'\s+',' ',unicodedata.normalize('NFKC',s).strip().upper())
+    value=re.sub(r'\s+\d+(?:\.\d+)?\s*(?:MG|MCG|UG|G|ML|IU|毫克|微克|公克|公絲)$','',value)
     known={'DIAZEPAM':'diazepam','ZOLPIDEM':'zolpidem','ZOLPIDEM TARTRATE':'zolpidem','DIPHENHYDRAMINE':'diphenhydramine','DIPHENHYDRAMINE HYDROCHLORIDE':'diphenhydramine','DIPHENHYDRAMINE HCL':'diphenhydramine','METFORMIN':'metformin','METFORMIN HYDROCHLORIDE':'metformin','METFORMIN HCL':'metformin','ATORVASTATIN':'atorvastatin','ATORVASTATIN (CALCIUM)':'atorvastatin','ATORVASTATIN CALCIUM':'atorvastatin','ATORVASTATIN CALCIUM (2:1) TRIHYDRATE':'atorvastatin'}
-    return known.get(value,value)
+    if value in known:
+        return known[value]
+    stripped=re.sub(r'[()\[\],]+',' ',SALT_SUFFIX_SUFFIX_CLEAN(value) if False else SALT_SUFFIX_RE.sub(' ',value))
+    stripped=' '.join(stripped.split()).casefold()
+    if stripped in clinical_rules.DRUGS:
+        return clinical_rules.SYNONYMS.get(stripped,stripped)
+    return value
 def lookup(value):
     if not PATH.exists(): return None
     key=norm(value)
@@ -18,7 +35,7 @@ def lookup(value):
         rows=db.execute('SELECT DISTINCT p.source,p.code,p.zh,p.en,p.ingredients,p.status,p.form FROM products p JOIN aliases a ON a.product=p.id WHERE a.name=? LIMIT 101',(key,)).fetchall()
         if strength:
             prefix=norm(strength['baseText'])
-            candidates=db.execute('SELECT DISTINCT p.source,p.code,p.zh,p.en,p.ingredients,p.status,p.form FROM products p JOIN aliases a ON a.product=p.id WHERE a.name>=? AND a.name<? LIMIT 1001',(prefix,prefix+'\uffff')).fetchall() if len(prefix)>=2 else []
+            candidates=db.execute('SELECT DISTINCT p.source,p.code,p.zh,p.en,p.ingredients,p.status,p.form FROM products p JOIN aliases a ON a.product=p.id WHERE a.name>=? AND a.name<? LIMIT 5001',(prefix,prefix+'\uffff')).fetchall() if len(prefix)>=2 else []
             matches=[]
             for product in list(dict.fromkeys(rows+candidates)):
                 if not med_strength.compatible(strength,[product[2],product[3]],product[6]):continue
@@ -26,7 +43,7 @@ def lookup(value):
                 name_match=any(b and b['base']==strength['base'] for b in bases)
                 ingredient_match=any(norm(canonical(i))==norm(canonical(strength['baseText'])) for i in json.loads(product[4]))
                 if name_match or ingredient_match:matches.append(product)
-            if len(candidates)>1000 or (len(rows)>100 and not key.startswith(prefix)):
+            if len(candidates)>5000 or (len(rows)>100 and not key.startswith(prefix)):
                 return {'matched':False,'ambiguous':True,'suggestions':[],'strengthMatch':{'status':'unverified','requested':strength['display'],'note':'相符候選過多，請提供完整商品名及劑型，不能確認含量。'}}
             rows=matches
             if not rows:

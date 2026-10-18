@@ -2,7 +2,7 @@ import unittest,math
 from unittest.mock import patch
 import clinical_rules as c
 from local_api import evaluate
-ALL={'beers','stopp-start','pim-taiwan'}
+ALL={'beers','stopp-start','pim-taiwan','organ-safety','supplement-safety'}
 def med(name,**kw):return {**c.validate_med(name,lambda s:s),'ingredients':{name},**kw}
 def lab(name,value,unit):return {'name':name,'value':value,'unit':unit}
 def checks(name,labs=(),diagnoses=(),active=None,**kw):
@@ -15,7 +15,7 @@ class ClinicalTests(unittest.TestCase):
                 op,*args=spec
                 if op=='lab':
                     measure,cmp,threshold=args;value=threshold-0.01 if cmp in ['<','<='] else threshold+0.01
-                    unit={'CrCl':'mL/min','eGFR':'mL/min/1.73m2','K':'mmol/L','Na':'mmol/L','HR':'bpm','correctedCa':'mmol/L'}[measure];labs.append(lab(measure,value,unit))
+                    unit={'CrCl':'mL/min','eGFR':'mL/min/1.73m2','Scr':'mg/dL','AST':'U/L','ALT':'U/L','TBIL':'mg/dL','ChildPugh':'分','K':'mmol/L','Na':'mmol/L','HR':'bpm','correctedCa':'mmol/L'}[measure];labs.append(lab(measure,value,unit))
                 elif op in ['dose','duration']:info['dailyDoseMg' if op=='dose' else 'durationDays']=args[1]+1
                 elif op=='route':info['route']=args[0]
                 elif op=='indication':info['indication']=args[0]
@@ -78,6 +78,23 @@ class ClinicalTests(unittest.TestCase):
         self.assertTrue(any(x['id']=='BEERS-T6-SPIRONOLACTONE' and x['status']=='potential_risk' for x in r['results'][1]['clinicalChecks']))
         self.assertTrue(any(x['id']=='STOPP-B12-ARB' and x['status']=='potential_risk' for x in r['results'][2]['clinicalChecks']))
         self.assertFalse(r['fullAutomation']);self.assertFalse(r['clinicalUseReady'])
+    def test_supplements_and_hepatic_renal_screening(self):
+        p={
+            'serialId':'PT-20261018-0001',
+            'age':80,
+            'medications':['Warfarin','Atorvastatin','Metformin'],
+            'supplements':['銀杏葉萃取物','紅麴'],
+            'labs':[lab('eGFR',35,'mL/min/1.73m2'),lab('ALT',140,'U/L')],
+            'diagnoses':['心房顫動']
+        }
+        with patch.object(c,'approved_sources',return_value=ALL):r=evaluate(p)
+        self.assertEqual(r['serialId'],'PT-20261018-0001')
+        self.assertEqual(r['context']['supplementCount'],2)
+        all_ids={chk['id'] for res in r['results'] for chk in res['clinicalChecks'] if chk['status']=='potential_risk'}
+        self.assertIn('SUPP-BLEED-ANTICOAG',all_ids)
+        self.assertIn('SUPP-RYR-STATIN',all_ids)
+        self.assertIn('HEPATIC-STATIN-ALT',all_ids)
+        self.assertIn('RENAL-METFORMIN-45',all_ids)
     def test_registry_integrity(self):
         ids=[r['id'] for r in c.RULES];self.assertEqual(len(ids),len(set(ids)))
         for r in c.RULES:self.assertTrue(c.members(r['target'])<=c.DRUGS)

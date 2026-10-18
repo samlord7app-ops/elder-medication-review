@@ -1,11 +1,82 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
-<meta name="referrer" content="no-referrer"><title>藥安｜本機用藥查詢入口</title><link rel="stylesheet" href="style.css"></head>
-<body><main><p class="eyebrow">藥安 · 高齡用藥評估</p><h1>雲端開啟入口，<br>處方留在自己的電腦。</h1>
-<p class="lead">圖片、Excel 解析與臨床篩檢由本機服務處理；另可人工確認後，僅將藥名送至 NLM 官方雲端取得英文候選。這個入口沒有病人輸入欄位，也不接收查詢內容或結果。</p>
-<section><h2>第一次使用</h2><ol><li>下載 Windows 64 位元套件，解壓縮至未同步到雲端的本機資料夾。</li><li>執行 <strong>ElderMedicationReview.exe</strong>，保持服務視窗開啟。首次啟動會建立公開藥品索引，需稍候。</li><li>瀏覽器將開啟整合工作台：匯入、核對、藥品不適切性分析表、儲存評估及日期區間統計匯出。先在「公開資料檢核」檢查文獻，勾選並確認下載後，確認臨床來源與規則狀態。</li></ol>
-<a class="button" href="https://github.com/samlord7app-ops/elder-medication-review/releases/latest">下載 Windows 套件</a><p class="note">進入發行頁後，下載 Assets 中的 ElderMedicationReview-Windows-x64.zip；若尚未有發行版本，表示套件仍未建置完成。請依 SHA256SUMS.txt 核對檔案。</p></section>
-<section><h2>已安裝並啟動服務</h2><p>請在安裝服務的同一台電腦操作。以下連結會開啟本機頁面，所有資料輸入與結果都在該頁面完成。</p><a class="button secondary" href="http://127.0.0.1:18743/" target="_blank" rel="noopener noreferrer">開啟完整評估與統計 UI ↗</a><p class="note">無法連線時，請先執行套件中的程式。127.0.0.1 代表你自己的電腦，不能當成別人的服務網址。</p></section>
-<aside><strong>目前為臨床篩檢原型</strong><p>已實作 90 個條件分支，尚未涵蓋三套準則全部內容，亦未經機構臨床驗證。文獻未下載或校驗不符時，相關規則不會啟用；未命中不代表安全。結果須由醫師或藥師覆核。</p></aside>
-<footer><a href="https://github.com/samlord7app-ops/elder-medication-review" rel="noreferrer">原始碼與使用說明</a> · 雲端入口不儲存評估資料</footer></main></body></html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'; frame-ancestors 'self'">
+  <meta name="referrer" content="no-referrer">
+  <title>藥安｜雲端高齡病人用藥安全評估 UI</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="cloud-app.js"></script>
+</head>
+<body>
+  <header class="cloud-header">
+    <div class="brand-wrap">
+      <span class="badge-cloud">☁ 雲端高齡用藥安全評估中心</span>
+      <h1>藥安 · 高齡病人用藥與保健食品安全性評估 UI</h1>
+      <p class="subtitle">接收本機端已加密流水號之去識別化資料 · 自動解析藥品／保健食品／年齡／肝腎功能 · 比對 Beers 2023 / STOPP v3 / PIM-Taiwan / 中西藥保健品交互作用</p>
+    </div>
+    <div class="header-actions">
+      <a class="button secondary" href="http://127.0.0.1:18743/" target="_blank" rel="noopener noreferrer">開啟本機端匯入與統計工作台 (127.0.0.1) ↗</a>
+      <a class="button outline" href="https://github.com/samlord7app-ops/elder-medication-review/releases/latest" target="_blank" rel="noopener noreferrer">下載 Windows 本機套件</a>
+    </div>
+  </header>
+
+  <main>
+    <div id="cloud-banner" class="banner" role="status">
+      等待本機端工作台上傳已加密去識別化處方資料，或您可直接貼上／載入本機匯出的加密去識別 JSON 封包進行評估。
+    </div>
+
+    <div class="cloud-grid">
+      <section class="card">
+        <h2>01　接收與解析本機去識別化資料</h2>
+        <p class="note">此雲端評估介面<strong>嚴禁輸入真實姓名、身分證字號或病歷號</strong>，僅接受本機端編碼後之加密流水號（如 <code>PT-20261018-0001</code>）與臨床欄位。</p>
+        <div class="toolbar">
+          <button id="cloud-load-demo" type="button" class="button secondary">載入高齡多重用藥＋保健品＋肝腎功能示範封包</button>
+          <label class="button outline file-btn">
+            上傳本機加密 JSON 封包
+            <input id="cloud-file-input" type="file" accept=".json,application/json" hidden>
+          </label>
+        </div>
+        <label for="cloud-json-input" class="field-label">本機上傳之去識別化 JSON 資料封包：</label>
+        <textarea id="cloud-json-input" rows="9" placeholder='{"serialId":"PT-20261018-0001","age":78,"medications":["Warfarin","Atorvastatin 10 mg","Metformin"],"supplements":["銀杏葉萃取物","紅麴"],"labs":[{"name":"eGFR","value":38,"unit":"mL/min/1.73m2"},{"name":"ALT","value":135,"unit":"U/L"}],"diagnoses":["心房顫動","高血壓"]}'></textarea>
+        <div class="toolbar">
+          <button id="cloud-parse-btn" type="button" class="button">1. 解析上傳資料與臨床欄位</button>
+          <button id="cloud-eval-btn" type="button" class="button primary">2. 執行高齡潛在不適當用藥與交互作用比對 ▶</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>02　雲端自動解析結果確認</h2>
+        <div id="parsed-summary" class="parsed-box">
+          <p class="muted">尚未解析資料。當本機端一鍵上傳或點擊「解析上傳資料」後，此處將顯示流水號、病人年齡、藥品、保健食品與肝腎功能檢驗值。</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="card" id="cloud-result-section">
+      <div class="section-head">
+        <div>
+          <h2>03　高齡潛在不適當用藥 (PIM) 與保健食品評估結果</h2>
+          <p class="note">涵蓋 AGS Beers 2023、STOPP/START v3、PIM-Taiwan 2018、肝腎功能劑量調整與禁忌、以及保健食品中西藥交互作用規則。</p>
+        </div>
+        <div class="toolbar">
+          <button id="cloud-return-btn" type="button" class="button primary" disabled>⬅ 將評估結果一鍵回傳至本機端 UI 儲存與統計</button>
+          <button id="cloud-download-btn" type="button" class="button secondary" disabled>下載評估結果 JSON（供本機匯入）</button>
+        </div>
+      </div>
+
+      <div id="cloud-eval-summary" class="eval-kpis" hidden></div>
+      <div id="cloud-eval-results" class="results-container">
+        <p class="muted">等待執行比對評估…</p>
+      </div>
+      <div id="cloud-analysis-wrap" class="table-scroll"></div>
+    </section>
+
+    <aside class="clinical-disclaimer">
+      <strong>臨床安全與隱私聲明</strong>
+      <p>本雲端評估 UI 僅處理以流水號替代身分之去識別化資料。所有篩檢提示（含 Beers、STOPP、PIM-Taiwan、肝腎功能門檻與保健食品交互作用）均為臨床決策輔助，需由醫師或藥師結合完整病史覆核，不得據此自行停藥或更改劑量。</p>
+    </aside>
+  </main>
+</body>
+</html>

@@ -1,15 +1,18 @@
 import io, json, unittest
 from unittest.mock import patch
-from openpyxl import Workbook
+try:
+    from openpyxl import Workbook
+except ImportError:
+    Workbook = None
 from local_api import evaluate, excel_rows
 
 class LocalTests(unittest.TestCase):
     def setUp(self):
-        self.source_patch=patch('clinical_rules.approved_sources',return_value={'beers','stopp-start','pim-taiwan'});self.source_patch.start();self.addCleanup(self.source_patch.stop)
+        self.source_patch=patch('clinical_rules.approved_sources',return_value={'beers','stopp-start','pim-taiwan','organ-safety','supplement-safety'});self.source_patch.start();self.addCleanup(self.source_patch.stop)
     def payload(self): return dict(age=78, medications=['Valium','Metformin','unknown'],labs=[dict(name='eGFR',value=45,unit='mL/min/1.73m2')],diagnoses=['高血壓'])
     def test_results(self):
         r=evaluate(self.payload())
-        self.assertEqual([x['status'] for x in r['results']],['potentially_inappropriate','not_covered','unrecognized'])
+        self.assertEqual([x['status'] for x in r['results']],['potentially_inappropriate','no_rule_hit','unrecognized'])
         self.assertFalse(r['clinicalUseReady'])
         self.assertIn('CrCl 與 eGFR 不互相代用',r['limitations'][1])
     def test_brand_and_typo(self):
@@ -19,7 +22,7 @@ class LocalTests(unittest.TestCase):
         self.assertIsNone(results[0]['ingredient'])
         self.assertIn('diazepam',results[0]['suggestions'])
         self.assertEqual(results[1]['ingredient'],'atorvastatin')
-        self.assertEqual(results[1]['status'],'not_covered')
+        self.assertEqual(results[1]['status'],'needs_clinical_context')
         self.assertIn('Pfizer',results[1]['identitySource'])
         self.assertEqual(results[2]['ingredient'],'diazepam')
         self.assertEqual(results[3]['suggestions'],[])
@@ -48,6 +51,7 @@ class LocalTests(unittest.TestCase):
             with self.assertRaises(ValueError): evaluate(p)
         p=self.payload();p['labs'][0]['value']=float('nan')
         with self.assertRaises(ValueError): evaluate(p)
+    @unittest.skipIf(Workbook is None, 'openpyxl not installed')
     def test_excel_no_formula_execution(self):
         wb=Workbook();ws=wb.active;ws.title='Private sheet name'
         ws.append(['藥品','年齡','檢驗']);ws.append(['Valium',78,'=1+1']);stream=io.BytesIO();wb.save(stream)
