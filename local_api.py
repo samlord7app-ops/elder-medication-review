@@ -291,7 +291,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'no-referrer')
-        self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'")
+        self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src blob: data:; connect-src 'self' https://samlord7app-ops.github.io; frame-src 'self' https://samlord7app-ops.github.io; frame-ancestors 'self'; base-uri 'none'; form-action 'none'")
         self.end_headers()
         self.wfile.write(body)
 
@@ -353,11 +353,13 @@ class Handler(BaseHTTPRequestHandler):
             '/cloud-ui/index.html': 'cloud-ui/index.html',
             '/cloud-ui/style.css': 'cloud-ui/style.css',
             '/cloud-ui/cloud-app.js': 'cloud-ui/cloud-app.js',
+            '/cloud-ui/cloud-rules-db.json': 'cloud-ui/cloud-rules-db.json',
+            '/cloud-rules-db.json': 'cloud-ui/cloud-rules-db.json',
         }
         name = files.get(path_only)
         if not name or not (ROOT / name).exists():
             return self.send(404, {'error': 'Not found'})
-        kind = 'text/html; charset=utf-8' if name.endswith('html') else 'text/css; charset=utf-8' if name.endswith('css') else 'text/javascript; charset=utf-8'
+        kind = 'text/html; charset=utf-8' if name.endswith('html') else 'text/css; charset=utf-8' if name.endswith('css') else 'application/json; charset=utf-8' if name.endswith('json') else 'text/javascript; charset=utf-8'
         self.send(200, (ROOT / name).read_bytes(), kind)
 
     def do_POST(self):

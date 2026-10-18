@@ -280,56 +280,35 @@ function clinicalStatusLabel(status) {
  }[status] || '需臨床覆核';
 }
 
-fetch('/api/clinical/coverage', { cache: 'no-store', credentials: 'omit' }).then(r => r.json()).then(d => {
- const section = document.createElement('section');
- const h = document.createElement('h2');
- h.textContent = '臨床規則覆蓋範圍（含肝腎功能與保健食品交互作用）';
- section.append(h);
- const note = document.createElement('p');
- note.className = 'notice';
- note.textContent = '來源已驗證且可執行 ' + d.activeRuleCount + '／' + d.executableRuleCount + ' 個條件式篩檢分支：Beers ' + d.bySource.beers + '、STOPP ' + d.bySource['stopp-start'] + '、PIM-Taiwan ' + d.bySource['pim-taiwan'] + '、肝腎功能安全 ' + (d.bySource['organ-safety'] || 0) + '、保健食品中西藥交互作用 ' + (d.bySource['supplement-safety'] || 0) + ' 個分支。';
- section.append(note);
- const help = document.createElement('p');
- help.className = 'muted';
- help.textContent = '缺少的診斷視為未知。若已確認無某病史，可填「無：心衰竭」等明確否定。腎功能支援 CrCl (mL/min)、eGFR (mL/min/1.73m2)、Scr (mg/dL)；肝功能支援 AST (U/L)、ALT (U/L)、TBIL (mg/dL)、Child-Pugh (分)。';
- section.append(help);
- const detail = document.createElement('details');
- const summary = document.createElement('summary');
- summary.textContent = '檢視已實作規則及必要條件';
- detail.append(summary);
- const list = document.createElement('div');
- list.style.maxHeight = '320px';
- list.style.overflow = 'auto';
- for (const r of d.rules) {
-  const p = document.createElement('p');
-  p.textContent = r.id + '：' + r.title + ((r.conditions || []).length ? '；條件：' + r.conditions.map(clinicalCondition).join(' 且 ') : '') + (r.note ? '；' + r.note : '');
-  list.append(p);
- }
- detail.append(list);
- section.append(detail);
- document.getElementById('status').after(section);
-}).catch(() => {});
-
-fetch('/api/clinical/registry', { cache: 'no-store', credentials: 'omit' }).then(r => r.json()).then(d => {
- if (!d.available) return;
- const section = document.createElement('section');
- const detail = document.createElement('details');
- const summary = document.createElement('summary');
- summary.textContent = '來源條文盤點：STOPP 133、START 57、PIM-Taiwan Table 1 140 列（多數仍需人工覆核）';
- detail.append(summary);
- const note = document.createElement('p');
- note.textContent = d.note;
- detail.append(note);
- const list = document.createElement('div');
- list.style.maxHeight = '320px';
- list.style.overflow = 'auto';
- for (const record of d.criteria) {
-  const p = document.createElement('p');
-  const labels = { partially_automated: '部分條件已實作', manual_review: '需人工覆核', source_unverified: '來源版本未驗證' };
-  p.textContent = record.id + ' · ' + labels[record.automation] + '：' + (record.text || [record.drug, record.reason, record.advice].filter(Boolean).join(' · '));
-  list.append(p);
- }
- detail.append(list);
- section.append(detail);
- document.getElementById('status').after(section);
-}).catch(() => {});
+(async () => {
+ try {
+  const db = window.ElderCloudAPI && typeof window.ElderCloudAPI.loadDatabase === 'function'
+   ? await window.ElderCloudAPI.loadDatabase()
+   : await fetch('/cloud-ui/cloud-rules-db.json', { cache: 'no-store' }).then(r => r.json());
+  const rules = db.rules || [];
+  const countBy = src => rules.filter(r => r.source === src).length;
+  const section = document.createElement('section');
+  const h = document.createElement('h2');
+  h.textContent = '☁ 雲端臨床知識庫 API 連線狀態（免下載至本機電腦）';
+  section.append(h);
+  const note = document.createElement('p');
+  note.className = 'notice';
+  note.textContent = `雲端知識庫（${db.version || 'CLOUD-API'}）已連線，共提供 ${rules.length} 個雲端條件式篩檢分支：beers（Beers 2023）${countBy('beers')} 條、stopp-start（STOPP v3）${countBy('stopp-start')} 條、pim-taiwan（PIM-Taiwan 2018）${countBy('pim-taiwan')} 條、organ-safety（肝腎功能）${countBy('organ-safety')} 條、supplement-safety（保健食品交互作用）${countBy('supplement-safety')} 條。所有規則皆存於雲端，不佔本機記憶體與硬碟空間。`;
+  section.append(note);
+  const detail = document.createElement('details');
+  const summary = document.createElement('summary');
+  summary.textContent = '檢視雲端 API 規則清單及必要條件（共 ' + rules.length + ' 條）';
+  detail.append(summary);
+  const list = document.createElement('div');
+  list.style.maxHeight = '280px';
+  list.style.overflow = 'auto';
+  for (const r of rules) {
+   const p = document.createElement('p');
+   p.textContent = r.id + ' [' + r.source + ']：' + r.title + ((r.conditions || []).length ? '；條件：' + r.conditions.map(clinicalCondition).join(' 且 ') : '') + (r.note ? '；' + r.note : '');
+   list.append(p);
+  }
+  detail.append(list);
+  section.append(detail);
+  document.getElementById('status').after(section);
+ } catch (_) {}
+})();

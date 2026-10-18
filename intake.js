@@ -537,9 +537,9 @@ $('preview').onclick=async()=>{
 };
 
 $('confirm').onchange=()=>{
-  const ok=$('confirm').checked&&approved&&token&&!busy;
+  const ok=$('confirm').checked&&approved&&!busy;
   $('send').disabled=!ok;
-  if($('open-cloud-window'))$('open-cloud-window').disabled=!($('confirm').checked&&approved&&!busy);
+  if($('open-cloud-window'))$('open-cloud-window').disabled=!ok;
 };
 
 function selectSuggestionCandidate(inputName,suggestedName){
@@ -551,7 +551,7 @@ function selectSuggestionCandidate(inputName,suggestedName){
   message('已暫選 '+suggestedName+'，尚未套用或重新送出。');
 }
 
-function displayEvaluationResult(d,sourceLabel='本機與雲端同步評估'){
+function displayEvaluationResult(d,sourceLabel='☁ 雲端臨床知識庫 API 比對回傳結果'){
   if(d.serialId&&$('record-serial-display'))$('record-serial-display').value=d.serialId;
   $('results').replaceChildren(renderAnalysisTable(d.results.flatMap(r=>r.analysis||[]),d.results));
   const note=document.createElement('p');
@@ -562,10 +562,10 @@ function displayEvaluationResult(d,sourceLabel='本機與雲端同步評估'){
   message(`${sourceLabel}已完成回傳，可點擊表格右上角「複製臨床評估摘要」貼回處方系統，或於下方儲存至本機紀錄。`);
 }
 
-function sendPayloadToCloudFrame(payloadObj,autoEvaluate=true){
+function sendPayloadToCloudFrame(payloadObj,autoEvaluate=true,requestId=null){
   const frame=$('cloud-ui-frame');
   if(frame&&frame.contentWindow){
-    frame.contentWindow.postMessage({type:'LOCAL_DEIDENTIFIED_PAYLOAD',payload:payloadObj,autoEvaluate},'*');
+    frame.contentWindow.postMessage({type:'LOCAL_DEIDENTIFIED_PAYLOAD',payload:payloadObj,autoEvaluate,requestId},'*');
   }
 }
 
@@ -576,12 +576,18 @@ $('send').onclick=async()=>{
   const body=JSON.parse(JSON.stringify(approved));
   busy=true;
   $('send').disabled=true;
-  message('正在將加密去識別化封包上傳至評估引擎與雲端高齡用藥安全評估 UI…');
+  message('☁ 正在將去識別化處方封包傳送至「雲端臨床知識庫 API」（Beers / STOPP-START / PIM-Taiwan / 肝腎功能 / 保健品交互作用）比對中…');
   try{
-    sendPayloadToCloudFrame(body,true);
-    const d=await request('/api/evaluate',body);
+    const reqId='req-'+Date.now();
+    sendPayloadToCloudFrame(body,true,reqId);
+    let d=null;
+    if(window.ElderCloudAPI&&typeof window.ElderCloudAPI.evaluate==='function'){
+      d=await window.ElderCloudAPI.evaluate(body);
+    }else{
+      d=await request('/api/evaluate',body);
+    }
     if(rev!==revision)return message('資料已變更，已捨棄舊結果；請重新確認。');
-    displayEvaluationResult(d,'高齡用藥與保健食品安全性評估');
+    displayEvaluationResult(d,'☁ 雲端臨床知識庫 API 比對回傳結果');
   }catch(e){
     message(e.message);
   }finally{
@@ -606,11 +612,11 @@ if($('open-cloud-window')){
   };
 }
 
-// 接收來自雲端高齡用藥安全評估 UI 回傳的評估結果與高度自適應
+// 接收來自雲端高齡用藥安全評估 UI / API 回傳的評估結果與高度自適應
 window.addEventListener('message',e=>{
   if(!e.data||typeof e.data!=='object')return;
   if(e.data.type==='CLOUD_EVAL_RESULT'&&e.data.payload){
-    displayEvaluationResult(e.data.payload,'☁ 雲端高齡用藥安全評估 UI 回傳結果');
+    displayEvaluationResult(e.data.payload,'☁ 雲端臨床知識庫 API 比對回傳結果');
   }
   if(e.data.type==='CLOUD_UI_HEIGHT'&&typeof e.data.height==='number'){
     const frame=$('cloud-ui-frame');
@@ -642,5 +648,4 @@ if($('vault-clear-btn')){
   };
 }
 
-fetch('/api/session',{cache:'no-store',credentials:'omit',redirect:'error'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{token=d.token;message('本機服務已連線。請匯入單一個案處方／Excel／圖片，或點擊「載入高齡處方＋保健食品＋肝腎功能＋個資示範」。')}).catch(()=>message('請先啟動 local_api.py，並透過 http://127.0.0.1:18743 開啟此工作台。'));
-fetch('/api/catalog',{cache:'no-store',credentials:'omit',redirect:'error'}).then(r=>r.json()).then(d=>{const section=document.createElement('section');const h=document.createElement('h2');h.textContent='本機資料庫與文獻匯入狀態';section.append(h);const text=document.createElement('p');text.className='muted';text.textContent=d.status==='imported'?`藥品目錄 ${d.productCount.toLocaleString()} 筆（含歷史異動），索引 ${d.aliasCount.toLocaleString()} 筆。匯入時間：${d.importedAt}。臨床條件篩檢（含 Beers、STOPP、PIM-Taiwan、肝腎功能及保健食品交互作用）已啟用。`:'尚未建立官方藥品索引，僅有內建高齡常用藥品與保健食品字典。';section.append(text);for(const s of d.sources||[]){const p=document.createElement('p');p.textContent=s.id.toUpperCase()+'：原始 '+s.rawRows.toLocaleString()+' 列，去重後 '+s.distinctProducts.toLocaleString()+' 筆。';section.append(p)}for(const [url,title]of [['/reference/beers','Beers 2023 本機原文 PDF'],['/reference/stopp-start','STOPP/START v3 本機準則附件'],['/reference/pim-taiwan','PIM-Taiwan 2018 本機全文（純文字）']]){const p=document.createElement('p');if((d.localReferences||[]).includes(url.split('/').pop())){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noreferrer';a.textContent=title+((d.referenceApprovals||[]).some(r=>r.id===url.split('/').pop()&&r.currentVersionApproved)?'（已確認可匯入；部分條件已實作）':'（版本待確認）');p.append(a)}else{p.textContent=title+'：此裝置尚未下載，請執行文獻下載程式。'}section.append(p)}$('status').after(section)}).catch(()=>{});
+fetch('/api/session',{cache:'no-store',credentials:'omit',redirect:'error'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{token=d.token;message('☁ 雲端臨床知識庫 API 與本機個資加密工作台已連線（規則資料庫存於雲端，不佔本機記憶體）。請匯入處方或點擊「載入高齡處方＋保健食品＋肝腎功能＋個資示範」。')}).catch(()=>message('☁ 雲端臨床知識庫 API 與本機瀏覽器加密金庫已就緒（免下載規則資料庫至電腦）。請貼上處方文字或點擊「載入高齡處方＋保健食品＋肝腎功能＋個資示範」。'));

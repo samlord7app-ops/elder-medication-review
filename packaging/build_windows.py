@@ -6,7 +6,7 @@ from importlib.metadata import distribution
 ROOT = Path(__file__).resolve().parents[1]
 APP_FILES = ['intake.html','intake.css','intake.js','intake-core.js',
              'clinical-ui.js','update-controls.js','records-core.js','records-ui.js','cloud-drugs-ui.js','windows_ocr.ps1']
-CLOUD_UI_FILES = ['index.html','style.css','cloud-app.js']
+CLOUD_UI_FILES = ['index.html','style.css','cloud-app.js','cloud-rules-db.json']
 PUBLIC_FILES = ['public-catalog.zip','catalog-manifest.json','literature-manifest.json',
                 'extra-manifest.json','reference-approvals.json','clinical-rulepack-manifest.json']
 
