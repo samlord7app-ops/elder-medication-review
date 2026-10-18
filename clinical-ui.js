@@ -1,4 +1,14 @@
 /* Clinical fields contain no identifiers and are included in the final preview. */
+function renderAnalysisTable(rows){
+ const box=document.createElement('div');box.className='analysis-table';
+ const title=document.createElement('h3');title.textContent='藥品不適切性分析表';box.append(title);
+ const note=document.createElement('p');note.className='muted';note.textContent='每列對應一個藥品／規則分支。Beers 表次與 STOPP 原條款另列；系統分支代碼不是新增的原文條款。以下為篩檢提示，建議需經醫師／藥師個別覆核。';box.append(note);
+ const scroll=document.createElement('div');scroll.className='record-scroll';const table=document.createElement('table');
+ const header=document.createElement('tr');for(const text of ['藥物／成分','對應 Beers／STOPP／PIM 條款','判讀狀態','臨床風險／條款主題','建議與待補資料']){const th=document.createElement('th');th.textContent=text;header.append(th)}table.append(header);
+ const labels={potential_risk:'潛在風險，需覆核',insufficient_data:'資料不足，不能判定',source_unverified:'來源未確認，不能判定',exception_requires_review:'可能例外，需覆核',not_matched:'本條件未命中（非安全結論）'};
+ for(const row of rows){const tr=document.createElement('tr');tr.dataset.analysisStatus=row.status;for(const text of [row.drug+(row.ingredient?'／'+row.ingredient:''),row.criterion,labels[row.status]||clinicalStatusLabel(row.status),row.risk,row.recommendation]){const td=document.createElement('td');td.textContent=text;tr.append(td)}table.append(tr)}
+ scroll.append(table);box.append(scroll);return box;
+}
 function renderClinicalFields(div,row){
  if(row.kind!=='medication')return;
  const box=document.createElement('div');box.className='clinical-fields';row.clinical=row.clinical||{};

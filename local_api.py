@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import catalog
 import clinical_rules as clinical
 import reference_updates
+import analysis_table
 
 ROOT = Path(__file__).resolve().parent
 TOKEN = secrets.token_urlsafe(32)
@@ -81,6 +82,7 @@ def evaluate(p):
         reason='；'.join(r['title'] for r in hits) if hits else '缺少必要資料或此規則文獻版本未確認，不能判定。' if missing else '符合可能的適應症例外，需臨床覆核；不等同安全。' if exceptions else '已辨識成分，但目前沒有涵蓋此藥的可執行規則；不能判定適當。' if display and not checks else '僅表示已執行條件未命中；完整準則尚未實作，不能視為安全。' if display else '藥名未辨識或同名成分不一致，請核對原始處方。'
         hints=list(dict.fromkeys(suggestions(med['name'])+(identity.get('suggestions',[]) if identity else [])))[:5] if not display else []
         results.append({'input':med['name'],'ingredient':display,'catalogMatches':identity.get('products',[]) if identity else [],'suggestions':hints,'identitySource':'TFDA／健保署本機公開目錄（含歷史品項），請核對規格與途徑' if identity and identity.get('matched') else DRUG_SOURCES.get(display),'status':state,'category':'條件式用藥篩檢' if hits else None,'reason':reason,'source':'；'.join(r['id'] for r in hits) or None,'clinicalChecks':checks,'unmappedIngredients':med['unmapped'],'clinicalInput':{k:med[k] for k in ['route','dailyDoseMg','durationDays','indication','formulation']}})
+    for result in results:result['analysis']=analysis_table.rows([result])
     coverage=clinical.coverage()
     return {'version':clinical.VERSION,'clinicalUseReady':False,'fullAutomation':False,'results':results,'catalog':catalog.metadata(),'coverage':{k:v for k,v in coverage.items() if k!='rules'},'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['已啟用 '+str(coverage['executableRuleCount'])+' 個條件式分支；不等同三套準則完整自動判讀，尚未經機構臨床驗證。','未列出的診斷視為未知；CrCl 與 eGFR 不互相代用；檢驗時效與病史完整性需人工確認。','START 處方遺漏、未編碼條件與例外仍需人工覆核；不得依本工具自行停藥或改劑量。']}
 
@@ -157,6 +159,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.send(200,path.read_bytes(),'application/pdf' if path.suffix=='.pdf' else 'text/plain; charset=utf-8')
         files={'/':'intake.html','/intake.html':'intake.html','/intake.js':'intake.js','/intake.css':'intake.css','/intake-core.js':'intake-core.js','/update-controls.js':'update-controls.js'}
         files['/clinical-ui.js']='clinical-ui.js'
+        files['/records-core.js']='records-core.js'
+        files['/records-ui.js']='records-ui.js'
         name=files.get(self.path)
         if not name: return self.send(404,{'error':'Not found'})
         kind='text/html; charset=utf-8' if name.endswith('html') else 'text/css; charset=utf-8' if name.endswith('css') else 'text/javascript; charset=utf-8'

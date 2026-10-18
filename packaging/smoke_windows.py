@@ -23,6 +23,16 @@ try:
         assert "frame-ancestors 'none'" in r.headers['Content-Security-Policy']
     with urllib.request.urlopen('http://127.0.0.1:18743/api/session',timeout=5) as r:
         token=json.load(r)['token']
+    for script in ['records-core.js','records-ui.js']:
+        with urllib.request.urlopen('http://127.0.0.1:18743/'+script,timeout=5) as r:
+            assert r.status==200
+    request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',
+        data=json.dumps({'age':78,'medications':['Diazepam'],'labs':[],'diagnoses':[]}).encode(),
+        headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token,'Content-Type':'application/json'})
+    with urllib.request.urlopen(request,timeout=10) as r:
+        analysis=json.load(r)['results'][0]['analysis']
+        assert analysis and 'Beers 2023' in analysis[0]['criterion']
+        assert analysis[0]['status']=='source_unverified', 'Unverified references must not activate rules'
     workbook=Workbook();workbook.active.append(['Diazepam']);buffer=io.BytesIO();workbook.save(buffer);workbook.close()
     request=urllib.request.Request('http://127.0.0.1:18743/api/extract/excel',data=buffer.getvalue(),
         headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token})
@@ -35,7 +45,7 @@ try:
         raise AssertionError('Cross-origin request was accepted')
     except urllib.error.HTTPError as e:assert e.code==403
     # Do not ship the test-generated catalog database: ZIP was assembled beforehand.
-    print('Frozen Windows package: startup, catalog, Excel, local UI and origin isolation passed.')
+    print('Frozen Windows package: startup, catalog, Excel, integrated UI, analysis API, source guard and origin isolation passed.')
 finally:
     process.terminate()
     process.wait(timeout=15)

@@ -5,7 +5,7 @@ from importlib.metadata import distribution
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_FILES = ['intake.html','intake.css','intake.js','intake-core.js',
-             'clinical-ui.js','update-controls.js','windows_ocr.ps1']
+             'clinical-ui.js','update-controls.js','records-core.js','records-ui.js','windows_ocr.ps1']
 PUBLIC_FILES = ['public-catalog.zip','catalog-manifest.json','literature-manifest.json',
                 'extra-manifest.json','reference-approvals.json','clinical-rulepack-manifest.json']
 

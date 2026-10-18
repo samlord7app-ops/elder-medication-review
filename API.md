@@ -57,3 +57,10 @@ GitHub 只存放程式碼，不接收個案資料。本機 API 並未部署到 G
 `test-browser.cjs` 需本機服務、Playwright 及 Edge；驗證確認前無評估請求、請求內容、修改後撤銷確認、token 防護及無外部請求。測試資料皆為虛構。
 
 Windows OCR 官方說明：https://learn.microsoft.com/en-us/uwp/api/windows.media.ocr.ocrengine 。示範用藥規則來源：https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/ 。
+
+
+## 藥品不適切性分析表與整合紀錄
+
+POST /api/evaluate 的每個 results 項目新增 analysis 陣列，含 drug、ingredient、criterion、ruleId、source、status、risk、recommendation。Beers 顯示表次；STOPP 顯示原條款及系統分支；不將工程分支編號冒充原始準則條文。資料不足、來源未確認、可能例外與未命中分別呈現；建議沿用規則補充及人工覆核流程，並非自動停藥處置。
+
+前端確認後保存的快照包含年齡、日期、藥名／成分、結果／建議、條款及規則版本、覆核狀態；不保存原始檔、診斷或檢驗明細。保存只寫本機 localStorage 的 elder-review-records-v1，沒有上傳紀錄 API。日期區間含起訖日，另可篩選藥品、命中規則來源類別、評估狀態及覆核狀態；匯出與畫面使用同一篩選結果。比例分母為篩選後評估次數，非病人人數。未確認儲存或輸入已修改的結果不會進入統計。
