@@ -1,5 +1,7 @@
 # 本機匯入與評估 API
 
+人工校對新增「全選藥品／取消全選藥品」，只作用於非空白且未偵測到個資線索的藥品候選，年齡、診斷與檢驗不會被一起選取。評估後可連續選取多項相似藥名候選，再按「一次套用全部藥名修正」統一核對及套用；套用不會呼叫 API，必須重新預覽、確認後才一次送出全部選取藥品。此流程由 `test-batch-browser.cjs` 驗證。
+
 公開資料更新端點：`POST /api/reference/check`（body 必須為 `{}`）啟動背景檢核；`GET /api/reference/check/<id>` 取得狀態；`POST /api/reference/update` 接受 `{checkId, sources}`，只可更新該次檢查有變動／新增的白名單來源。兩個 POST 均沿用本機 Origin／token 保護。沒有自動排程或自動更新；服務重啟後需重新檢查。完整保存行為見 REFERENCES.md。
 
 **2026-10-18 更新：** 已匯入 TFDA／健保署官方公開目錄並接上此 API；下文早期「五種成分」限制現僅適用於人工別名與示範風險規則，不再代表目錄辨識範圍。共 291,408 筆目錄紀錄（含歷史），來源與文獻狀態見 [REFERENCES.md](REFERENCES.md)。新裝置先執行 `python import_public_data.py --from-bundle`。`GET /api/catalog` 回傳匯入來源、筆數與文獻狀態；結果新增 `catalogMatches` 與 `ambiguous` 狀態。

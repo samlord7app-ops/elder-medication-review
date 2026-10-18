@@ -128,6 +128,11 @@ class Handler(BaseHTTPRequestHandler):
             extra=ROOT/'public_reference'/'extra-manifest.json'
             result['extraReferences']=json.loads(extra.read_text(encoding='utf-8')) if extra.exists() else []
             result['localReferences']=[key for key,file in {'beers':'beers-2023-paper.pdf','stopp-start':'stopp-start-v3-appendix.pdf','pim-taiwan':'pim-taiwan-2018.txt'}.items() if (ROOT/'public_reference'/file).exists()]
+            approvals=ROOT/'public_reference'/'reference-approvals.json'
+            result['referenceApprovals']=json.loads(approvals.read_text(encoding='utf-8')) if approvals.exists() else []
+            for approval in result['referenceApprovals']:
+                path=ROOT/'public_reference'/approval['file']
+                approval['currentVersionApproved']=path.exists() and reference_updates.digest(path.read_bytes())==approval['sha256']
             return self.send(200,result)
         if self.path=='/api/reference/latest':return self.send(200,reference_updates.latest() or {})
         if self.path.startswith('/api/reference/check/'):
