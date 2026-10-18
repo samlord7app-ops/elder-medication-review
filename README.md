@@ -1,5 +1,7 @@
 # 藥安・本機高齡用藥評估原型
 
+**雲端入口／可下載本機服務：** 部署設定與 Windows 套件流程已加入，見 [SHARING.md](SHARING.md)。雲端只發布 `cloud-ui/`；處方輸入、解析與評估留在本機工作台，沒有病人資料上雲 API。
+
 **條件式篩檢已擴充：** 本機工作台新增藥品劑量／療程／途徑／適應症欄位，並可執行 90 個條件分支；尚非三套準則完整自動化或經機構臨床驗證。請先閱讀 [CLINICAL_RULES.md](CLINICAL_RULES.md) 的實際範圍與限制。舊的獨立 index.html 仍是小型示範，臨床引擎只接在本機 API 工作台。
 
 **公開資料已匯入：** 本機 API 現可使用 TFDA／健保署完整下載快照作目錄辨識；歷史紀錄、授權與文獻匯入狀態見 [REFERENCES.md](REFERENCES.md)。GitHub 新下載者先執行 `python import_public_data.py --from-bundle` 建立本機索引。下文舊工作站的小型字典與示範規則限制仍保留；官方目錄不代表完整臨床判讀。

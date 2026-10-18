@@ -26,6 +26,8 @@ __pycache__/
 *.pyc
 .venv/
 test-output/
+release-build/
+release-work/
 
 # Explicitly allow only public-source bundle and provenance, never patient exports.
 public_reference/*

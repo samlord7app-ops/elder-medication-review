@@ -1,0 +1,34 @@
+"""Smoke-test frozen application before publishing its already-built ZIP."""
+import json, subprocess, time, urllib.request, urllib.error
+from pathlib import Path
+
+root=Path(__file__).resolve().parents[1]
+exe=root/'release-build/ElderMedicationReview/ElderMedicationReview.exe'
+process=subprocess.Popen([str(exe),'--no-browser'],cwd=exe.parent)
+try:
+    deadline=time.monotonic()+180
+    while True:
+        if process.poll() is not None:raise RuntimeError('Packaged service exited early')
+        try:
+            with urllib.request.urlopen('http://127.0.0.1:18743/api/catalog',timeout=2) as r:
+                catalog=json.load(r)
+            break
+        except (OSError,urllib.error.URLError):
+            if time.monotonic()>deadline:raise RuntimeError('Packaged service did not become ready')
+            time.sleep(1)
+    with urllib.request.urlopen('http://127.0.0.1:18743/',timeout=5) as r:
+        assert r.status==200 and b'intake.js' in r.read()
+        assert "frame-ancestors 'none'" in r.headers['Content-Security-Policy']
+    with urllib.request.urlopen('http://127.0.0.1:18743/api/session',timeout=5) as r:
+        token=json.load(r)['token']
+    request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',data=b'{}',
+        headers={'Origin':'https://untrusted.example','X-Local-Token':token})
+    try:
+        urllib.request.urlopen(request,timeout=5)
+        raise AssertionError('Cross-origin request was accepted')
+    except urllib.error.HTTPError as e:assert e.code==403
+    # Do not ship the test-generated catalog database: ZIP was assembled beforehand.
+    print('Frozen Windows package: startup, local UI and origin isolation passed.')
+finally:
+    process.terminate()
+    process.wait(timeout=15)

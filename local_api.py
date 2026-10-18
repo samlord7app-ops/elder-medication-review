@@ -192,7 +192,7 @@ class LocalServer(ThreadingHTTPServer):
         if os.name=='nt': self.socket.setsockopt(socket.SOL_SOCKET,socket.SO_EXCLUSIVEADDRUSE,1)
         super().server_bind()
 
-if __name__=='__main__':
+def main(open_browser=False):
     if not catalog.PATH.exists() and (catalog.PATH.parent/'public-catalog.zip').exists():
         import import_public_data
         import_public_data.unpack_bundle()
@@ -200,4 +200,9 @@ if __name__=='__main__':
         import_public_data.build()
     server=LocalServer(('127.0.0.1',PORT),Handler)
     print(f'Local-only review workstation: {ORIGIN} (Ctrl+C to stop)',flush=True)
+    if open_browser:
+        import webbrowser
+        webbrowser.open(ORIGIN)
     server.serve_forever()
+
+if __name__=='__main__':main()
