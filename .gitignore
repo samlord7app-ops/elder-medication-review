@@ -1,0 +1,24 @@
+# Local patient records, exports, backups, and imported datasets
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.json
+*.jsonl
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+backups/
+exports/
+data/
+patient-data/
+
+# Credentials and machine-local files
+.env
+.env.*
+*.pem
+*.key
+node_modules/
+.DS_Store
+Thumbs.db
