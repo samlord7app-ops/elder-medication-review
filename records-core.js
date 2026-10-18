@@ -6,7 +6,7 @@
  function str(s,n=3000){if(typeof s!=='string'||s.length>n||IntakePrivacy(s))throw Error('紀錄包含格式錯誤或疑似識別資料。');return s}
  function IntakePrivacy(s){return /[A-Za-z][1289]\d{8}|姓名|身[份分]證|病歷號|09\d{8}|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/i.test(s)}
  function checked(record){
-  if(!record||!record.id||!date(record.date)||!Number.isInteger(record.age)||record.age<65||record.age>120||!reviews.includes(record.review)||!Array.isArray(record.items)||!record.items.length||record.items.length>100)throw Error('紀錄格式錯誤。');
+  if(!record||!record.id||!date(record.date)||(record.age!==null&&(!Number.isInteger(record.age)||record.age<65||record.age>120))||!reviews.includes(record.review)||!Array.isArray(record.items)||!record.items.length||record.items.length>100)throw Error('紀錄格式錯誤。');
   return {id:str(record.id,100),date:record.date,age:record.age,review:record.review,version:str(record.version,120),items:record.items.map(i=>{
    if(!statuses.includes(i.status)||!Array.isArray(i.hits)||i.hits.length>100||(i.analysis&&(!Array.isArray(i.analysis)||i.analysis.length>100)))throw Error('藥品紀錄格式錯誤。');
    return {name:str(i.name,200),ingredient:str(i.ingredient||'',500),status:i.status,reason:str(i.reason),analysis:(i.analysis||[]).map(a=>({criterion:str(a.criterion,300),ruleId:str(a.ruleId,100),source:str(a.source,100),status:str(a.status,100),risk:str(a.risk),recommendation:str(a.recommendation)})),hits:i.hits.map(h=>({id:str(h.id,100),category:str(h.category,150),reason:str(h.reason),source:str(h.source,500)}))};

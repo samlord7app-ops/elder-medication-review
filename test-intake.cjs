@@ -7,3 +7,5 @@ assert.throws(()=>core.payload([...rows,{kind:'age',value:'79',selected:true}]))
 assert.throws(()=>core.payload([...rows,{kind:'medication',value:'A123456789',selected:true}]));
 assert.throws(()=>core.payload([...rows,{kind:'lab',value:'eGFR,,mL/min',selected:true}]));
 console.log('PASS: candidate exclusion, manual selection, request allowlist, age ambiguity, identifiers, numeric values');
+
+assert.equal(core.payload([{kind:'medication',value:'Diazepam',selected:true}]).age,null);

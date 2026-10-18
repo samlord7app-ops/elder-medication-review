@@ -6,3 +6,5 @@ assert.throws(()=>c.select([r],{from:'2026-10-19',to:'2026-10-18'}));assert.thro
 assert(c.csv([['=1+1',' x,y','"q"','\n@SUM(1)']]).includes("' =")==false);assert(c.csv([['=1+1']]).includes("'=1+1"));assert(c.csv([['\n@SUM(1)']]).includes("'\n@SUM(1)"));assert.deepEqual(c.restore({format:'elder-review-records-v1',records:[r]}),[r]);
 const old={format:1,records:[{id:'old',date:'2026-10-01',age:80,version:'demo',review:'待覆核',items:[{raw:'Unknown',name:'',status:'無法辨識，待確認',hits:[]}]}]};assert.equal(c.legacy(old)[0].items[0].status,'unrecognized');assert.equal(c.legacy(old)[0].version,'demo');
 console.log('Records: date boundaries, filtered denominators, snapshots, privacy, backup validation, CSV formula protection and legacy import passed.');
+
+assert.equal(c.checked({...r,age:null}).age,null);

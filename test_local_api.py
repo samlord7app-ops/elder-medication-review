@@ -32,8 +32,18 @@ class LocalTests(unittest.TestCase):
             with self.assertRaises(ValueError): evaluate(p)
         p=self.payload();p['labs'][0]['patientId']='hidden'
         with self.assertRaises(ValueError): evaluate(p)
+    def test_age_optional_without_assumption(self):
+        for omit in [False,True]:
+            p=self.payload();p['age']=None
+            if omit:del p['age']
+            result=evaluate(p)
+            self.assertIsNone(result['context']['age'])
+            self.assertFalse(result['context']['ageProvided'])
+            self.assertEqual(result['results'][0]['status'],'needs_clinical_context')
+            self.assertTrue(all(c['status']=='insufficient_data' for c in result['results'][0]['clinicalChecks']))
+            self.assertTrue(any('65' in m for c in result['results'][0]['clinicalChecks'] for m in c['missing']))
     def test_numeric_validation(self):
-        for age in [64,121,True,None,'78']:
+        for age in [64,121,True,'78']:
             p=self.payload();p['age']=age
             with self.assertRaises(ValueError): evaluate(p)
         p=self.payload();p['labs'][0]['value']=float('nan')

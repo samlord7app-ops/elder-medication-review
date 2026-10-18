@@ -34,11 +34,11 @@ def text(v, limit=100):
     return v.strip()
 
 def evaluate(p):
-    if not isinstance(p,dict) or set(p) != {'age','medications','labs','diagnoses'}:
+    if not isinstance(p,dict) or set(p) not in ({'age','medications','labs','diagnoses'},{'medications','labs','diagnoses'}):
         raise ValueError('只允許 age、medications、labs、diagnoses 四種欄位。')
-    age=p['age']
-    if isinstance(age,bool) or not isinstance(age,int) or not 65<=age<=120:
-        raise ValueError('年齡須為 65–120 歲整數。')
+    age=p.get('age')
+    if age is not None and (isinstance(age,bool) or not isinstance(age,int) or not 65<=age<=120):
+        raise ValueError('年齡為選填；提供時須為 65–120 歲整數，未提供請留空。')
     for key in ['medications','labs','diagnoses']:
         if not isinstance(p[key],list) or len(p[key])>100: raise ValueError('每類最多 100 項。')
     med_models=[clinical.validate_med(m,text) for m in p['medications']]
@@ -77,6 +77,11 @@ def evaluate(p):
     active=set().union(*(m['ingredients'] for m in resolved));approved_sources=clinical.approved_sources();results=[]
     for med in resolved:
         identity=med['identity'];display=med['display'];checks=clinical.assess(med,labs,diagnoses,active,approved_sources)
+        if age is None:
+            for check in checks:
+                check['missing'].append('年齡未提供，需確認符合高齡準則適用族群（65 歲以上）')
+                if check['status']!='source_unverified':check['status']='insufficient_data'
+
         hits=[r for r in checks if r['status']=='potential_risk'];missing=[r for r in checks if r['status'] in ['insufficient_data','source_unverified']];exceptions=[r for r in checks if r['status']=='exception_requires_review']
         state='potentially_inappropriate' if hits else 'needs_clinical_context' if missing else 'exception_requires_review' if exceptions else 'not_covered' if display and not checks else 'no_rule_hit' if display else 'ambiguous' if identity and identity.get('ambiguous') else 'unrecognized'
         reason='；'.join(r['title'] for r in hits) if hits else '缺少必要資料或此規則文獻版本未確認，不能判定。' if missing else '符合可能的適應症例外，需臨床覆核；不等同安全。' if exceptions else '已辨識成分，但目前沒有涵蓋此藥的可執行規則；不能判定適當。' if display and not checks else '僅表示已執行條件未命中；完整準則尚未實作，不能視為安全。' if display else '藥名未辨識或同名成分不一致，請核對原始處方。'
@@ -84,7 +89,7 @@ def evaluate(p):
         results.append({'input':med['name'],'ingredient':display,'catalogMatches':identity.get('products',[]) if identity else [],'suggestions':hints,'identitySource':'TFDA／健保署本機公開目錄（含歷史品項），請核對規格與途徑' if identity and identity.get('matched') else DRUG_SOURCES.get(display),'status':state,'category':'條件式用藥篩檢' if hits else None,'reason':reason,'source':'；'.join(r['id'] for r in hits) or None,'clinicalChecks':checks,'unmappedIngredients':med['unmapped'],'clinicalInput':{k:med[k] for k in ['route','dailyDoseMg','durationDays','indication','formulation']}})
     for result in results:result['analysis']=analysis_table.rows([result])
     coverage=clinical.coverage()
-    return {'version':clinical.VERSION,'clinicalUseReady':False,'fullAutomation':False,'results':results,'catalog':catalog.metadata(),'coverage':{k:v for k,v in coverage.items() if k!='rules'},'context':{'age':age,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':['已啟用 '+str(coverage['executableRuleCount'])+' 個條件式分支；不等同三套準則完整自動判讀，尚未經機構臨床驗證。','未列出的診斷視為未知；CrCl 與 eGFR 不互相代用；檢驗時效與病史完整性需人工確認。','START 處方遺漏、未編碼條件與例外仍需人工覆核；不得依本工具自行停藥或改劑量。']}
+    return {'version':clinical.VERSION,'clinicalUseReady':False,'fullAutomation':False,'results':results,'catalog':catalog.metadata(),'coverage':{k:v for k,v in coverage.items() if k!='rules'},'context':{'age':age,'ageProvided':age is not None,'labCount':len(labs),'diagnosisCount':len(diagnoses)},'limitations':(['年齡未提供：藥品辨識可執行，老人準則適用性仍待確認，未推定年齡。'] if age is None else [])+['已啟用 '+str(coverage['executableRuleCount'])+' 個條件式分支；不等同三套準則完整自動判讀，尚未經機構臨床驗證。','未列出的診斷視為未知；CrCl 與 eGFR 不互相代用；檢驗時效與病史完整性需人工確認。','START 處方遺漏、未編碼條件與例外仍需人工覆核；不得依本工具自行停藥或改劑量。']}
 
 def excel_rows(raw):
     from openpyxl import load_workbook

@@ -33,6 +33,12 @@ try:
         analysis=json.load(r)['results'][0]['analysis']
         assert analysis and 'Beers 2023' in analysis[0]['criterion']
         assert analysis[0]['status']=='source_unverified', 'Unverified references must not activate rules'
+    request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',
+        data=json.dumps({'medications':['Diazepam'],'labs':[],'diagnoses':[]}).encode(),
+        headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token,'Content-Type':'application/json'})
+    with urllib.request.urlopen(request,timeout=10) as r:
+        result=json.load(r)
+        assert result['context']['age'] is None and not result['context']['ageProvided']
     workbook=Workbook();workbook.active.append(['Diazepam']);buffer=io.BytesIO();workbook.save(buffer);workbook.close()
     request=urllib.request.Request('http://127.0.0.1:18743/api/extract/excel',data=buffer.getvalue(),
         headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token})

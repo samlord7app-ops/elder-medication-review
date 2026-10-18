@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id), core=IntakeCore;
 let token='',source=null,imageURL='',sheets=[],rows=[],approved=null,busy=false,revision=0;
 const pendingNames=new Map();
 function message(s){$('status').textContent=s}
-function selectionSummary(){const counts={medication:0,age:0,lab:0,diagnosis:0};for(const r of rows)if(r.selected&&r.kind in counts)counts[r.kind]++;$('selection-summary').textContent=`目前勾選：藥品 ${counts.medication} 項、年齡 ${counts.age} 項、檢驗 ${counts.lab} 項、診斷 ${counts.diagnosis} 項。必須勾選至少一項藥品及恰好一個年齡；「全選藥品」不會代選年齡。`;return counts}
+function selectionSummary(){const counts={medication:0,age:0,lab:0,diagnosis:0};for(const r of rows)if(r.selected&&r.kind in counts)counts[r.kind]++;$('selection-summary').textContent=`目前勾選：藥品 ${counts.medication} 項、年齡 ${counts.age} 項、檢驗 ${counts.lab} 項、診斷 ${counts.diagnosis} 項。必須勾選至少一項藥品。年齡選填；未選取時記為未提供，不推定年齡。`;return counts}
 function previewFeedback(text,error=false){const node=$('preview-feedback');node.textContent=text;node.className=error?'preview-error':'preview-success';node.setAttribute('role',error?'alert':'status');node.focus({preventScroll:true});node.scrollIntoView({block:'center',behavior:'smooth'})}
 
 function identityHints(div,result){

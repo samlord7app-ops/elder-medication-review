@@ -40,7 +40,7 @@ GitHub 只存放程式碼，不接收個案資料。本機 API 並未部署到 G
 }
 ```
 
-年齡為 65–120 歲整數，每類最多 100 項；檢驗項目需數值與單位。用藥至少一項。檢驗／檢查目前只支援數值型，敘述性影像報告不可直接貼入請求。
+年齡選填；提供時為 65–120 歲整數，未提供傳 null 或省略。每類最多 100 項；檢驗項目需數值與單位。用藥至少一項。檢驗／檢查目前只支援數值型，敘述性影像報告不可直接貼入請求。
 
 成功回傳包含 `version`、`clinicalUseReady: false`、`results`、`context` 與 `limitations`。每個結果含輸入藥品、辨識成分、狀態、類別、原因及來源。狀態包括 `potentially_inappropriate`、`no_rule_hit`、`unrecognized`。輸入錯誤回傳 400，來源／token 不符 403，過大請求 413。
 
@@ -64,3 +64,6 @@ Windows OCR 官方說明：https://learn.microsoft.com/en-us/uwp/api/windows.med
 POST /api/evaluate 的每個 results 項目新增 analysis 陣列，含 drug、ingredient、criterion、ruleId、source、status、risk、recommendation。Beers 顯示表次；STOPP 顯示原條款及系統分支；不將工程分支編號冒充原始準則條文。資料不足、來源未確認、可能例外與未命中分別呈現；建議沿用規則補充及人工覆核流程，並非自動停藥處置。
 
 前端確認後保存的快照包含年齡、日期、藥名／成分、結果／建議、條款及規則版本、覆核狀態；不保存原始檔、診斷或檢驗明細。保存只寫本機 localStorage 的 elder-review-records-v1，沒有上傳紀錄 API。日期區間含起訖日，另可篩選藥品、命中規則來源類別、評估狀態及覆核狀態；匯出與畫面使用同一篩選結果。比例分母為篩選後評估次數，非病人人數。未確認儲存或輸入已修改的結果不會進入統計。
+
+
+年齡為選填：前端未勾選時傳 age: null，API 亦接受省略 age。未提供年齡不推定為 65 歲以上，仍辨識藥品並列出對應條款；其高齡適用性標示資料不足待確認，不產生已確認適用的風險結論。已填年齡仍須為 65–120 歲整數。紀錄以 null 保存，畫面及匯出顯示「未提供」。
