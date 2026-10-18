@@ -46,6 +46,13 @@ try:
     with urllib.request.urlopen(request,timeout=10) as r:
         result=json.load(r)
         assert result['context']['age'] is None and not result['context']['ageProvided']
+    request=urllib.request.Request('http://127.0.0.1:18743/api/evaluate',
+        data=json.dumps({'age':None,'medications':['Lipitor 10 mg'],'labs':[],'diagnoses':[]}).encode(),
+        headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token,'Content-Type':'application/json'})
+    with urllib.request.urlopen(request,timeout=10) as r:
+        result=json.load(r)['results'][0]
+        assert result['strengthMatch']['status']=='matched'
+        assert result['ingredient']=='atorvastatin' and result['clinicalInput']['dailyDoseMg'] is None
     workbook=Workbook();workbook.active.append(['Diazepam']);buffer=io.BytesIO();workbook.save(buffer);workbook.close()
     request=urllib.request.Request('http://127.0.0.1:18743/api/extract/excel',data=buffer.getvalue(),
         headers={'Origin':'http://127.0.0.1:18743','X-Local-Token':token})

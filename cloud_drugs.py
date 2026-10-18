@@ -1,5 +1,6 @@
 """Opt-in drug-name-only RxNav lookup; no clinical payload, logging or disk cache."""
 import json, re, time, urllib.parse, urllib.request, urllib.error
+import med_strength
 
 BASE='https://rxnav.nlm.nih.gov/REST/'
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -34,7 +35,8 @@ def lookup(p):
     names=validate(p);deadline=time.monotonic()+50;results=[]
     for name in names:
         item={'input':name,'source':'NLM RxNav / RxNorm','status':'not_found','candidates':[]};results.append(item)
-        if not re.fullmatch(r"[A-Za-z0-9 ()\[\].,+/%'\-]+",name) or not re.search('[A-Za-z]{3}',name) or (re.fullmatch('[A-Za-z0-9]{10}',name) and re.search(r'\d',name)) or re.search(r'\b(BID|TID|QID|PRN|QD|QHS|Q\d+H)\b',name,re.I):
+        requested_strength=med_strength.parse(name)
+        if not re.fullmatch(r"[A-Za-z0-9 ()\[\].,+/%'\-]+",name) or not re.search('[A-Za-z]{3}',name) or (re.fullmatch('[A-Za-z0-9]{10}',name) and re.search(r'\d{4}',name)) or re.search(r'\b(BID|TID|QID|PRN|QD|QHS|Q\d+H)\b',name,re.I):
             item.update(status='unsupported',message='此來源不適合中文、台灣代碼或整段處方。此項未送到雲端；請使用本機 TFDA／健保目錄或只保留英文藥名。');continue
         try:
             raw=get_json('approximateTerm.json?'+urllib.parse.urlencode({'term':name,'maxEntries':3,'option':1}),deadline)
@@ -48,6 +50,7 @@ def lookup(p):
                 props=get_json(f'rxcui/{rxcui}/properties.json',deadline).get('properties') or {}
                 label=props.get('name','')
                 if props.get('rxcui')!=rxcui or not isinstance(label,str) or not label or len(label)>250:continue
+                if requested_strength and not med_strength.compatible(requested_strength,[label]):continue
                 ingredients=[label] if props.get('tty')=='IN' else []
                 if not ingredients:
                     time.sleep(0.12)
@@ -55,9 +58,21 @@ def lookup(p):
                     for group in related.get('relatedGroup',{}).get('conceptGroup',[]):
                         if group.get('tty')=='IN':ingredients.extend(v['name'] for v in group.get('conceptProperties',[]) if isinstance(v.get('name'),str) and 0<len(v['name'])<=100)
                 ingredients=list(dict.fromkeys(ingredients))[:10]
-                item['candidates'].append({'rxcui':rxcui,'name':label,'ingredients':ingredients,'rank':str(candidate.get('rank',''))[:20],'score':str(candidate.get('score',''))[:30]})
+                entry={'rxcui':rxcui,'name':label,'ingredients':ingredients,'rank':str(candidate.get('rank',''))[:20],'score':str(candidate.get('score',''))[:30]}
+                if not requested_strength and re.search(r'\d',name):entry['strengthMatch']='unverified'
+                if requested_strength:
+                    entry['strengthMatch']='matched'
+                    if len(ingredients)==1:
+                        brand=re.search(r'\[([^\]]+)\]',label)
+                        base=brand[1] if brand else ingredients[0]
+                        forms=med_strength.parse(label)['forms']
+                        topical=re.search(r'\b(cream|ointment|gel)\b',label,re.I)
+                        suffix=' '.join({'extended':'ER','immediate':'IR','tablet':'tablet','capsule':'capsule','injection':'injection','topical':topical[1] if topical else 'topical'}[f] for f in sorted(forms))
+                        entry['suggestedName']=(base+' '+requested_strength['display']+' '+suffix).strip()
+                item['candidates'].append(entry)
             item['status']='candidates' if item['candidates'] else 'not_found'
             item['message']='候選不是已確認品項，請核對成分、強度及劑型；相似度不是正確機率。'
+            if requested_strength and not item['candidates']:item['message']='未找到藥名、含量與指定劑型相符的雲端候選；不會改配其他含量。請人工核對或補完整藥名。'
         except (OSError,ValueError,KeyError,TypeError,AttributeError):
             item.update(status='unavailable',message='官方雲端來源連線或回應失敗；未將錯誤內容或藥名寫入日誌。可保留資料，稍後重試。',candidates=[])
     return {'source':'https://rxnav.nlm.nih.gov','scope':'English drug-name candidates only; not Taiwan code validation or clinical assessment','results':results}

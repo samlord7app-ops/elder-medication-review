@@ -17,7 +17,7 @@ jobs:
       - name: Install packaging dependencies
         run: python -m pip install pyinstaller==6.16.0 openpyxl==3.1.5 pypdf==6.1.1
       - name: Test local service
-        run: python -m unittest test_clinical_rules test_local_api test_catalog test_reference_updates test_analysis_table test_cloud_drugs
+        run: python -m unittest test_clinical_rules test_local_api test_catalog test_reference_updates test_analysis_table test_cloud_drugs test_med_strength
       - name: Test record filtering and export safety
         run: node test-records.cjs
       - name: Build allowlisted portable package

@@ -23,11 +23,11 @@
    response.results.forEach((result,index)=>{
     const box=document.createElement('div');box.className='result';const title=document.createElement('strong');title.textContent=result.input;box.append(title);const note=document.createElement('p');note.textContent=result.message||(result.candidates.length?'請核對候選。':'未找到候選，仍需人工確認。');box.append(note);
     for(const candidate of result.candidates){const line=document.createElement('p');line.textContent=`${candidate.name}｜RxCUI ${candidate.rxcui}｜成分：${candidate.ingredients.join(' + ')||'未取得'}｜相似順位 ${candidate.rank}（非正確機率）`;box.append(line);
-     if(candidate.ingredients.length===1){const ingredient=candidate.ingredients[0];const button=document.createElement('button');button.textContent='暫選成分 '+ingredient;button.onclick=()=>{
+     if(candidate.ingredients.length===1&&candidate.strengthMatch!=='unverified'){const ingredient=candidate.suggestedName||candidate.ingredients[0];const button=document.createElement('button');button.textContent=(candidate.strengthMatch?'暫選藥名與含量 ':'暫選成分 ')+ingredient;button.onclick=()=>{
       const row=refs[index];if(busy||!rows.includes(row)||row.value.trim()!==names[index])return status('原始欄位已變更，請重新核對。');
       if(ingredient.length>100||core.privacy.test(ingredient))return status('候選格式不適合直接套用，請人工核對。');
       staging=true;invalidate(true);staging=false;pendingNames.set(row,ingredient);$('batch-status').textContent='已暫選 '+pendingNames.size+' 項修正。請對照處方確認成分、強度及途徑，再按「一次套用全部藥名修正」。';status('已暫選成分，尚未改動欄位。請按第 05 區的「一次套用全部藥名修正」，再重新預覽及本機評估。');
-     };box.append(button)}else{const warning=document.createElement('p');warning.textContent='複方或成分不明：不提供一鍵替換，請藥師核對所有成分、強度與劑型後在人工校對區處理。';box.append(warning)}
+     };box.append(button)}else{const warning=document.createElement('p');warning.textContent='複方、成分不明或含量格式未確認：不提供一鍵替換，請藥師核對所有成分、強度與劑型後在人工校對區處理。';box.append(warning)}
     }$('cloud-results').append(box);
    });status('雲端藥名候選已回傳，尚未自動套用或執行臨床評估。請核對後暫選。');
   }catch(e){status(e.message)}finally{busy=false;$('cloud-preview').disabled=false;$('cloud-consent').checked=false;$('cloud-send').disabled=true}
