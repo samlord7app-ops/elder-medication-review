@@ -1,0 +1,3532 @@
+{
+  "version": "CLOUD-API-2026-10-18.3",
+  "sources": [
+    "beers",
+    "stopp-start",
+    "pim-taiwan",
+    "organ-safety",
+    "supplement-safety"
+  ],
+  "groups": {
+    "benzodiazepines": [
+      "alprazolam",
+      "bromazepam",
+      "brotizolam",
+      "chlordiazepoxide",
+      "clobazam",
+      "clonazepam",
+      "clorazepate",
+      "diazepam",
+      "estazolam",
+      "fludiazepam",
+      "flunitrazepam",
+      "flurazepam",
+      "lorazepam",
+      "medazepam",
+      "midazolam",
+      "nitrazepam",
+      "nordazepam",
+      "oxazepam",
+      "oxazolam",
+      "prazepam",
+      "temazepam",
+      "triazolam"
+    ],
+    "zdrugs": [
+      "eszopiclone",
+      "zaleplon",
+      "zolpidem",
+      "zopiclone"
+    ],
+    "first_antihistamines": [
+      "brompheniramine",
+      "carbinoxamine",
+      "chlorpheniramine",
+      "clemastine",
+      "cyproheptadine",
+      "dexchlorpheniramine",
+      "dimenhydrinate",
+      "diphenhydramine",
+      "doxylamine",
+      "hydroxyzine",
+      "meclizine",
+      "promethazine",
+      "triprolidine"
+    ],
+    "strong_antidepressants": [
+      "amitriptyline",
+      "amoxapine",
+      "clomipramine",
+      "desipramine",
+      "imipramine",
+      "nortriptyline",
+      "paroxetine",
+      "trimipramine"
+    ],
+    "antipsychotics": [
+      "amisulpride",
+      "aripiprazole",
+      "chlorpromazine",
+      "chlorprothixene",
+      "clozapine",
+      "flupentixol",
+      "fluphenazine",
+      "haloperidol",
+      "levomepromazine",
+      "loxapine",
+      "lurasidone",
+      "olanzapine",
+      "paliperidone",
+      "perphenazine",
+      "pimozide",
+      "quetiapine",
+      "risperidone",
+      "sulpiride",
+      "thioridazine",
+      "trifluoperazine",
+      "ziprasidone",
+      "zotepine"
+    ],
+    "nsaids": [
+      "aceclofenac",
+      "acemetacin",
+      "alclofenac",
+      "benzydamine",
+      "celecoxib",
+      "diclofenac",
+      "diflunisal",
+      "etodolac",
+      "etoricoxib",
+      "fenbufen",
+      "fenoprofen",
+      "flufenamic",
+      "flurbiprofen",
+      "ibuprofen",
+      "indomethacin",
+      "ketoprofen",
+      "ketorolac",
+      "meclofenamic",
+      "mefenamic",
+      "meloxicam",
+      "nabumetone",
+      "naproxen",
+      "niflumic",
+      "nimesulide",
+      "oxaprozin",
+      "piroxicam",
+      "sulindac",
+      "tenoxicam",
+      "tiaprofenic",
+      "tolmetin"
+    ],
+    "ace": [
+      "benazepril",
+      "captopril",
+      "enalapril",
+      "fosinopril",
+      "imidapril",
+      "lisinopril",
+      "perindopril",
+      "quinapril",
+      "ramipril",
+      "trandolapril"
+    ],
+    "arb": [
+      "azilsartan",
+      "candesartan",
+      "eprosartan",
+      "irbesartan",
+      "losartan",
+      "olmesartan",
+      "telmisartan",
+      "valsartan"
+    ],
+    "beta": [
+      "acebutolol",
+      "atenolol",
+      "betaxolol",
+      "bisoprolol",
+      "carvedilol",
+      "celiprolol",
+      "labetalol",
+      "metoprolol",
+      "nadolol",
+      "nebivolol",
+      "pindolol",
+      "propranolol",
+      "sotalol",
+      "timolol"
+    ],
+    "anticoagulants": [
+      "acenocoumarol",
+      "apixaban",
+      "dabigatran",
+      "edoxaban",
+      "rivaroxaban",
+      "warfarin"
+    ],
+    "antiplatelets": [
+      "aspirin",
+      "cilostazol",
+      "clopidogrel",
+      "dipyridamole",
+      "prasugrel",
+      "ticagrelor",
+      "ticlopidine"
+    ],
+    "ppi": [
+      "dexlansoprazole",
+      "esomeprazole",
+      "lansoprazole",
+      "omeprazole",
+      "pantoprazole",
+      "rabeprazole"
+    ],
+    "opioids": [
+      "buprenorphine",
+      "codeine",
+      "fentanyl",
+      "hydrocodone",
+      "hydromorphone",
+      "meperidine",
+      "methadone",
+      "morphine",
+      "oxycodone",
+      "pethidine",
+      "tapentadol",
+      "tramadol"
+    ],
+    "gabapentinoids": [
+      "gabapentin",
+      "pregabalin"
+    ],
+    "muscle_relaxants": [
+      "carisoprodol",
+      "chlorzoxazone",
+      "cyclobenzaprine",
+      "metaxalone",
+      "methocarbamol",
+      "orphenadrine"
+    ],
+    "bladder_antimuscarinics": [
+      "darifenacin",
+      "fesoterodine",
+      "flavoxate",
+      "oxybutynin",
+      "solifenacin",
+      "tolterodine",
+      "trospium"
+    ],
+    "ssri": [
+      "citalopram",
+      "escitalopram",
+      "fluoxetine",
+      "fluvoxamine",
+      "paroxetine",
+      "sertraline"
+    ],
+    "snri": [
+      "desvenlafaxine",
+      "duloxetine",
+      "milnacipran",
+      "venlafaxine"
+    ],
+    "loop": [
+      "bumetanide",
+      "furosemide",
+      "torsemide"
+    ],
+    "thiazide": [
+      "bendroflumethiazide",
+      "chlorothiazide",
+      "chlorthalidone",
+      "hydrochlorothiazide",
+      "indapamide",
+      "metolazone"
+    ],
+    "statins": [
+      "atorvastatin",
+      "fluvastatin",
+      "lovastatin",
+      "pitavastatin",
+      "pravastatin",
+      "rosuvastatin",
+      "simvastatin"
+    ],
+    "antiepileptics": [
+      "carbamazepine",
+      "gabapentin",
+      "levetiracetam",
+      "oxcarbazepine",
+      "phenobarbital",
+      "phenytoin",
+      "pregabalin",
+      "topiramate",
+      "valproate"
+    ],
+    "nitrates": [
+      "isosorbide",
+      "nitroglycerin"
+    ],
+    "pde5": [
+      "avanafil",
+      "sildenafil",
+      "tadalafil",
+      "vardenafil"
+    ],
+    "sulfonylureas": [
+      "chlorpropamide",
+      "glibenclamide",
+      "gliclazide",
+      "glimepiride",
+      "glipizide",
+      "glyburide",
+      "tolbutamide"
+    ],
+    "systemic_steroids": [
+      "cortisone",
+      "dexamethasone",
+      "hydrocortisone",
+      "methylprednisolone",
+      "prednisolone",
+      "prednisone",
+      "triamcinolone"
+    ],
+    "fluoroquinolones": [
+      "ciprofloxacin",
+      "gemifloxacin",
+      "levofloxacin",
+      "moxifloxacin",
+      "norfloxacin",
+      "ofloxacin"
+    ],
+    "tetracyclines": [
+      "doxycycline",
+      "minocycline",
+      "tetracycline"
+    ],
+    "k_sparing": [
+      "amiloride",
+      "eplerenone",
+      "spironolactone",
+      "triamterene"
+    ],
+    "cns": [
+      "alprazolam",
+      "amisulpride",
+      "amitriptyline",
+      "amoxapine",
+      "aripiprazole",
+      "bromazepam",
+      "brotizolam",
+      "buprenorphine",
+      "carbamazepine",
+      "carisoprodol",
+      "chlordiazepoxide",
+      "chlorpromazine",
+      "chlorprothixene",
+      "chlorzoxazone",
+      "citalopram",
+      "clobazam",
+      "clomipramine",
+      "clonazepam",
+      "clorazepate",
+      "clozapine",
+      "codeine",
+      "cyclobenzaprine",
+      "desipramine",
+      "desvenlafaxine",
+      "diazepam",
+      "duloxetine",
+      "escitalopram",
+      "estazolam",
+      "eszopiclone",
+      "fentanyl",
+      "fludiazepam",
+      "flunitrazepam",
+      "fluoxetine",
+      "flupentixol",
+      "fluphenazine",
+      "flurazepam",
+      "fluvoxamine",
+      "gabapentin",
+      "haloperidol",
+      "hydrocodone",
+      "hydromorphone",
+      "imipramine",
+      "levetiracetam",
+      "levomepromazine",
+      "lorazepam",
+      "loxapine",
+      "lurasidone",
+      "medazepam",
+      "meperidine",
+      "metaxalone",
+      "methadone",
+      "methocarbamol",
+      "midazolam",
+      "milnacipran",
+      "morphine",
+      "nitrazepam",
+      "nordazepam",
+      "nortriptyline",
+      "olanzapine",
+      "orphenadrine",
+      "oxazepam",
+      "oxazolam",
+      "oxcarbazepine",
+      "oxycodone",
+      "paliperidone",
+      "paroxetine",
+      "perphenazine",
+      "pethidine",
+      "phenobarbital",
+      "phenytoin",
+      "pimozide",
+      "prazepam",
+      "pregabalin",
+      "quetiapine",
+      "risperidone",
+      "sertraline",
+      "sulpiride",
+      "tapentadol",
+      "temazepam",
+      "thioridazine",
+      "topiramate",
+      "tramadol",
+      "triazolam",
+      "trifluoperazine",
+      "trimipramine",
+      "valproate",
+      "venlafaxine",
+      "zaleplon",
+      "ziprasidone",
+      "zolpidem",
+      "zopiclone",
+      "zotepine"
+    ],
+    "anticholinergic": [
+      "amitriptyline",
+      "amoxapine",
+      "atropine",
+      "benztropine",
+      "brompheniramine",
+      "carbinoxamine",
+      "chlorpheniramine",
+      "clemastine",
+      "clomipramine",
+      "cyproheptadine",
+      "darifenacin",
+      "desipramine",
+      "dexchlorpheniramine",
+      "dicyclomine",
+      "dimenhydrinate",
+      "diphenhydramine",
+      "disopyramide",
+      "doxylamine",
+      "fesoterodine",
+      "flavoxate",
+      "hydroxyzine",
+      "hyoscyamine",
+      "imipramine",
+      "meclizine",
+      "nortriptyline",
+      "oxybutynin",
+      "paroxetine",
+      "promethazine",
+      "propantheline",
+      "scopolamine",
+      "solifenacin",
+      "tolterodine",
+      "trihexyphenidyl",
+      "trimipramine",
+      "triprolidine",
+      "trospium"
+    ],
+    "anticholinergic_nonbladder": [
+      "amitriptyline",
+      "amoxapine",
+      "atropine",
+      "benztropine",
+      "brompheniramine",
+      "carbinoxamine",
+      "chlorpheniramine",
+      "clemastine",
+      "clomipramine",
+      "cyproheptadine",
+      "desipramine",
+      "dexchlorpheniramine",
+      "dicyclomine",
+      "dimenhydrinate",
+      "diphenhydramine",
+      "disopyramide",
+      "doxylamine",
+      "hydroxyzine",
+      "hyoscyamine",
+      "imipramine",
+      "meclizine",
+      "nortriptyline",
+      "paroxetine",
+      "promethazine",
+      "propantheline",
+      "scopolamine",
+      "trihexyphenidyl",
+      "trimipramine",
+      "triprolidine"
+    ],
+    "antithrombotics": [
+      "acenocoumarol",
+      "apixaban",
+      "aspirin",
+      "cilostazol",
+      "clopidogrel",
+      "dabigatran",
+      "dipyridamole",
+      "edoxaban",
+      "prasugrel",
+      "rivaroxaban",
+      "ticagrelor",
+      "ticlopidine",
+      "warfarin"
+    ],
+    "antihypertensives": [
+      "acebutolol",
+      "amlodipine",
+      "atenolol",
+      "azilsartan",
+      "benazepril",
+      "bendroflumethiazide",
+      "betaxolol",
+      "bisoprolol",
+      "bumetanide",
+      "candesartan",
+      "captopril",
+      "carvedilol",
+      "celiprolol",
+      "chlorothiazide",
+      "chlorthalidone",
+      "clonidine",
+      "diltiazem",
+      "doxazosin",
+      "enalapril",
+      "eprosartan",
+      "felodipine",
+      "fosinopril",
+      "furosemide",
+      "hydralazine",
+      "hydrochlorothiazide",
+      "imidapril",
+      "indapamide",
+      "irbesartan",
+      "labetalol",
+      "lercanidipine",
+      "lisinopril",
+      "losartan",
+      "methyldopa",
+      "metolazone",
+      "metoprolol",
+      "nadolol",
+      "nebivolol",
+      "nifedipine",
+      "olmesartan",
+      "perindopril",
+      "pindolol",
+      "prazosin",
+      "propranolol",
+      "quinapril",
+      "ramipril",
+      "sotalol",
+      "telmisartan",
+      "terazosin",
+      "timolol",
+      "torsemide",
+      "trandolapril",
+      "valsartan",
+      "verapamil"
+    ],
+    "antidiabetics": [
+      "acarbose",
+      "alogliptin",
+      "canagliflozin",
+      "chlorpropamide",
+      "dapagliflozin",
+      "dulaglutide",
+      "empagliflozin",
+      "glibenclamide",
+      "gliclazide",
+      "glimepiride",
+      "glipizide",
+      "glyburide",
+      "insulin",
+      "linagliptin",
+      "liraglutide",
+      "metformin",
+      "nateglinide",
+      "pioglitazone",
+      "repaglinide",
+      "rosiglitazone",
+      "saxagliptin",
+      "semaglutide",
+      "sitagliptin",
+      "tolbutamide",
+      "vildagliptin"
+    ],
+    "bleeding_supplements": [
+      "fish_oil",
+      "garlic",
+      "ginkgo_biloba",
+      "ginseng",
+      "glucosamine",
+      "turmeric"
+    ],
+    "mineral_chelators": [
+      "calcium",
+      "iron",
+      "magnesium"
+    ],
+    "beers_zdrugs": [
+      "eszopiclone",
+      "zaleplon",
+      "zolpidem"
+    ]
+  },
+  "drugs": [
+    "acarbose",
+    "acebutolol",
+    "aceclofenac",
+    "acemetacin",
+    "acenocoumarol",
+    "acetaminophen",
+    "acetylsalicylic acid",
+    "alclofenac",
+    "allicin",
+    "allopurinol",
+    "alogliptin",
+    "alprazolam",
+    "american ginseng",
+    "amiloride",
+    "amiodarone",
+    "amisulpride",
+    "amitriptyline",
+    "amlodipine",
+    "amoxapine",
+    "apixaban",
+    "aripiprazole",
+    "aspirin",
+    "atenolol",
+    "atorvastatin",
+    "atropine",
+    "avanafil",
+    "azilsartan",
+    "b complex",
+    "baclofen",
+    "benazepril",
+    "bendroflumethiazide",
+    "benztropine",
+    "benzydamine",
+    "betaxolol",
+    "bisoprolol",
+    "bromazepam",
+    "brompheniramine",
+    "brotizolam",
+    "bumetanide",
+    "buprenorphine",
+    "b群",
+    "calcium",
+    "calcium carbonate",
+    "calcium citrate",
+    "calcium supplement",
+    "canagliflozin",
+    "candesartan",
+    "captopril",
+    "carbamazepine",
+    "carbinoxamine",
+    "carisoprodol",
+    "carvedilol",
+    "celecoxib",
+    "celiprolol",
+    "cerenin",
+    "chlordiazepoxide",
+    "chlorothiazide",
+    "chlorpheniramine",
+    "chlorpromazine",
+    "chlorpropamide",
+    "chlorprothixene",
+    "chlorthalidone",
+    "chlorzoxazone",
+    "cholecalciferol",
+    "cholestin",
+    "cilostazol",
+    "cimetidine",
+    "ciprofloxacin",
+    "citalopram",
+    "clarithromycin",
+    "clemastine",
+    "clobazam",
+    "clomipramine",
+    "clonazepam",
+    "clonidine",
+    "clopidogrel",
+    "clorazepate",
+    "clozapine",
+    "codeine",
+    "coenzyme q10",
+    "colchicine",
+    "coq10",
+    "cortisone",
+    "curcumin",
+    "cyclobenzaprine",
+    "cyproheptadine",
+    "dabigatran",
+    "dapagliflozin",
+    "darifenacin",
+    "denosumab",
+    "desipramine",
+    "desvenlafaxine",
+    "dexamethasone",
+    "dexchlorpheniramine",
+    "dexlansoprazole",
+    "dha",
+    "diazepam",
+    "diclofenac",
+    "dicyclomine",
+    "diflunisal",
+    "digoxin",
+    "diltiazem",
+    "dimenhydrinate",
+    "diphenhydramine",
+    "dipyridamole",
+    "disopyramide",
+    "dofetilide",
+    "donepezil",
+    "doxazosin",
+    "doxepin",
+    "doxycycline",
+    "doxylamine",
+    "dronedarone",
+    "dulaglutide",
+    "duloxetine",
+    "edoxaban",
+    "empagliflozin",
+    "enalapril",
+    "enoxaparin",
+    "epa",
+    "epa/dha",
+    "eplerenone",
+    "eprosartan",
+    "erythromycin",
+    "escitalopram",
+    "esomeprazole",
+    "estazolam",
+    "eszopiclone",
+    "etodolac",
+    "etoricoxib",
+    "famotidine",
+    "febuxostat",
+    "felodipine",
+    "fenbufen",
+    "fenoprofen",
+    "fentanyl",
+    "ferrous fumarate",
+    "ferrous gluconate",
+    "ferrous sulfate",
+    "fesoterodine",
+    "fish oil",
+    "fish_oil",
+    "flavoxate",
+    "fludiazepam",
+    "flufenamic",
+    "flunitrazepam",
+    "fluoxetine",
+    "flupentixol",
+    "fluphenazine",
+    "flurazepam",
+    "flurbiprofen",
+    "fluvastatin",
+    "fluvoxamine",
+    "folic_acid",
+    "fondaparinux",
+    "fosinopril",
+    "furosemide",
+    "gabapentin",
+    "galantamine",
+    "garlic",
+    "garlic extract",
+    "gemifloxacin",
+    "ginkgo",
+    "ginkgo biloba",
+    "ginkgo_biloba",
+    "ginseng",
+    "glibenclamide",
+    "gliclazide",
+    "glimepiride",
+    "glipizide",
+    "glucosamine",
+    "glucosamine hcl",
+    "glucosamine sulfate",
+    "glyburide",
+    "glycyrrhiza",
+    "guanfacine",
+    "haloperidol",
+    "hydralazine",
+    "hydrochlorothiazide",
+    "hydrocodone",
+    "hydrocortisone",
+    "hydromorphone",
+    "hydroxyzine",
+    "hyoscyamine",
+    "hypericum",
+    "hypericum perforatum",
+    "ibuprofen",
+    "imidapril",
+    "imipramine",
+    "indapamide",
+    "indomethacin",
+    "insulin",
+    "irbesartan",
+    "iron",
+    "iron supplement",
+    "isosorbide",
+    "ketoprofen",
+    "ketorolac",
+    "labetalol",
+    "lansoprazole",
+    "lercanidipine",
+    "levetiracetam",
+    "levofloxacin",
+    "levomepromazine",
+    "levothyroxine",
+    "licorice",
+    "linagliptin",
+    "liraglutide",
+    "lisinopril",
+    "lithium",
+    "lorazepam",
+    "losartan",
+    "lovastatin",
+    "loxapine",
+    "lurasidone",
+    "lutein",
+    "magnesium",
+    "magnesium citrate",
+    "magnesium oxide",
+    "magnesium supplement",
+    "meclizine",
+    "meclofenamic",
+    "meclozine",
+    "medazepam",
+    "mefenamic",
+    "megestrol",
+    "melatonin",
+    "meloxicam",
+    "menaquinone",
+    "meperidine",
+    "metaxalone",
+    "metformin",
+    "methadone",
+    "methocarbamol",
+    "methotrexate",
+    "methyldopa",
+    "methylprednisolone",
+    "metoclopramide",
+    "metolazone",
+    "metoprolol",
+    "mgo",
+    "midazolam",
+    "milnacipran",
+    "minocycline",
+    "monacolin k",
+    "monascus",
+    "morphine",
+    "moxifloxacin",
+    "moxonidine",
+    "nabumetone",
+    "nadolol",
+    "naproxen",
+    "nateglinide",
+    "natto",
+    "nattokinase",
+    "nebivolol",
+    "nifedipine",
+    "niflumic",
+    "nimesulide",
+    "nitrazepam",
+    "nitrofurantoin",
+    "nitroglycerin",
+    "nizatidine",
+    "nordazepam",
+    "norfloxacin",
+    "nortriptyline",
+    "ofloxacin",
+    "olanzapine",
+    "olmesartan",
+    "omega 3",
+    "omega-3",
+    "omega3",
+    "omeprazole",
+    "orphenadrine",
+    "oxaprozin",
+    "oxazepam",
+    "oxazolam",
+    "oxcarbazepine",
+    "oxybutynin",
+    "oxycodone",
+    "paliperidone",
+    "panax ginseng",
+    "pantoprazole",
+    "paracetamol",
+    "paroxetine",
+    "perindopril",
+    "perphenazine",
+    "pethidine",
+    "phenobarbital",
+    "phenytoin",
+    "phytonadione",
+    "pimozide",
+    "pindolol",
+    "pioglitazone",
+    "piroxicam",
+    "pitavastatin",
+    "potassium chloride",
+    "potassium gluconate",
+    "potassium supplement",
+    "potassium_supp",
+    "prasugrel",
+    "pravastatin",
+    "prazepam",
+    "prazosin",
+    "prednisolone",
+    "prednisone",
+    "pregabalin",
+    "probenecid",
+    "probiotics",
+    "promethazine",
+    "propantheline",
+    "propranolol",
+    "q10",
+    "quetiapine",
+    "quinapril",
+    "rabeprazole",
+    "ramipril",
+    "red yeast rice",
+    "red_yeast_rice",
+    "repaglinide",
+    "rilmenidine",
+    "risperidone",
+    "rivaroxaban",
+    "rivastigmine",
+    "rosiglitazone",
+    "rosuvastatin",
+    "saxagliptin",
+    "scopolamine",
+    "semaglutide",
+    "sertraline",
+    "sildenafil",
+    "simvastatin",
+    "sitagliptin",
+    "solifenacin",
+    "sotalol",
+    "spironolactone",
+    "st john wort",
+    "st johns wort",
+    "st. john's wort",
+    "st_johns_wort",
+    "sulfamethoxazole",
+    "sulindac",
+    "sulpiride",
+    "tadalafil",
+    "tapentadol",
+    "telmisartan",
+    "temazepam",
+    "tenoxicam",
+    "terazosin",
+    "teriparatide",
+    "testosterone",
+    "tetracycline",
+    "theophylline",
+    "thioridazine",
+    "thyroxine",
+    "tiaprofenic",
+    "ticagrelor",
+    "ticlopidine",
+    "timolol",
+    "tolbutamide",
+    "tolmetin",
+    "tolterodine",
+    "topiramate",
+    "torsemide",
+    "tramadol",
+    "trandolapril",
+    "triamcinolone",
+    "triamterene",
+    "triazolam",
+    "trifluoperazine",
+    "trihexyphenidyl",
+    "trimethoprim",
+    "trimipramine",
+    "triprolidine",
+    "trospium",
+    "turmeric",
+    "ubiquinol",
+    "ubiquinone",
+    "valproate",
+    "valsartan",
+    "vardenafil",
+    "venlafaxine",
+    "verapamil",
+    "vildagliptin",
+    "vitamin b",
+    "vitamin d",
+    "vitamin d3",
+    "vitamin k",
+    "vitamin k1",
+    "vitamin k2",
+    "vitamin_b",
+    "vitamin_d",
+    "vitamin_k",
+    "warfarin",
+    "zaleplon",
+    "ziprasidone",
+    "zolpidem",
+    "zopiclone",
+    "zotepine",
+    "乳酸菌",
+    "人參",
+    "人蔘",
+    "代鹽",
+    "低鈉鹽",
+    "使蒂諾斯",
+    "冠脂妥",
+    "合利他命",
+    "固樂沙敏",
+    "壽美降脂",
+    "大蒜精",
+    "大蒜萃取物",
+    "富馬酸亞鐵",
+    "循利寧",
+    "挺立",
+    "普拿疼",
+    "檸檬酸鈣",
+    "檸檬酸鎂",
+    "氧化鎂",
+    "海藻鈣",
+    "深海魚油",
+    "游離型葉黃素",
+    "甘胺酸鎂",
+    "甘草",
+    "甘草萃取",
+    "甘草錠",
+    "益生菌",
+    "硫酸亞鐵",
+    "碳酸鈣",
+    "秋薑黃",
+    "立普妥",
+    "粉光參",
+    "紅參",
+    "紅薑黃",
+    "紅麴",
+    "紅麴膠囊",
+    "紅麴菌",
+    "納豆",
+    "納豆激酶",
+    "納豆紅麴",
+    "維他命b群",
+    "維他命d",
+    "維他命d3",
+    "維他命k",
+    "維生素b",
+    "維生素b群",
+    "維生素d",
+    "維生素d3",
+    "維生素k",
+    "維生素k2",
+    "維骨力",
+    "聖約翰草",
+    "脈優",
+    "花旗參",
+    "葉黃素",
+    "葡萄糖胺",
+    "蒜精",
+    "薑黃",
+    "薑黃素",
+    "補鐵",
+    "褪黑激素",
+    "西洋參",
+    "貫葉連翹",
+    "輔酶q10",
+    "金絲桃",
+    "鈣",
+    "鈣片",
+    "鉀片",
+    "鉀補充劑",
+    "銀杏",
+    "銀杏果",
+    "銀杏葉",
+    "銀杏葉萃取物",
+    "鎂",
+    "鎂片",
+    "鐵",
+    "鐵劑",
+    "阿斯匹靈",
+    "高麗參",
+    "高麗蔘",
+    "魚油",
+    "黑蒜精"
+  ],
+  "synonyms": {
+    "acetylsalicylic acid": "aspirin",
+    "acetaminophen": "paracetamol",
+    "pethidine": "meperidine",
+    "glibenclamide": "glyburide",
+    "meclozine": "meclizine",
+    "thyroxine": "levothyroxine",
+    "普拿疼": "paracetamol",
+    "阿斯匹靈": "aspirin",
+    "立普妥": "atorvastatin",
+    "冠脂妥": "rosuvastatin",
+    "脈優": "amlodipine",
+    "使蒂諾斯": "zolpidem",
+    "ginkgo": "ginkgo_biloba",
+    "銀杏葉": "ginkgo_biloba",
+    "循利寧": "ginkgo_biloba",
+    "銀杏": "ginkgo_biloba",
+    "銀杏果": "ginkgo_biloba",
+    "銀杏葉萃取物": "ginkgo_biloba",
+    "ginkgo biloba": "ginkgo_biloba",
+    "cerenin": "ginkgo_biloba",
+    "cholestin": "red_yeast_rice",
+    "monacolin k": "red_yeast_rice",
+    "紅麴": "red_yeast_rice",
+    "紅麴菌": "red_yeast_rice",
+    "紅麴膠囊": "red_yeast_rice",
+    "red yeast rice": "red_yeast_rice",
+    "壽美降脂": "red_yeast_rice",
+    "monascus": "red_yeast_rice",
+    "epa": "fish_oil",
+    "fish oil": "fish_oil",
+    "epa/dha": "fish_oil",
+    "omega 3": "fish_oil",
+    "omega-3": "fish_oil",
+    "dha": "fish_oil",
+    "深海魚油": "fish_oil",
+    "omega3": "fish_oil",
+    "魚油": "fish_oil",
+    "st. john's wort": "st_johns_wort",
+    "金絲桃": "st_johns_wort",
+    "貫葉連翹": "st_johns_wort",
+    "st john wort": "st_johns_wort",
+    "聖約翰草": "st_johns_wort",
+    "st johns wort": "st_johns_wort",
+    "hypericum perforatum": "st_johns_wort",
+    "hypericum": "st_johns_wort",
+    "西洋參": "ginseng",
+    "花旗參": "ginseng",
+    "panax ginseng": "ginseng",
+    "人參": "ginseng",
+    "紅參": "ginseng",
+    "高麗參": "ginseng",
+    "人蔘": "ginseng",
+    "粉光參": "ginseng",
+    "american ginseng": "ginseng",
+    "ginseng": "ginseng",
+    "高麗蔘": "ginseng",
+    "碳酸鈣": "calcium",
+    "鈣片": "calcium",
+    "鈣": "calcium",
+    "calcium carbonate": "calcium",
+    "挺立": "calcium",
+    "海藻鈣": "calcium",
+    "calcium supplement": "calcium",
+    "calcium citrate": "calcium",
+    "檸檬酸鈣": "calcium",
+    "鐵劑": "iron",
+    "ferrous gluconate": "iron",
+    "硫酸亞鐵": "iron",
+    "補鐵": "iron",
+    "ferrous sulfate": "iron",
+    "富馬酸亞鐵": "iron",
+    "鐵": "iron",
+    "ferrous fumarate": "iron",
+    "iron supplement": "iron",
+    "甘胺酸鎂": "magnesium",
+    "氧化鎂": "magnesium",
+    "檸檬酸鎂": "magnesium",
+    "鎂": "magnesium",
+    "magnesium supplement": "magnesium",
+    "mgo": "magnesium",
+    "magnesium oxide": "magnesium",
+    "magnesium citrate": "magnesium",
+    "鎂片": "magnesium",
+    "vitamin k": "vitamin_k",
+    "納豆激酶": "vitamin_k",
+    "維生素k": "vitamin_k",
+    "納豆": "vitamin_k",
+    "natto": "vitamin_k",
+    "維生素k2": "vitamin_k",
+    "nattokinase": "vitamin_k",
+    "vitamin k2": "vitamin_k",
+    "menaquinone": "vitamin_k",
+    "維他命k": "vitamin_k",
+    "納豆紅麴": "vitamin_k",
+    "vitamin k1": "vitamin_k",
+    "phytonadione": "vitamin_k",
+    "ubiquinone": "coq10",
+    "coenzyme q10": "coq10",
+    "q10": "coq10",
+    "coq10": "coq10",
+    "輔酶q10": "coq10",
+    "ubiquinol": "coq10",
+    "garlic": "garlic",
+    "大蒜萃取物": "garlic",
+    "allicin": "garlic",
+    "garlic extract": "garlic",
+    "黑蒜精": "garlic",
+    "蒜精": "garlic",
+    "大蒜精": "garlic",
+    "薑黃": "turmeric",
+    "turmeric": "turmeric",
+    "紅薑黃": "turmeric",
+    "秋薑黃": "turmeric",
+    "curcumin": "turmeric",
+    "薑黃素": "turmeric",
+    "維骨力": "glucosamine",
+    "glucosamine hcl": "glucosamine",
+    "固樂沙敏": "glucosamine",
+    "葡萄糖胺": "glucosamine",
+    "glucosamine": "glucosamine",
+    "glucosamine sulfate": "glucosamine",
+    "potassium gluconate": "potassium_supp",
+    "potassium supplement": "potassium_supp",
+    "potassium chloride": "potassium_supp",
+    "鉀片": "potassium_supp",
+    "代鹽": "potassium_supp",
+    "低鈉鹽": "potassium_supp",
+    "鉀補充劑": "potassium_supp",
+    "licorice": "licorice",
+    "甘草錠": "licorice",
+    "glycyrrhiza": "licorice",
+    "甘草": "licorice",
+    "甘草萃取": "licorice",
+    "褪黑激素": "melatonin",
+    "melatonin": "melatonin",
+    "維他命d3": "vitamin_d",
+    "cholecalciferol": "vitamin_d",
+    "維他命d": "vitamin_d",
+    "維生素d": "vitamin_d",
+    "vitamin d3": "vitamin_d",
+    "維生素d3": "vitamin_d",
+    "vitamin d": "vitamin_d",
+    "維生素b": "vitamin_b",
+    "b complex": "vitamin_b",
+    "b群": "vitamin_b",
+    "維生素b群": "vitamin_b",
+    "合利他命": "vitamin_b",
+    "維他命b群": "vitamin_b",
+    "vitamin b": "vitamin_b",
+    "游離型葉黃素": "lutein",
+    "葉黃素": "lutein",
+    "lutein": "lutein",
+    "乳酸菌": "probiotics",
+    "益生菌": "probiotics",
+    "probiotics": "probiotics",
+    "diazepam": "diazepam",
+    "valium": "diazepam",
+    "zolpidem": "zolpidem",
+    "stilnox": "zolpidem",
+    "diphenhydramine": "diphenhydramine",
+    "metformin": "metformin",
+    "lipitor": "atorvastatin",
+    "atorvastatin": "atorvastatin",
+    "crestor": "rosuvastatin",
+    "rosuvastatin": "rosuvastatin",
+    "norvasc": "amlodipine",
+    "amlodipine": "amlodipine",
+    "aspirin": "aspirin",
+    "bokey": "aspirin",
+    "伯基": "aspirin",
+    "warfarin": "warfarin",
+    "coumadin": "warfarin",
+    "可邁丁": "warfarin",
+    "plavix": "clopidogrel",
+    "clopidogrel": "clopidogrel",
+    "保栓通": "clopidogrel",
+    "xarelto": "rivaroxaban",
+    "rivaroxaban": "rivaroxaban",
+    "拜瑞妥": "rivaroxaban",
+    "eliquis": "apixaban",
+    "apixaban": "apixaban",
+    "艾必克凝": "apixaban",
+    "lixiana": "edoxaban",
+    "edoxaban": "edoxaban",
+    "里先安": "edoxaban",
+    "pradaxa": "dabigatran",
+    "dabigatran": "dabigatran",
+    "普栓達": "dabigatran",
+    "panadol": "paracetamol",
+    "paracetamol": "paracetamol"
+  },
+  "supplements": {
+    "ginkgo_biloba": {
+      "display": "銀杏葉萃取物 (Ginkgo biloba)",
+      "aliases": [
+        "cerenin",
+        "ginkgo",
+        "ginkgo biloba",
+        "循利寧",
+        "銀杏",
+        "銀杏果",
+        "銀杏葉",
+        "銀杏葉萃取物"
+      ]
+    },
+    "red_yeast_rice": {
+      "display": "紅麴 (Red yeast rice / Monacolin K)",
+      "aliases": [
+        "cholestin",
+        "monacolin k",
+        "monascus",
+        "red yeast rice",
+        "壽美降脂",
+        "紅麴",
+        "紅麴膠囊",
+        "紅麴菌"
+      ]
+    },
+    "fish_oil": {
+      "display": "魚油 / Omega-3 (Fish oil)",
+      "aliases": [
+        "dha",
+        "epa",
+        "epa/dha",
+        "fish oil",
+        "omega 3",
+        "omega-3",
+        "omega3",
+        "深海魚油",
+        "魚油"
+      ]
+    },
+    "st_johns_wort": {
+      "display": "聖約翰草 / 貫葉連翹 (St. John's Wort)",
+      "aliases": [
+        "hypericum",
+        "hypericum perforatum",
+        "st john wort",
+        "st johns wort",
+        "st. john's wort",
+        "聖約翰草",
+        "貫葉連翹",
+        "金絲桃"
+      ]
+    },
+    "ginseng": {
+      "display": "人參 / 西洋參 (Ginseng)",
+      "aliases": [
+        "american ginseng",
+        "ginseng",
+        "panax ginseng",
+        "人參",
+        "人蔘",
+        "粉光參",
+        "紅參",
+        "花旗參",
+        "西洋參",
+        "高麗參",
+        "高麗蔘"
+      ]
+    },
+    "calcium": {
+      "display": "鈣片 / 鈣補充劑 (Calcium)",
+      "aliases": [
+        "calcium carbonate",
+        "calcium citrate",
+        "calcium supplement",
+        "挺立",
+        "檸檬酸鈣",
+        "海藻鈣",
+        "碳酸鈣",
+        "鈣",
+        "鈣片"
+      ]
+    },
+    "iron": {
+      "display": "鐵劑 / 鐵補充劑 (Iron)",
+      "aliases": [
+        "ferrous fumarate",
+        "ferrous gluconate",
+        "ferrous sulfate",
+        "iron supplement",
+        "富馬酸亞鐵",
+        "硫酸亞鐵",
+        "補鐵",
+        "鐵",
+        "鐵劑"
+      ]
+    },
+    "magnesium": {
+      "display": "鎂補充劑 / 氧化鎂 (Magnesium)",
+      "aliases": [
+        "magnesium citrate",
+        "magnesium oxide",
+        "magnesium supplement",
+        "mgo",
+        "檸檬酸鎂",
+        "氧化鎂",
+        "甘胺酸鎂",
+        "鎂",
+        "鎂片"
+      ]
+    },
+    "vitamin_k": {
+      "display": "維生素 K / 納豆激酶 (Vitamin K / Natto)",
+      "aliases": [
+        "menaquinone",
+        "natto",
+        "nattokinase",
+        "phytonadione",
+        "vitamin k",
+        "vitamin k1",
+        "vitamin k2",
+        "納豆",
+        "納豆激酶",
+        "納豆紅麴",
+        "維他命k",
+        "維生素k",
+        "維生素k2"
+      ]
+    },
+    "coq10": {
+      "display": "輔酶 Q10 (Coenzyme Q10)",
+      "aliases": [
+        "coenzyme q10",
+        "coq10",
+        "q10",
+        "ubiquinol",
+        "ubiquinone",
+        "輔酶q10"
+      ]
+    },
+    "garlic": {
+      "display": "大蒜精 / 蒜頭萃取物 (Garlic extract)",
+      "aliases": [
+        "allicin",
+        "garlic",
+        "garlic extract",
+        "大蒜精",
+        "大蒜萃取物",
+        "蒜精",
+        "黑蒜精"
+      ]
+    },
+    "turmeric": {
+      "display": "薑黃素 (Turmeric / Curcumin)",
+      "aliases": [
+        "curcumin",
+        "turmeric",
+        "秋薑黃",
+        "紅薑黃",
+        "薑黃",
+        "薑黃素"
+      ]
+    },
+    "glucosamine": {
+      "display": "葡萄糖胺 (Glucosamine)",
+      "aliases": [
+        "glucosamine",
+        "glucosamine hcl",
+        "glucosamine sulfate",
+        "固樂沙敏",
+        "維骨力",
+        "葡萄糖胺"
+      ]
+    },
+    "potassium_supp": {
+      "display": "鉀補充劑 / 低鈉鹽 (Potassium supplement)",
+      "aliases": [
+        "potassium chloride",
+        "potassium gluconate",
+        "potassium supplement",
+        "代鹽",
+        "低鈉鹽",
+        "鉀片",
+        "鉀補充劑"
+      ]
+    },
+    "licorice": {
+      "display": "甘草萃取物 (Licorice)",
+      "aliases": [
+        "glycyrrhiza",
+        "licorice",
+        "甘草",
+        "甘草萃取",
+        "甘草錠"
+      ]
+    },
+    "melatonin": {
+      "display": "褪黑激素 (Melatonin)",
+      "aliases": [
+        "melatonin",
+        "褪黑激素"
+      ]
+    },
+    "vitamin_d": {
+      "display": "維生素 D (Vitamin D)",
+      "aliases": [
+        "cholecalciferol",
+        "vitamin d",
+        "vitamin d3",
+        "維他命d",
+        "維他命d3",
+        "維生素d",
+        "維生素d3"
+      ]
+    },
+    "vitamin_b": {
+      "display": "維生素 B 群 (Vitamin B complex)",
+      "aliases": [
+        "b complex",
+        "b群",
+        "vitamin b",
+        "合利他命",
+        "維他命b群",
+        "維生素b",
+        "維生素b群"
+      ]
+    },
+    "lutein": {
+      "display": "葉黃素 (Lutein)",
+      "aliases": [
+        "lutein",
+        "游離型葉黃素",
+        "葉黃素"
+      ]
+    },
+    "probiotics": {
+      "display": "益生菌 (Probiotics)",
+      "aliases": [
+        "probiotics",
+        "乳酸菌",
+        "益生菌"
+      ]
+    }
+  },
+  "diagnoses": {
+    "heart_failure": [
+      "heart failure",
+      "hf",
+      "i50",
+      "心衰竭"
+    ],
+    "dementia": [
+      "dementia",
+      "f03",
+      "失智",
+      "失智症"
+    ],
+    "delirium": [
+      "delirium",
+      "f05",
+      "譫妄"
+    ],
+    "falls": [
+      "falls",
+      "history of falls",
+      "反覆跌倒",
+      "跌倒史"
+    ],
+    "fractures": [
+      "history of fractures",
+      "骨折史"
+    ],
+    "parkinsons": [
+      "g20",
+      "parkinson disease",
+      "parkinsons disease",
+      "帕金森氏症",
+      "帕金森病"
+    ],
+    "peptic_ulcer": [
+      "peptic ulcer",
+      "十二指腸潰瘍",
+      "消化性潰瘍",
+      "胃潰瘍"
+    ],
+    "syncope": [
+      "syncope",
+      "暈厥"
+    ],
+    "bph": [
+      "bph",
+      "前列腺增生",
+      "攝護腺肥大",
+      "良性攝護腺肥大"
+    ],
+    "gout": [
+      "gout",
+      "痛風"
+    ],
+    "epilepsy": [
+      "epilepsy",
+      "癲癇"
+    ],
+    "atrial_fibrillation": [
+      "af",
+      "atrial fibrillation",
+      "心房顫動"
+    ],
+    "coronary_disease": [
+      "coronary artery disease",
+      "冠心病",
+      "冠狀動脈疾病"
+    ],
+    "stroke": [
+      "ischemic stroke",
+      "中風史",
+      "缺血性中風"
+    ],
+    "frailty": [
+      "frailty",
+      "衰弱"
+    ],
+    "palliative": [
+      "end of life",
+      "palliative",
+      "安寧照護",
+      "生命末期"
+    ],
+    "copd": [
+      "copd",
+      "慢性阻塞性肺病"
+    ],
+    "asthma": [
+      "asthma",
+      "氣喘"
+    ],
+    "urinary_retention": [
+      "urinary retention",
+      "尿滯留"
+    ],
+    "liver_disease": [
+      "child-pugh b",
+      "child-pugh c",
+      "cirrhosis",
+      "hepatic impairment",
+      "liver failure",
+      "慢性肝炎",
+      "肝功能不全",
+      "肝硬化",
+      "肝衰竭"
+    ],
+    "ckd": [
+      "chronic kidney disease",
+      "ckd",
+      "esrd",
+      "尿毒症",
+      "慢性腎臟病",
+      "腎衰竭"
+    ]
+  },
+  "labAliases": {
+    "CrCl": [
+      "ccr",
+      "crcl",
+      "creatinine clearance",
+      "肌酸酐清除率"
+    ],
+    "eGFR": [
+      "egfr",
+      "gfr",
+      "估算腎絲球過濾率",
+      "腎絲球過濾率"
+    ],
+    "Scr": [
+      "cr",
+      "creatinine",
+      "scr",
+      "serum creatinine",
+      "肌酸酐",
+      "血中肌酸酐"
+    ],
+    "AST": [
+      "ast",
+      "got",
+      "sgot",
+      "天門冬胺酸轉胺酶",
+      "肝指數ast",
+      "肝指數got"
+    ],
+    "ALT": [
+      "alt",
+      "gpt",
+      "sgpt",
+      "丙胺酸轉胺酶",
+      "肝指數alt",
+      "肝指數gpt"
+    ],
+    "TBIL": [
+      "bilirubin",
+      "t-bil",
+      "tbil",
+      "total bilirubin",
+      "總膽紅素",
+      "膽紅素"
+    ],
+    "ChildPugh": [
+      "child pugh",
+      "child-pugh",
+      "child-pugh score",
+      "childpugh",
+      "肝硬化分級分數"
+    ],
+    "K": [
+      "k",
+      "k+",
+      "potassium",
+      "血鉀",
+      "鉀"
+    ],
+    "Na": [
+      "na",
+      "na+",
+      "sodium",
+      "血鈉",
+      "鈉"
+    ],
+    "HR": [
+      "heart rate",
+      "hr",
+      "心率"
+    ],
+    "correctedCa": [
+      "corrected calcium",
+      "correctedca",
+      "校正鈣"
+    ]
+  },
+  "rules": [
+    {
+      "id": "BEERS-T2-BZD",
+      "source": "beers",
+      "target": "@benzodiazepines",
+      "title": "苯二氮平類：認知、譫妄、跌倒及骨折風險",
+      "conditions": [],
+      "exceptions": [
+        "epilepsy",
+        "rem_sleep_behavior",
+        "alcohol_withdrawal",
+        "severe_anxiety",
+        "procedural"
+      ],
+      "note": "癲癇等特定適應症可能合理，需人工確認；不可自行驟停。"
+    },
+    {
+      "id": "BEERS-T2-ZDRUG",
+      "source": "beers",
+      "target": "@beers_zdrugs",
+      "title": "Z 類安眠藥：譫妄、跌倒與骨折風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": "僅原始 Beers 所列 eszopiclone、zaleplon、zolpidem；zopiclone 另依 PIM-Taiwan。"
+    },
+    {
+      "id": "BEERS-T2-ANTIDEP",
+      "source": "beers",
+      "target": "@strong_antidepressants",
+      "title": "強抗膽鹼抗憂鬱藥：鎮靜、姿勢性低血壓與抗膽鹼風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-MUSCLE",
+      "source": "beers",
+      "target": "@muscle_relaxants",
+      "title": "肌肉鬆弛劑：鎮靜、抗膽鹼及骨折風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-MEGESTROL",
+      "source": "beers",
+      "target": "megestrol",
+      "title": "Megestrol：血栓及死亡風險，體重改善效益有限",
+      "conditions": [],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-MEPERIDINE",
+      "source": "beers",
+      "target": "meperidine",
+      "title": "Meperidine：神經毒性及譫妄風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-INDOMETHACIN",
+      "source": "beers",
+      "target": "indomethacin",
+      "title": "Indomethacin：腸胃出血、腎損傷及中樞副作用風險",
+      "conditions": [
+        [
+          "route",
+          "oral",
+          "parenteral"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-KETOROLAC",
+      "source": "beers",
+      "target": "ketorolac",
+      "title": "Ketorolac：腸胃出血與急性腎損傷風險",
+      "conditions": [
+        [
+          "route",
+          "oral",
+          "parenteral"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-GLYBURIDE",
+      "source": "beers",
+      "target": "glyburide|glimepiride|chlorpropamide",
+      "title": "長效磺醯脲類：持續性低血糖風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": "須考慮其他降血糖治療與可取得性；不應自行停藥。"
+    },
+    {
+      "id": "BEERS-T2-BENZTROPINE",
+      "source": "beers",
+      "target": "benztropine|trihexyphenidyl",
+      "title": "抗帕金森抗膽鹼藥：高齡者耐受性較差",
+      "conditions": [
+        [
+          "route",
+          "oral"
+        ]
+      ],
+      "exceptions": [],
+      "note": "口服製劑的用途與替代治療需覆核。"
+    },
+    {
+      "id": "BEERS-T2-ANTIHIST",
+      "source": "beers",
+      "target": "@first_antihistamines",
+      "title": "第一代抗組織胺：抗膽鹼、混亂與跌倒風險",
+      "conditions": [
+        [
+          "route",
+          "oral"
+        ]
+      ],
+      "exceptions": [],
+      "note": "Diphenhydramine 用於急性嚴重過敏等情境可能合理；仍需覆核。"
+    },
+    {
+      "id": "BEERS-T2-DOXEPIN",
+      "source": "beers",
+      "target": "doxepin",
+      "title": "口服 doxepin 每日超過 6 mg 的抗膽鹼與鎮靜風險",
+      "conditions": [
+        [
+          "route",
+          "oral"
+        ],
+        [
+          "dose",
+          ">",
+          6
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T2-DIGOXIN",
+      "source": "beers",
+      "target": "digoxin",
+      "title": "Digoxin 每日超過 0.125 mg 有較高毒性風險",
+      "conditions": [
+        [
+          "dose",
+          ">",
+          0.125
+        ]
+      ],
+      "exceptions": [],
+      "note": "心衰竭或心房顫動第一線使用另需個別檢視；不要自行驟停。"
+    },
+    {
+      "id": "BEERS-T2-PPI",
+      "source": "beers",
+      "target": "@ppi",
+      "title": "PPI 超過 8 週使用需重新評估適應症",
+      "conditions": [
+        [
+          "duration",
+          ">",
+          56
+        ]
+      ],
+      "exceptions": [
+        "erosive_esophagitis",
+        "barrett",
+        "zollinger_ellison",
+        "gastroprotection"
+      ],
+      "note": "高風險腸胃保護及維持治療等可能適當；須覆核其他例外。"
+    },
+    {
+      "id": "BEERS-T2-METOCLOPRAMIDE",
+      "source": "beers",
+      "target": "metoclopramide",
+      "title": "Metoclopramide 超過 12 週使用需覆核遲發性運動障礙風險",
+      "conditions": [
+        [
+          "duration",
+          ">",
+          84
+        ]
+      ],
+      "exceptions": [],
+      "note": "胃輕癱與少數例外需由醫師判斷。"
+    },
+    {
+      "id": "BEERS-T2-ALPHA1",
+      "source": "beers",
+      "target": "doxazosin|prazosin|terazosin",
+      "title": "非選擇性 α1 阻斷劑用於高血壓：姿勢性低血壓風險",
+      "conditions": [
+        [
+          "indication",
+          "hypertension"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T3-DEMENTIA-ANTIPSYCH",
+      "source": "beers",
+      "target": "@antipsychotics",
+      "title": "失智或譫妄患者使用抗精神病藥需覆核中風、認知及死亡風險",
+      "conditions": [
+        [
+          "diagnosis",
+          "dementia",
+          "delirium"
+        ]
+      ],
+      "exceptions": [
+        "schizophrenia",
+        "bipolar"
+      ],
+      "note": "處理危及安全的行為問題等情境可能合理；需確認非藥物處置與最低有效療程。"
+    },
+    {
+      "id": "BEERS-T6-CIPROFLOXACIN",
+      "source": "beers",
+      "target": "ciprofloxacin",
+      "title": "需依適應症調降劑量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-NITROFURANTOIN",
+      "source": "beers",
+      "target": "nitrofurantoin",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-AMILORIDE",
+      "source": "beers",
+      "target": "amiloride",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-DABIGATRAN",
+      "source": "beers",
+      "target": "dabigatran",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-DOFETILIDE",
+      "source": "beers",
+      "target": "dofetilide",
+      "title": "需調整劑量；低於 20 應避免",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          60
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-EDOXABAN",
+      "source": "beers",
+      "target": "edoxaban",
+      "title": "15–50 需減量；低於 15 應避免",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<=",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-ENOXAPARIN",
+      "source": "beers",
+      "target": "enoxaparin",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-FONDAPARINUX",
+      "source": "beers",
+      "target": "fondaparinux",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-RIVAROXABAN",
+      "source": "beers",
+      "target": "rivaroxaban",
+      "title": "依適應症與仿單調整；低於 15 應避免",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<=",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-SPIRONOLACTONE",
+      "source": "beers",
+      "target": "spironolactone",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-TRIAMTERENE",
+      "source": "beers",
+      "target": "triamterene",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-BACLOFEN",
+      "source": "beers",
+      "target": "baclofen",
+      "title": "應避免；無法避免時需最低有效劑量並監測中樞毒性",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          60
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-DULOXETINE",
+      "source": "beers",
+      "target": "duloxetine",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-GABAPENTIN",
+      "source": "beers",
+      "target": "gabapentin",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          60
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-LEVETIRACETAM",
+      "source": "beers",
+      "target": "levetiracetam",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<=",
+          80
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-PREGABALIN",
+      "source": "beers",
+      "target": "pregabalin",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          60
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-TRAMADOL",
+      "source": "beers",
+      "target": "tramadol",
+      "title": "速放型需減量；緩釋型應避免",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ],
+        [
+          "formulation_known"
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-CIMETIDINE",
+      "source": "beers",
+      "target": "cimetidine",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-FAMOTIDINE",
+      "source": "beers",
+      "target": "famotidine",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-NIZATIDINE",
+      "source": "beers",
+      "target": "nizatidine",
+      "title": "需減量",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-COLCHICINE",
+      "source": "beers",
+      "target": "colchicine",
+      "title": "需減量並監測毒性",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-PROBENECID",
+      "source": "beers",
+      "target": "probenecid",
+      "title": "應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依原準則腎功能門檻篩檢，實際劑量須核對適應症及台灣仿單。"
+    },
+    {
+      "id": "BEERS-T6-EDOXABAN-HIGH",
+      "source": "beers",
+      "target": "edoxaban",
+      "title": "CrCl 高於 95 mL/min 應避免 edoxaban",
+      "conditions": [
+        [
+          "lab",
+          "CrCl",
+          ">",
+          95
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T6-TMP-SMX",
+      "source": "beers",
+      "target": "trimethoprim|sulfamethoxazole",
+      "title": "TMP-SMX：CrCl 15–29 需減量，低於 15 應避免",
+      "conditions": [
+        [
+          "co",
+          "trimethoprim"
+        ],
+        [
+          "co",
+          "sulfamethoxazole"
+        ],
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T6-NSAIDS",
+      "source": "beers",
+      "target": "@nsaids",
+      "title": "腎功能低下者使用全身性 NSAID 的腎損傷風險",
+      "conditions": [
+        [
+          "route",
+          "oral",
+          "parenteral"
+        ],
+        [
+          "lab",
+          "CrCl",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T5-OPIOID-BZD",
+      "source": "beers",
+      "target": "@opioids",
+      "title": "Opioid 合併苯二氮平類：過量與呼吸抑制風險",
+      "conditions": [
+        [
+          "co",
+          "@benzodiazepines"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-OPIOID-GABA",
+      "source": "beers",
+      "target": "@opioids",
+      "title": "Opioid 合併 gabapentin／pregabalin：嚴重鎮靜與呼吸抑制風險",
+      "conditions": [
+        [
+          "co",
+          "@gabapentinoids"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-WARFARIN-AMIODARONE",
+      "source": "beers",
+      "target": "warfarin",
+      "title": "Warfarin 合併 amiodarone：出血風險",
+      "conditions": [
+        [
+          "co",
+          "amiodarone"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-WARFARIN-CIPRO",
+      "source": "beers",
+      "target": "warfarin",
+      "title": "Warfarin 合併 ciprofloxacin：出血風險",
+      "conditions": [
+        [
+          "co",
+          "ciprofloxacin"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-WARFARIN-MACROLIDE",
+      "source": "beers",
+      "target": "warfarin",
+      "title": "Warfarin 合併部分 macrolide：出血風險",
+      "conditions": [
+        [
+          "co",
+          "clarithromycin|erythromycin"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-WARFARIN-TMP-SMX",
+      "source": "beers",
+      "target": "warfarin",
+      "title": "Warfarin 合併 TMP-SMX：出血風險",
+      "conditions": [
+        [
+          "co",
+          "trimethoprim"
+        ],
+        [
+          "co",
+          "sulfamethoxazole"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-WARFARIN-SSRI",
+      "source": "beers",
+      "target": "warfarin",
+      "title": "Warfarin 合併 SSRI：出血風險",
+      "conditions": [
+        [
+          "co",
+          "@ssri"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-LITHIUM-ACE",
+      "source": "beers",
+      "target": "lithium",
+      "title": "Lithium 合併 ACEI：鋰中毒風險",
+      "conditions": [
+        [
+          "co",
+          "@ace"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-LITHIUM-LOOP",
+      "source": "beers",
+      "target": "lithium",
+      "title": "Lithium 合併 loop 利尿劑：鋰中毒風險",
+      "conditions": [
+        [
+          "co",
+          "@loop"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-LITHIUM-ARB",
+      "source": "beers",
+      "target": "lithium",
+      "title": "Lithium 合併 ARB／含 valsartan 的 ARNI：鋰中毒風險",
+      "conditions": [
+        [
+          "co",
+          "@arb"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-THEOPHYLLINE-CIMETIDINE",
+      "source": "beers",
+      "target": "theophylline",
+      "title": "Theophylline 合併 cimetidine：毒性風險",
+      "conditions": [
+        [
+          "co",
+          "cimetidine"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-THEOPHYLLINE-CIPRO",
+      "source": "beers",
+      "target": "theophylline",
+      "title": "Theophylline 合併 ciprofloxacin：毒性風險",
+      "conditions": [
+        [
+          "co",
+          "ciprofloxacin"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-PHENYTOIN-TMP-SMX",
+      "source": "beers",
+      "target": "phenytoin",
+      "title": "Phenytoin 合併 TMP-SMX：毒性風險",
+      "conditions": [
+        [
+          "co",
+          "trimethoprim"
+        ],
+        [
+          "co",
+          "sulfamethoxazole"
+        ]
+      ],
+      "exceptions": [],
+      "note": "需由臨床人員確認適應症、替代方案及必要監測；部分併用情境有例外。"
+    },
+    {
+      "id": "BEERS-T5-CNS3",
+      "source": "beers",
+      "target": "@cns",
+      "title": "同時使用三種以上中樞作用藥：跌倒及骨折風險",
+      "conditions": [
+        [
+          "count",
+          "@cns",
+          ">=",
+          3
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T5-ANTICHOL2",
+      "source": "beers",
+      "target": "@anticholinergic",
+      "title": "多種抗膽鹼藥併用：認知、譫妄與跌倒風險",
+      "conditions": [
+        [
+          "count",
+          "@anticholinergic",
+          ">=",
+          2
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "BEERS-T3-HF-NSAID",
+      "source": "beers",
+      "target": "@nsaids",
+      "title": "心衰竭患者使用全身性 NSAID 可能惡化體液滯留",
+      "conditions": [
+        [
+          "diagnosis",
+          "heart_failure"
+        ],
+        [
+          "route",
+          "oral",
+          "parenteral"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-HF-TZD",
+      "source": "beers",
+      "target": "pioglitazone|rosiglitazone",
+      "title": "心衰竭患者使用 TZD 可能惡化體液滯留",
+      "conditions": [
+        [
+          "diagnosis",
+          "heart_failure"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-DEMENTIA-ANTICHOL",
+      "source": "beers",
+      "target": "@anticholinergic",
+      "title": "失智或譫妄患者使用強抗膽鹼藥可能惡化認知",
+      "conditions": [
+        [
+          "diagnosis",
+          "dementia",
+          "delirium"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-FALLS-BZD",
+      "source": "beers",
+      "target": "@benzodiazepines",
+      "title": "有跌倒／骨折史者使用苯二氮平類風險增加",
+      "conditions": [
+        [
+          "diagnosis",
+          "falls",
+          "fractures"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-FALLS-ZDRUG",
+      "source": "beers",
+      "target": "@zdrugs",
+      "title": "有跌倒／骨折史者使用 Z 類安眠藥風險增加",
+      "conditions": [
+        [
+          "diagnosis",
+          "falls",
+          "fractures"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-FALLS-ANTIPSYCH",
+      "source": "beers",
+      "target": "@antipsychotics",
+      "title": "有跌倒／骨折史者使用抗精神病藥風險增加",
+      "conditions": [
+        [
+          "diagnosis",
+          "falls",
+          "fractures"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-SYNCOPE-AChEI",
+      "source": "beers",
+      "target": "donepezil|rivastigmine|galantamine",
+      "title": "暈厥患者使用膽鹼酯酶抑制劑需檢視心搏過緩原因",
+      "conditions": [
+        [
+          "diagnosis",
+          "syncope"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-PARKINSON-METOCLO",
+      "source": "beers",
+      "target": "metoclopramide",
+      "title": "帕金森病患者使用 metoclopramide 可能惡化動作症狀",
+      "conditions": [
+        [
+          "diagnosis",
+          "parkinsons"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "BEERS-T3-BPH-ANTICHOL",
+      "source": "beers",
+      "target": "@anticholinergic_nonbladder",
+      "title": "攝護腺肥大患者需覆核強抗膽鹼藥對排尿影響",
+      "conditions": [
+        [
+          "diagnosis",
+          "bph"
+        ]
+      ],
+      "exceptions": [],
+      "note": "疾病、嚴重度、用途與例外仍需臨床覆核。"
+    },
+    {
+      "id": "STOPP-B3",
+      "source": "stopp-start",
+      "target": "@beta",
+      "title": "Beta 阻斷劑合併 verapamil／diltiazem：心傳導阻滯風險",
+      "conditions": [
+        [
+          "co",
+          "verapamil|diltiazem"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B4",
+      "source": "stopp-start",
+      "target": "@beta",
+      "title": "心率低於 50 時使用減慢心率藥有傳導阻滯風險",
+      "conditions": [
+        [
+          "lab",
+          "HR",
+          "<",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B4-OTHER",
+      "source": "stopp-start",
+      "target": "verapamil|diltiazem|digoxin",
+      "title": "心率低於 50 時使用減慢心率藥有傳導阻滯風險",
+      "conditions": [
+        [
+          "lab",
+          "HR",
+          "<",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B9-K",
+      "source": "stopp-start",
+      "target": "@thiazide",
+      "title": "Thiazide 合併低血鉀",
+      "conditions": [
+        [
+          "lab",
+          "K",
+          "<",
+          3
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B9-Na",
+      "source": "stopp-start",
+      "target": "@thiazide",
+      "title": "Thiazide 合併低血鈉",
+      "conditions": [
+        [
+          "lab",
+          "Na",
+          "<",
+          130
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B9-Ca",
+      "source": "stopp-start",
+      "target": "@thiazide",
+      "title": "Thiazide 合併校正血鈣過高",
+      "conditions": [
+        [
+          "lab",
+          "correctedCa",
+          ">",
+          2.65
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B9-GOUT",
+      "source": "stopp-start",
+      "target": "@thiazide",
+      "title": "Thiazide 合併痛風史",
+      "conditions": [
+        [
+          "diagnosis",
+          "gout"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B11",
+      "source": "stopp-start",
+      "target": "methyldopa|clonidine|moxonidine|rilmenidine|guanfacine",
+      "title": "中樞作用降壓藥在高齡者耐受性較差",
+      "conditions": [],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B12-ACE",
+      "source": "stopp-start",
+      "target": "@ace",
+      "title": "ACEI／ARB 合併血鉀高於 5.5 mmol/L",
+      "conditions": [
+        [
+          "lab",
+          "K",
+          ">",
+          5.5
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B12-ARB",
+      "source": "stopp-start",
+      "target": "@arb",
+      "title": "ACEI／ARB 合併血鉀高於 5.5 mmol/L",
+      "conditions": [
+        [
+          "lab",
+          "K",
+          ">",
+          5.5
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-B14-NITRATE",
+      "source": "stopp-start",
+      "target": "@pde5",
+      "title": "PDE5 抑制劑合併硝酸鹽有嚴重低血壓風險",
+      "conditions": [
+        [
+          "co",
+          "@nitrates"
+        ]
+      ],
+      "exceptions": [],
+      "note": "此為 B14 併用分支；嚴重心衰竭／低血壓分支仍需人工覆核。"
+    },
+    {
+      "id": "STOPP-C6",
+      "source": "stopp-start",
+      "target": "ticlopidine",
+      "title": "Ticlopidine 應重新評估，其他藥物有較佳安全性依據",
+      "conditions": [],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "STOPP-C10",
+      "source": "stopp-start",
+      "target": "@nsaids",
+      "title": "NSAID 合併抗凝血藥：重大腸胃出血風險",
+      "conditions": [
+        [
+          "route",
+          "oral",
+          "parenteral"
+        ],
+        [
+          "co",
+          "@anticoagulants"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T1-BZD",
+      "source": "pim-taiwan",
+      "target": "@benzodiazepines",
+      "title": "苯二氮平類：認知、混亂、跌倒及骨折風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": "對應 PIM-Taiwan 2018 Table 1 的部分藥群，並非 Table 1 全部 140 列。"
+    },
+    {
+      "id": "PIM-TW-T1-ZDRUG",
+      "source": "pim-taiwan",
+      "target": "@zdrugs",
+      "title": "非苯二氮平安眠藥：認知、混亂、跌倒及骨折風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": "對應 PIM-Taiwan 2018 Table 1 的部分藥群，並非 Table 1 全部 140 列。"
+    },
+    {
+      "id": "PIM-TW-T1-TCA",
+      "source": "pim-taiwan",
+      "target": "@strong_antidepressants",
+      "title": "強抗膽鹼抗憂鬱藥：混亂、鎮靜與姿勢性低血壓風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": "對應 PIM-Taiwan 2018 Table 1 的部分藥群，並非 Table 1 全部 140 列。"
+    },
+    {
+      "id": "PIM-TW-T1-LONG-SU",
+      "source": "pim-taiwan",
+      "target": "glyburide|chlorpropamide",
+      "title": "長效磺醯脲類：持續性低血糖風險",
+      "conditions": [],
+      "exceptions": [],
+      "note": "對應 PIM-Taiwan 2018 Table 1 的部分藥群，並非 Table 1 全部 140 列。"
+    },
+    {
+      "id": "PIM-TW-T1-ANTIHIST",
+      "source": "pim-taiwan",
+      "target": "@first_antihistamines",
+      "title": "第一代抗組織胺的抗膽鹼風險",
+      "conditions": [
+        [
+          "route",
+          "oral"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T1-DIGOXIN",
+      "source": "pim-taiwan",
+      "target": "digoxin",
+      "title": "Digoxin 高劑量毒性風險",
+      "conditions": [
+        [
+          "dose",
+          ">",
+          0.125
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T2-HF-NSAID",
+      "source": "pim-taiwan",
+      "target": "@nsaids",
+      "title": "心衰竭合併 NSAID 可能惡化病情",
+      "conditions": [
+        [
+          "diagnosis",
+          "heart_failure"
+        ],
+        [
+          "route",
+          "oral",
+          "parenteral"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T2-HF-CCB",
+      "source": "pim-taiwan",
+      "target": "verapamil|diltiazem",
+      "title": "心衰竭合併非二氫吡啶鈣離子阻斷劑需覆核",
+      "conditions": [
+        [
+          "diagnosis",
+          "heart_failure"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T2-HF-TZD",
+      "source": "pim-taiwan",
+      "target": "pioglitazone|rosiglitazone",
+      "title": "心衰竭合併 TZD 可能惡化病情",
+      "conditions": [
+        [
+          "diagnosis",
+          "heart_failure"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T2-FALLS-BZD",
+      "source": "pim-taiwan",
+      "target": "@benzodiazepines",
+      "title": "有跌倒／骨折史者使用苯二氮平類需覆核",
+      "conditions": [
+        [
+          "diagnosis",
+          "falls",
+          "fractures"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "PIM-TW-T2-DEMENTIA",
+      "source": "pim-taiwan",
+      "target": "@anticholinergic",
+      "title": "失智／譫妄患者使用抗膽鹼藥需覆核",
+      "conditions": [
+        [
+          "diagnosis",
+          "delirium",
+          "dementia"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "RENAL-METFORMIN-30",
+      "source": "organ-safety",
+      "target": "metformin",
+      "title": "Metformin 於 eGFR < 30 mL/min/1.73m2 屬禁忌：乳酸中毒風險",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "依台灣 TFDA 與國際準則，eGFR < 30 應停用 Metformin。"
+    },
+    {
+      "id": "RENAL-METFORMIN-45",
+      "source": "organ-safety",
+      "target": "metformin",
+      "title": "Metformin 於 eGFR < 45 mL/min/1.73m2 需評估減量並密切監測腎功能",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          45
+        ]
+      ],
+      "exceptions": [],
+      "note": "eGFR 30-45 不建議新起始，既有使用者建議減半劑量。"
+    },
+    {
+      "id": "RENAL-NSAID-EGFR",
+      "source": "organ-safety",
+      "target": "@nsaids",
+      "title": "eGFR < 30 mL/min/1.73m2 使用 NSAID 具急性腎損傷與體液滯留高風險",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": "高齡腎功能不全患者應避免全身性 NSAID。"
+    },
+    {
+      "id": "RENAL-ALLOPURINOL",
+      "source": "organ-safety",
+      "target": "allopurinol",
+      "title": "Allopurinol 於 eGFR < 60 mL/min/1.73m2 需依腎功能調降起始與維持劑量",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          60
+        ]
+      ],
+      "exceptions": [],
+      "note": "腎功能低下未減量會增加嚴重皮膚不良反應（SCAR）與毒性風險。"
+    },
+    {
+      "id": "RENAL-DIGOXIN-EGFR",
+      "source": "organ-safety",
+      "target": "digoxin",
+      "title": "Digoxin 於 eGFR < 50 mL/min/1.73m2 排泄減少，需減量並監測血中濃度",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          50
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "RENAL-SCR-HIGH-NSAID",
+      "source": "organ-safety",
+      "target": "@nsaids",
+      "title": "血清肌酸酐 (Scr) > 1.5 mg/dL 使用 NSAID 惡化腎功能風險",
+      "conditions": [
+        [
+          "lab",
+          "Scr",
+          ">",
+          1.5
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "HEPATIC-STATIN-ALT",
+      "source": "organ-safety",
+      "target": "@statins",
+      "title": "Statin 類降血脂藥合併 ALT (GPT) > 120 U/L（>3倍上限）：肝損傷風險需評估停藥或換藥",
+      "conditions": [
+        [
+          "lab",
+          "ALT",
+          ">",
+          120
+        ]
+      ],
+      "exceptions": [],
+      "note": "轉胺酶顯著上升超過正常上限 3 倍時，應立即覆核 Statin 安全性。"
+    },
+    {
+      "id": "HEPATIC-STATIN-AST",
+      "source": "organ-safety",
+      "target": "@statins",
+      "title": "Statin 類降血脂藥合併 AST (GOT) > 120 U/L（>3倍上限）：肝損傷風險需評估",
+      "conditions": [
+        [
+          "lab",
+          "AST",
+          ">",
+          120
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "HEPATIC-APAP-ALT",
+      "source": "organ-safety",
+      "target": "paracetamol",
+      "title": "Acetaminophen (普拿疼) 於肝指數異常 (ALT > 100 U/L) 需限制每日總劑量 (<2000 mg/day)",
+      "conditions": [
+        [
+          "lab",
+          "ALT",
+          ">",
+          100
+        ]
+      ],
+      "exceptions": [],
+      "note": "肝功能受損或肝硬化高齡患者應調降 Acetaminophen 每日最大量。"
+    },
+    {
+      "id": "HEPATIC-DULOXETINE",
+      "source": "organ-safety",
+      "target": "duloxetine",
+      "title": "Duloxetine 於肝功能不全 (ALT > 80 U/L 或慢性肝病) 應避免使用",
+      "conditions": [
+        [
+          "lab",
+          "ALT",
+          ">",
+          80
+        ]
+      ],
+      "exceptions": [],
+      "note": "Duloxetine 具肝毒性風險且經肝代謝，肝功能異常應避免。"
+    },
+    {
+      "id": "HEPATIC-BZD-LIVER",
+      "source": "organ-safety",
+      "target": "diazepam|chlordiazepoxide|flurazepam|clonazepam|alprazolam|midazolam",
+      "title": "長效或經肝氧化代謝之 BZD 於肝功能異常 (TBIL > 2.0 mg/dL 或 Child-Pugh >= 7) 易誘發肝性腦病變與過度鎮靜",
+      "conditions": [
+        [
+          "lab",
+          "TBIL",
+          ">",
+          2.0
+        ]
+      ],
+      "exceptions": [],
+      "note": "若必須使用 BZD，Lot 類（Lorazepam、Oxazepam、Temazepam）受肝代謝影響較小。"
+    },
+    {
+      "id": "HEPATIC-DOAC-CHILD",
+      "source": "organ-safety",
+      "target": "rivaroxaban|apixaban|edoxaban",
+      "title": "中重度肝硬化 (Child-Pugh >= 7 分) 使用新型口服抗凝血劑 (DOAC) 出血與蓄積風險",
+      "conditions": [
+        [
+          "lab",
+          "ChildPugh",
+          ">=",
+          7
+        ]
+      ],
+      "exceptions": [],
+      "note": "Rivaroxaban 於 Child-Pugh B/C 屬禁忌；其他 DOAC 於 Child-Pugh C 禁用。"
+    },
+    {
+      "id": "SUPP-BLEED-ANTICOAG",
+      "source": "supplement-safety",
+      "target": "@bleeding_supplements",
+      "title": "具抗血小板/抗凝血作用之保健食品（銀杏、魚油、大蒜精、人參、薑黃、葡萄糖胺）合併口服抗凝血劑：顯著增加出血風險",
+      "conditions": [
+        [
+          "co",
+          "@anticoagulants"
+        ]
+      ],
+      "exceptions": [],
+      "note": "建議密切監測瘀青、牙齦出血、黑便或 INR（若使用 Warfarin），必要時停用保健食品。"
+    },
+    {
+      "id": "SUPP-ANTICOAG-BLEED",
+      "source": "supplement-safety",
+      "target": "@anticoagulants",
+      "title": "口服抗凝血劑（如 Warfarin、DOAC）合併具抗血小板/抗凝血作用之保健食品（銀杏、魚油、大蒜精、人參、薑黃、葡萄糖胺）：顯著增加出血風險",
+      "conditions": [
+        [
+          "co",
+          "@bleeding_supplements"
+        ]
+      ],
+      "exceptions": [],
+      "note": "建議密切監測瘀青、牙齦出血、黑便或 INR（若使用 Warfarin），必要時停用保健食品。"
+    },
+    {
+      "id": "SUPP-BLEED-ANTIPLATELET",
+      "source": "supplement-safety",
+      "target": "@bleeding_supplements",
+      "title": "具抗血小板作用之保健食品（銀杏、魚油、大蒜精、人參、薑黃）合併抗血小板藥（Aspirin、Clopidogrel 等）：加成出血風險",
+      "conditions": [
+        [
+          "co",
+          "@antiplatelets"
+        ]
+      ],
+      "exceptions": [],
+      "note": "高齡者腸胃道與顱內出血風險較高，應評估保健食品必要性。"
+    },
+    {
+      "id": "SUPP-BLEED-NSAID",
+      "source": "supplement-safety",
+      "target": "ginkgo_biloba|fish_oil|garlic|ginseng",
+      "title": "銀杏／魚油／大蒜精／人參合併 NSAID 止痛藥：增加胃腸道黏膜出血風險",
+      "conditions": [
+        [
+          "co",
+          "@nsaids"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-RYR-STATIN",
+      "source": "supplement-safety",
+      "target": "red_yeast_rice",
+      "title": "紅麴（含 Monacolin K，結構同 Lovastatin）合併 Statin 降血脂藥：重複用藥，大幅增加橫紋肌溶解症與肝毒性風險",
+      "conditions": [
+        [
+          "co",
+          "@statins"
+        ]
+      ],
+      "exceptions": [],
+      "note": "紅麴與處方 Statin 嚴禁併用，請衛教病人立即停用紅麴保健品。"
+    },
+    {
+      "id": "SUPP-STATIN-RYR",
+      "source": "supplement-safety",
+      "target": "@statins",
+      "title": "處方 Statin 降血脂藥合併紅麴（含 Monacolin K）：重複用藥，大幅增加橫紋肌溶解症與肝毒性風險",
+      "conditions": [
+        [
+          "co",
+          "red_yeast_rice"
+        ]
+      ],
+      "exceptions": [],
+      "note": "紅麴與處方 Statin 嚴禁併用，請衛教病人立即停用紅麴保健品。"
+    },
+    {
+      "id": "SUPP-RYR-ALT",
+      "source": "supplement-safety",
+      "target": "red_yeast_rice",
+      "title": "紅麴於肝功能異常 (ALT > 80 U/L) 使用：可能惡化肝指數",
+      "conditions": [
+        [
+          "lab",
+          "ALT",
+          ">",
+          80
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-VITK-WARFARIN",
+      "source": "supplement-safety",
+      "target": "vitamin_k",
+      "title": "維生素 K 或納豆製品合併 Warfarin：直接拮抗 Warfarin 藥效，導致 INR 下降與血栓風險",
+      "conditions": [
+        [
+          "co",
+          "warfarin"
+        ]
+      ],
+      "exceptions": [],
+      "note": "服用 Warfarin 患者應避免額外補充維生素 K、納豆、納豆激酶或大量深綠色蔬菜萃取物。"
+    },
+    {
+      "id": "SUPP-SJW-ANTICOAG",
+      "source": "supplement-safety",
+      "target": "st_johns_wort",
+      "title": "聖約翰草 (St. John's Wort) 強效誘導 CYP3A4/P-gp，合併抗凝血劑會降低血中濃度導致血栓風險",
+      "conditions": [
+        [
+          "co",
+          "@anticoagulants"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-SJW-SEROTONIN",
+      "source": "supplement-safety",
+      "target": "st_johns_wort",
+      "title": "聖約翰草合併抗憂鬱藥 (SSRI/SNRI/TCA)：引發血清素症候群 (Serotonin syndrome) 高風險",
+      "conditions": [
+        [
+          "co",
+          "@ssri|@snri|@strong_antidepressants"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-SJW-STATIN",
+      "source": "supplement-safety",
+      "target": "st_johns_wort",
+      "title": "聖約翰草合併 Statin（特別是 Atorvastatin/Simvastatin）：誘導代謝降低降膽固醇療效",
+      "conditions": [
+        [
+          "co",
+          "@statins"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-MINERAL-FQ",
+      "source": "supplement-safety",
+      "target": "@mineral_chelators",
+      "title": "鈣／鐵／鎂補充劑合併 Fluoroquinolone 類抗生素：形成螯合物大幅降低抗生素吸收與療效",
+      "conditions": [
+        [
+          "co",
+          "@fluoroquinolones"
+        ]
+      ],
+      "exceptions": [],
+      "note": "必須前後間隔至少 2 至 4 小時服用。"
+    },
+    {
+      "id": "SUPP-MINERAL-TETRA",
+      "source": "supplement-safety",
+      "target": "@mineral_chelators",
+      "title": "鈣／鐵／鎂補充劑合併四環黴素類抗生素 (Doxycycline 等)：螯合作用降低抗生素吸收",
+      "conditions": [
+        [
+          "co",
+          "@tetracyclines"
+        ]
+      ],
+      "exceptions": [],
+      "note": "必須前後間隔至少 2 至 4 小時服用。"
+    },
+    {
+      "id": "SUPP-MINERAL-THYROID",
+      "source": "supplement-safety",
+      "target": "@mineral_chelators",
+      "title": "鈣／鐵／鎂補充劑合併甲狀腺素 (Levothyroxine)：減少甲狀腺素腸道吸收",
+      "conditions": [
+        [
+          "co",
+          "levothyroxine"
+        ]
+      ],
+      "exceptions": [],
+      "note": "建議與 Levothyroxine 間隔 4 小時以上服用。"
+    },
+    {
+      "id": "SUPP-MGO-RENAL",
+      "source": "supplement-safety",
+      "target": "magnesium",
+      "title": "鎂補充劑／氧化鎂於腎功能低下 (eGFR < 30 或 CrCl < 30) 易蓄積引發高血鎂症（嗜睡、低血壓、心律不整）",
+      "conditions": [
+        [
+          "lab",
+          "eGFR",
+          "<",
+          30
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-COQ10-WARFARIN",
+      "source": "supplement-safety",
+      "target": "coq10",
+      "title": "輔酶 Q10 結構類似維生素 K2，合併 Warfarin 可能減弱抗凝血效果",
+      "conditions": [
+        [
+          "co",
+          "warfarin"
+        ]
+      ],
+      "exceptions": [],
+      "note": "若併用需密切監測 PT/INR。"
+    },
+    {
+      "id": "SUPP-COQ10-BP",
+      "source": "supplement-safety",
+      "target": "coq10",
+      "title": "輔酶 Q10 合併降血壓藥：可能具加成降壓作用，高齡者需留意姿勢性低血壓",
+      "conditions": [
+        [
+          "co",
+          "@antihypertensives"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-GINSENG-DM",
+      "source": "supplement-safety",
+      "target": "ginseng",
+      "title": "人參／西洋參合併降血糖藥或胰島素：可能加強降血糖作用，增加高齡者低血糖風險",
+      "conditions": [
+        [
+          "co",
+          "@antidiabetics"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-LICORICE-BP",
+      "source": "supplement-safety",
+      "target": "licorice",
+      "title": "甘草萃取物具礦物皮質酮作用（留鈉排鉀），合併降血壓藥或利尿劑會拮抗降壓效果並誘發低血鉀",
+      "conditions": [
+        [
+          "co",
+          "@antihypertensives"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-KSUPP-RAAS",
+      "source": "supplement-safety",
+      "target": "potassium_supp",
+      "title": "鉀補充劑／低鈉代鹽合併 ACEI／ARB 或保鉀利尿劑：嚴重高血鉀與心律不整風險",
+      "conditions": [
+        [
+          "co",
+          "@ace|@arb|@k_sparing"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    },
+    {
+      "id": "SUPP-MELATONIN-CNS",
+      "source": "supplement-safety",
+      "target": "melatonin",
+      "title": "褪黑激素合併鎮靜安眠藥 (BZD / Z-drugs)：加成嗜睡、晨間暈眩與高齡跌倒風險",
+      "conditions": [
+        [
+          "co",
+          "@benzodiazepines|@zdrugs"
+        ]
+      ],
+      "exceptions": [],
+      "note": ""
+    }
+  ]
+}
